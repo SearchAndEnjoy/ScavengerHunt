@@ -6,7 +6,7 @@ var browserify = require('gulp-browserify') // npm install gulp-browserify
 var htmlmin = require('gulp-htmlmin');
 
 
-gulp.task('default', ['html','css', 'js', 'img'])
+gulp.task('default', ['html','css', 'js', 'img','modules'])
 
 gulp.task('css', function (){
   gulp.src('./styles/*.scss')
@@ -33,6 +33,11 @@ gulp.task('img', function(){
     .pipe(gulp.dest('../public/images'))
 
 });
+
+gulp.task('modules', function(){
+  return gulp.src('node_modules/angular-google-maps/dist/angular-google-maps.js')
+    .pipe(gulp.dest('../public/modules'))
+})
 
 
 gulp.task('watch', function(){
