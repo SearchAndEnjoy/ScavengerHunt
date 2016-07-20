@@ -1,0 +1,28 @@
+{
+  "name": "scavengerhunt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RSuber/ScavengerHunt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RSuber/ScavengerHunt/issues"
+  },
+  "homepage": "https://github.com/RSuber/ScavengerHunt#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "sass": "^0.5.0"
+  },
+  "devDependencies": {
+    "gulp-browserify": "^0.5.1",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-sass": "^2.3.2"
+  }
+}
