@@ -1,7 +1,12 @@
 body {
-  background: linear-gradient(rgba(13, 126, 17, 0.9), rgba(13, 126, 17, 0.9)), url(../images/charleston_1869.jpg) no-repeat center center fixed;
+  background: linear-gradient(rgba(245, 231, 171, 0.9), rgba(245, 231, 171, 0.9)), url(../images/charleston_1869.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   background-position: right; }
+
+.jumbotron {
+  background-color: #6CADA9; }
+  .jumbotron h1 {
+    color: #e6e4da; }
