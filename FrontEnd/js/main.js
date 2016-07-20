@@ -1,4 +1,7 @@
-let app = angular.module('HuntApp', ['ngRoute']);
+let app = angular.module('HuntApp', ['ngRoute','uiGmapgoogle-maps']);
+// Controllers
+require('./Controllers/questioncontroller.js')(app);
+
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
@@ -32,7 +35,7 @@ app.config(['$routeProvider', function($routeProvider) {
           templateUrl:'templates/questionlist.html',
         })
         .when('/question',{
-          // controller:'questioncontroler',
+          controller:'QuestionController',
           templateUrl:'templates/questionpage.html',
         })
         .when('/gameover',{
