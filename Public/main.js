@@ -8,37 +8,37 @@ app.config(['$routeProvider', function($routeProvider) {
         })
         .when('/start', {
             // controller: 'startcontroller',
-            templateUrl: 'Templates/start_page.html',
+            templateUrl: 'templates/start_page.html',
         })
         .when('/info1', {
-            templateUrl: 'Templates/howtoplay1.html',
+            templateUrl: 'templates/howtoplay1.html',
         })
         .when('/info2', {
-            templateUrl: 'Templates/howtoplay2.html',
+            templateUrl: 'templates/howtoplay2.html',
         })
         .when('/create', {
             // controller: 'newcontroller',
-            templateUrl: 'Templates/newsession.html',
+            templateUrl: 'templates/newsession.html',
         })
         .when('/join', {
             // controller: 'joincontroller',
-            templateUrl:'Templates/joinsession.html',
+            templateUrl:'templates/joinsession.html',
         })
         .when('/lobby', {
           // controller:'lobbycontroller',
-          templateUrl:'Templates/lobby.html',
+          templateUrl:'templates/lobby.html',
         })
         .when('/list',{
           // controller:'listcontroller',
-          templateUrl:'Templates/questionlist.html',
+          templateUrl:'templates/questionlist.html',
         })
         .when('/question',{
           // controller:'questioncontroler',
-          templateUrl:'Templates/questionpage.html',
+          templateUrl:'templates/questionpage.html',
         })
         .when('/gameover',{
           // controller:'gameovercontroller',
-          templateUrl:'gameover.html',
+          templateUrl:'templates/gameover.html',
         });
 }]);
 
