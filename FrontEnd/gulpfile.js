@@ -16,7 +16,7 @@ gulp.task('css', function (){
 
 
 gulp.task('html', function () {
-    gulp.src('./templates/*.html').pipe(gulp.dest('../public/templates'));
+    gulp.src('./js/Templates/*.html').pipe(gulp.dest('../public/templates'));
 
     return gulp.src('./index.html')
         .pipe(gulp.dest('../public'));
