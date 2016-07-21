@@ -34,6 +34,7 @@ app.config(['$routeProvider', function($routeProvider) {
         .when('/start', {
             // controller: 'startcontroller',
             templateUrl: 'templates/start_page.html',
+            controller:'InfoController'
         })
         .when('/info1', {
             templateUrl: 'templates/howtoplay1.html',

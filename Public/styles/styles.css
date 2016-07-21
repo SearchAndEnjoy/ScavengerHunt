@@ -32,13 +32,6 @@ body {
   -moz-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
   box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56); }
 
-<<<<<<< HEAD
-.angular-google-map-container {
-  display: inline-block;
-  height: 20em;
-  width: 30em;
-  margin-left: 20em; }
-=======
 .form-group {
   background-color: #6CADA9;
   margin-bottom: 10%;
@@ -48,4 +41,9 @@ body {
   .form-group h1 {
     text-align: center;
     color: #faf9f5; }
->>>>>>> 21f359b5cf1f354730545d8ebf62e7ad83ff2ed7
+
+.angular-google-map-container {
+  display: inline-block;
+  height: 20em;
+  width: 30em;
+  margin-left: 20em; }
