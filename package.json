@@ -26,6 +26,7 @@
     "gulp-browserify": "^0.5.1",
     "gulp-htmlmin": "^2.0.0",
     "gulp-sass": "^2.3.2",
+    "gulp-surge": "^0.1.0",
     "surge": "^0.18.0"
   }
 }
