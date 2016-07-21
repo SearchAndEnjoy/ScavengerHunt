@@ -42,10 +42,10 @@ body {
     text-align: center;
     color: #faf9f5; }
 
-.angular-google-map-container {
+#map {
   display: inline-block;
-  height: 20em;
-  width: 30em;
+  height: 600px;
+  width: 75%;
   margin-left: 20em; }
 
 .list-group-item {
