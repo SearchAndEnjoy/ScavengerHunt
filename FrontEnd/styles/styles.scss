@@ -7,12 +7,16 @@
 // $font-color: #faf9f5;
 ////////////////// persistent background and header styling
 body {
+    overflow: scroll;
     background: linear-gradient(to bottom, rgba(245,231,171, 0.7), rgba(245,231,171, 0.7) ), url(../images/charleston_1869.jpg)no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     background-position: right;
+}
+.temp-links {
+    display: block;
 }
 .jumbotron {
     background-color: rgba(#6cada9, 0.9);
@@ -29,6 +33,18 @@ body {
         text-shadow: rgb(3, 3, 3) 2px 7px 7px;
     }
 }
+///////oddly floating footer fix later
+// .footer {
+//     position:fixed;
+//     color: #faf9f5;
+//     bottom: 0;
+//     width: 100%;
+//     height: 60px;
+//     background-color: #6CADA9;
+//     -webkit-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+//     -moz-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+//     box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+// }
 .lrg-page-buttons {
     color: #faf9f5;
     font-family: 'PT Sans', sans-serif;
@@ -41,47 +57,56 @@ body {
     -moz-box-shadow: 5px 16px 15px -1px rgba(0,0,0,0.56);
     box-shadow: 5px 16px 15px -1px rgba(0,0,0,0.56);
 }
-
 .page-box {
-  // background-color: lightgreen;
+    // background-color: lightgreen;
 }
-
+////////// create and join session page styling
 .form-group {
-background-color: #6CADA9;
-margin-bottom: 10%;
--webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
--moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  h1 {
-    text-align: center;
+    background-color: #6CADA9;
+    margin-bottom: 10%;
+    -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    h1 {
+        text-align: center;
+        color: #faf9f5;
+    }
+}
+//////////// detailed clue page
+#map {
+    background-color: lightblue;
+    height: 50em;
+    width: 100%;
+    -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+}
+.clue-box {
     color: #faf9f5;
-  }
+    background-color: #6CADA9;
+    margin-top: 5%;
+    padding: 3%;
+    border-radius: 3%;
+    -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
-
-#map{
-  display: inline-block;
-  height: 600px;
-  width:75%;
-  margin-left: 20em;
-}
-
+////////// Lobby group styling
 .list-group-item {
-background-color: #85D6D1;
-margin-bottom: 5%;
--webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
--moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-
+    color: #faf9f5;
+    background-color: #85D6D1;
+    // border: 2px solid #F27D5C ;
+    margin-bottom: 5%;
+    min-height: 15%;
+    -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
-///////oddly floating
-// .footer {
-//     position:fixed;
-//     color: #faf9f5;
-//     bottom: 0;
-//     width: 100%;
-//     height: 60px;
-//     background-color: #6CADA9;
-//     -webkit-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
-//     -moz-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
-//     box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
-// }
+////////// question list styling
+.clock-box {
+    background-color: #F27D5C;
+    margin: auto 0;
+    .clock {
+      text-align: center;
+    }
+}
