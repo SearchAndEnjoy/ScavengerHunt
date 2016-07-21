@@ -7,6 +7,9 @@ body {
   background-size: cover;
   background-position: right; }
 
+.temp-links {
+  display: block; }
+
 .jumbotron {
   background-color: rgba(108, 173, 169, 0.9);
   height: 5%;
@@ -44,10 +47,22 @@ body {
     color: #faf9f5; }
 
 #map {
-  display: inline-block;
-  height: 600px;
-  width: 75%;
-  margin-left: 20em; }
+  background-color: lightblue;
+  height: 50em;
+  width: 100%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+
+.clue-box {
+  color: #faf9f5;
+  background-color: #6CADA9;
+  margin-top: 5%;
+  padding: 3%;
+  border-radius: 3%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
 
 .list-group-item {
   color: #faf9f5;
@@ -57,3 +72,9 @@ body {
   -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+
+.clock-box {
+  background-color: #F27D5C;
+  margin: auto 0; }
+  .clock-box .clock {
+    text-align: center; }
