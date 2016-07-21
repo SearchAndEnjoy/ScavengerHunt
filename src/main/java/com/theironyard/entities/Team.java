@@ -1,6 +1,7 @@
 package com.theironyard.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Erik on 7/19/16.
@@ -17,7 +18,10 @@ public class Team {
     String teamName;
 
     @ManyToOne
-    Answer answer;
+    Game game;
 
+    @OneToMany(mappedBy = "team")
+    List<Answer> answerList;
 
 }
+

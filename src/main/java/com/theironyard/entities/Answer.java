@@ -1,10 +1,9 @@
 package com.theironyard.entities;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 /**
- * Created by Erik on 7/19/16.
+ * Created by Erik on 7/21/16.
  */
 @Entity
 @Table(name = "answers")
@@ -14,8 +13,14 @@ public class Answer {
     @Id
     int id;
 
-    @Column(nullable = false)
-    boolean atLocation;
+    @ManyToOne
+    Clue clue;
 
-    LocalDateTime lDT;
+
+    @ManyToOne
+    Team team;
+
+    @Column
+    boolean atLocation = false;
+
 }

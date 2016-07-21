@@ -10,6 +10,7 @@ import com.theironyard.services.GameRepository;
 import com.theironyard.services.TeamRepository;
 import org.apache.catalina.Server;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,30 +27,51 @@ import java.util.Scanner;
 @RestController
 public class ScavengerHuntController {
 
-//    @Autowired
-//    TeamRepository teams;
-//
-//    @Autowired
-//    GameRepository games;
+    @Autowired
+    TeamRepository teams;
+
+    @Autowired
+    GameRepository games;
 
     @Autowired
     ClueRepository clues;
 
-//    @Autowired
-//    AnswerRepository answers;
+    @Autowired
+    AnswerRepository answers;
 
+
+
+    // initialize the database
     @PostConstruct
     public void init() throws FileNotFoundException {
         parseClues("clues.tsv");
     }
 
 
+    @RequestMapping(path = "/game-session", method = RequestMethod.POST)
+    public Game newGame(String lobbyName, String lobbyCode, HttpSession session) {
+       Game newGame = new Game();
+        newGame.setLobbyName(lobbyName);
 
-//    @RequestMapping(path = "/newGame", method = RequestMethod.POST)
-//    public Game newGame(String lobbyName, String lobbyCode, HttpSession session) {
-//        session.getAttribute()
-//    }
+        return newGame;
+    }
 
+    @RequestMapping(path = "/game-session", method = RequestMethod.GET)
+    public Game getGame ()
+
+    @RequestMapping(path = "/game-session", method = RequestMethod.DELETE)
+    public HttpStatus cancelGame (HttpSession session) {
+        session.invalidate();
+
+        return HttpStatus.OK;
+    }
+
+    @RequestMapping(path = "/add-team", method = RequestMethod.POST)
+    public Team addTeam (String name, HttpSession session) {
+
+    }
+
+    //Parse the .tsv to populate database with clues
     public void parseClues(String fileName) throws FileNotFoundException {
         if (clues.count() == 0) {
             File clueFile = new File(fileName);
