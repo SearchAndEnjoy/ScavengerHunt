@@ -1,8 +1,9 @@
-let app = angular.module('HuntApp', ['ngRoute','uiGmapgoogle-maps']);
+let app = angular.module('HuntApp', ['ngRoute']);
 // Controllers
 require('./Controllers/questioncontroller.js')(app);
 require('./Controllers/infocontroller.js')(app);
-
+require('./Controllers/startcontroller.js')(app);
+require('./Services/mainservice.js')(app);
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
@@ -12,7 +13,7 @@ app.config(['$routeProvider', function($routeProvider) {
         .when('/start', {
             // controller: 'startcontroller',
             templateUrl: 'templates/start_page.html',
-            controller:'InfoController'
+            controller: 'StartController',
         })
         .when('/info1', {
             templateUrl: 'templates/howtoplay1.html',
