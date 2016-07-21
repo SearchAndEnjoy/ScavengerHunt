@@ -1,6 +1,7 @@
 module.exports = function(app){
-  app.controller('QuestionController',['$scope','$http',function($scope,$http){
-    $scope.map = {center: {latitude:45, longitude:73,}, zoom:8};
-    console.log('balls')
+  app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
+    MainService.getMap()
+    MainService.getLocation()
+
 }])
 }
