@@ -32,9 +32,6 @@ body {
   -moz-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
   box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56); }
 
-.page-box {
-  background-color: lightgreen; }
-
 .form-group {
   background-color: #6CADA9;
   margin-bottom: 10%;
@@ -50,3 +47,10 @@ body {
   height: 600px;
   width: 75%;
   margin-left: 20em; }
+
+.list-group-item {
+  background-color: #85D6D1;
+  margin-bottom: 5%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
