@@ -8,7 +8,7 @@ var babel = require('gulp-babel');
 var surge = require('gulp-surge');
 
 
-gulp.task('default', ['html', 'css', 'js', 'img', 'modules', 'deploy'])
+gulp.task('default', ['html', 'css', 'js', 'img', 'modules'])
 
 gulp.task('css', function() {
     gulp.src('./styles/*.scss')
@@ -42,12 +42,21 @@ gulp.task('img', function() {
 gulp.task('modules', function() {
     return gulp.src('node_modules/angular-google-maps/dist/angular-google-maps.js')
         .pipe(gulp.dest('../public/modules'))
+
+    // return gulp.src('node_modules/flipclock/compiled/flipclock.min.js')
+    //     .pipe(gulp.dest('../public/modules'))
 });
-gulp.task('deploy', [], function () {
-  return surge({
-    project: '../public',         // Path to your static build directory
-    domain: 'acceptable-science.surge.sh'  // Your domain or Surge subdomain
-  })
+
+gulp.task('modules', function() {
+    return gulp.src('node_modules/flipclock/compiled/flipclock.min.js')
+        .pipe(gulp.dest('../public/modules'))
+});
+
+gulp.task('deploy', [], function() {
+    return surge({
+        project: '../public', // Path to your static build directory
+        domain: 'acceptable-science.surge.sh' // Your domain or Surge subdomain
+    })
 });
 
 
@@ -58,5 +67,5 @@ gulp.task('watch', function() {
     gulp.watch('./js/Templates/*.html', ['html']);
     gulp.watch('./js/*/*.js', ['js']);
     gulp.watch('./images/*.jpg', ['img'])
-    // gulp.watch('../public/*.*', ['deploy'])
+        // gulp.watch('../public/*.*', ['deploy'])
 });
