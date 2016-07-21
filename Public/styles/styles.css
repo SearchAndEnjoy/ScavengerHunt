@@ -10,3 +10,9 @@ body {
   background-color: #6CADA9; }
   .jumbotron h1 {
     color: #e6e4da; }
+
+.angular-google-map-container {
+  display: inline-block;
+  height: 20em;
+  width: 30em;
+  margin-left: 20em; }
