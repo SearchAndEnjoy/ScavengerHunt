@@ -14,8 +14,8 @@ $scope.home= function(){
 },{}],2:[function(require,module,exports){
 module.exports = function(app){
   app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
-
     MainService.getMap()
+    MainService.getLocation()
 
 }])
 }
@@ -42,16 +42,33 @@ $scope.joinsession = function(){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
         return {
-            getMap: function(count) {
+            getMap: function() {
                 var map = new GMaps({
                     div: '#map',
-                    lat: -12.043333,
-                    lng: -77.028333
-          });
-          return map
-        },
-      };
-  }]);
+                    lat: 32.7807984,
+                    lng: -79.9367449,
+                });
+                return map
+            },
+            getLocation: function() {
+                GMaps.geolocate({
+                    success: function(position) {
+                        map.setCenter(map);
+                    },
+                    error: function(error) {
+                        alert('Geolocation failed: ' + error.message);
+                    },
+                    not_supported: function() {
+                        alert("Your browser does not support geolocation");
+                    },
+                    always: function() {
+                        alert("Done!");
+                    }
+                });
+
+            },
+        };
+    }]);
 };
 
 },{}],5:[function(require,module,exports){
