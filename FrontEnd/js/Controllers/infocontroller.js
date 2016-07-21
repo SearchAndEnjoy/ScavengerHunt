@@ -1,9 +1,11 @@
 module.exports = function(app){
   app.controller('InfoController',['$scope','$http','$location',function($scope,$http,$location){
-console.log('something')
-$scope.info = function(){
-  $location.path('/info1')
-}
 
+$scope.next = function(){
+  $location.path('/info2')
+};
+$scope.home= function(){
+  $location.path('/start')
+}
 }])
 }
