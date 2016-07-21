@@ -11,6 +11,7 @@ import com.theironyard.services.TeamRepository;
 import org.apache.catalina.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,28 +48,55 @@ public class ScavengerHuntController {
         parseClues("clues.tsv");
     }
 
+    @RequestMapping(path = "/create-team", method = RequestMethod.POST)
+    public Team newTeam(String teamName, HttpSession session) {
+        Team newTeam = new Team();
+        newTeam.setTeamName(teamName);
 
-    @RequestMapping(path = "/game-session", method = RequestMethod.POST)
-    public Game newGame(String lobbyName, String lobbyCode, HttpSession session) {
+        teams.save(newTeam);
+
+        session.setAttribute("team", newTeam.getId());
+
+        return newTeam;
+    }
+
+
+    @RequestMapping(path = "/create-game", method = RequestMethod.POST)
+    public Game newGame(String lobbyName, HttpSession session) {
        Game newGame = new Game();
         newGame.setLobbyName(lobbyName);
+
+        games.save(newGame);
+
+        session.setAttribute("gameId", newGame.getId());
 
         return newGame;
     }
 
-    @RequestMapping(path = "/game-session", method = RequestMethod.GET)
-    public Game getGame ()
+    @RequestMapping(path = "/add-team/{game_id}", method = RequestMethod.PUT)
+    public Team addTeam (String teamName, HttpSession session) {
+        Team addTeam = new Team();
+        addTeam.setTeamName(teamName);
 
-    @RequestMapping(path = "/game-session", method = RequestMethod.DELETE)
+        return addTeam;
+
+
+    }
+
+    @RequestMapping(path = "/start-game/{game_id}", method = RequestMethod.POST)
+    public Game startGame() {
+
+    }
+
+
+    @RequestMapping(path = "/at-location/{team_id}/{game_id}", method = RequestMethod.PUT)
+
+
+    @RequestMapping(path = "/cancel-game/{game_id}", method = RequestMethod.DELETE)
     public HttpStatus cancelGame (HttpSession session) {
         session.invalidate();
 
         return HttpStatus.OK;
-    }
-
-    @RequestMapping(path = "/add-team", method = RequestMethod.POST)
-    public Team addTeam (String name, HttpSession session) {
-
     }
 
     //Parse the .tsv to populate database with clues
