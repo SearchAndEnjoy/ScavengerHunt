@@ -13,19 +13,56 @@ $scope.home= function(){
 
 },{}],2:[function(require,module,exports){
 module.exports = function(app){
-  app.controller('QuestionController',['$scope','$http',function($scope,$http){
-    $scope.map = {center: {latitude:32.7765044, longitude: -79.9316274,}, zoom:16};
-    console.log('balls')
+  app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
+
+    MainService.getMap()
+
 }])
 }
 
 },{}],3:[function(require,module,exports){
+module.exports = function(app){
+  app.controller('StartController',['$scope','$http','$location',function($scope,$http,$location){
+
+$scope.info = function(){
+  $location.path('/info1')
+  console.log('something')
+}
+$scope.newsession = function(){
+$location.path('/create')
+}
+$scope.joinsession = function(){
+  $location.path('/join')
+}
+
+}])
+}
+
+},{}],4:[function(require,module,exports){
+module.exports = function(app) {
+    app.factory('MainService', ['$http', function($http) {
+        return {
+            getMap: function(count) {
+                var map = new GMaps({
+                    div: '#map',
+                    lat: -12.043333,
+                    lng: -77.028333
+          });
+          return map
+        },
+      };
+  }]);
+};
+
+},{}],5:[function(require,module,exports){
 'use strict';
 
-var app = angular.module('HuntApp', ['ngRoute', 'uiGmapgoogle-maps']);
+var app = angular.module('HuntApp', ['ngRoute']);
 // Controllers
 require('./Controllers/questioncontroller.js')(app);
 require('./Controllers/infocontroller.js')(app);
+require('./Controllers/startcontroller.js')(app);
+require('./Services/mainservice.js')(app);
 
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {
@@ -33,7 +70,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     }).when('/start', {
         // controller: 'startcontroller',
         templateUrl: 'templates/start_page.html',
-        controller: 'InfoController'
+        controller: 'StartController'
     }).when('/info1', {
         templateUrl: 'templates/howtoplay1.html',
         controller: 'InfoController'
@@ -60,4 +97,4 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/gameover.html'
     });
 }]);
-},{"./Controllers/infocontroller.js":1,"./Controllers/questioncontroller.js":2}]},{},[3])
+},{"./Controllers/infocontroller.js":1,"./Controllers/questioncontroller.js":2,"./Controllers/startcontroller.js":3,"./Services/mainservice.js":4}]},{},[5])
