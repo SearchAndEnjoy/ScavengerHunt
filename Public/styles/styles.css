@@ -20,7 +20,7 @@ body {
     font-size: 7em;
     text-shadow: #030303 2px 7px 7px; }
 
-.page-box .lrg-page-buttons {
+.lrg-page-buttons {
   color: #faf9f5;
   font-family: 'PT Sans', sans-serif;
   font-size: 5em;
@@ -31,3 +31,13 @@ body {
   -webkit-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
   -moz-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
   box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56); }
+
+.form-group {
+  background-color: #6CADA9;
+  margin-bottom: 10%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+  .form-group h1 {
+    text-align: center;
+    color: #faf9f5; }
