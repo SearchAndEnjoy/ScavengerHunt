@@ -1,6 +1,7 @@
 package com.theironyard.controllers;
 
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import com.theironyard.entities.Answer;
 import com.theironyard.entities.Clue;
 import com.theironyard.entities.Game;
 import com.theironyard.entities.Team;
@@ -20,6 +21,9 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -49,36 +53,43 @@ public class ScavengerHuntController {
     }
 
     @RequestMapping(path = "/create-team", method = RequestMethod.POST)
-    public Team newTeam(String teamName, HttpSession session) {
-        Team newTeam = new Team();
-        newTeam.setTeamName(teamName);
+    public Team newTeam(@RequestBody Team team, HttpSession session) {
+        // {teamName: "something", game: {lobbyName: "whatever"}}
 
-        teams.save(newTeam);
+        Random lc = new Random();
+        char c = (char) (lc.nextInt(26) + 'a' + 3);
 
-        session.setAttribute("team", newTeam.getId());
+        games.save(team.getGame());
 
-        return newTeam;
+        teams.save(team);
+
+        session.setAttribute("team_id", team.getId());
+
+        session.setAttribute("game_id",team.getGame().getId());
+
+        return team;
     }
 
+//    @RequestMapping(path = "/create-game", method = RequestMethod.POST)
+//    public Game newGame(@RequestBody Game game, HttpSession session) {
+//
+//        games.save(game);
+//
+//        session.setAttribute("game_id", game.getId());
+//
+//        return game;
+//    }
 
-    @RequestMapping(path = "/create-game", method = RequestMethod.POST)
-    public Game newGame(String lobbyName, HttpSession session) {
-       Game newGame = new Game();
-        newGame.setLobbyName(lobbyName);
+    @RequestMapping(path = "/add-team", method = RequestMethod.POST)
+    public Team addTeam (String teamName, int game_id, HttpSession session) {
+        Team team = new Team();
+        team.setTeamName(teamName);
 
-        games.save(newGame);
+        session.getAttribute()
 
-        session.setAttribute("gameId", newGame.getId());
+        session.setAttribute("team_id", team.getId());
 
-        return newGame;
-    }
-
-    @RequestMapping(path = "/add-team/{game_id}", method = RequestMethod.PUT)
-    public Team addTeam (String teamName, HttpSession session) {
-        Team addTeam = new Team();
-        addTeam.setTeamName(teamName);
-
-        return addTeam;
+        return team;
 
 
     }
@@ -86,10 +97,26 @@ public class ScavengerHuntController {
     @RequestMapping(path = "/start-game/{game_id}", method = RequestMethod.POST)
     public Game startGame() {
 
+        return startGame();
+
     }
 
+//    @RequestMapping(path = "/get-clues/{game_id}", method = RequestMethod.GET)
+//    public List<Clue> clueList (HttpSession session) {
+//
+//        ArrayList<Clue> gameClues = (ArrayList<Clue>) clues.findAll();
+//
+//        Random r = new Random();
+//        String random = .get(r.nextInt(clueList().size()));
+//    }
 
-    @RequestMapping(path = "/at-location/{team_id}/{game_id}", method = RequestMethod.PUT)
+
+    @RequestMapping(path = "/at-location/{team_id}", method = RequestMethod.PUT)
+    public Answer atLocation () {
+
+        return atLocation();
+
+    }
 
 
     @RequestMapping(path = "/cancel-game/{game_id}", method = RequestMethod.DELETE)
