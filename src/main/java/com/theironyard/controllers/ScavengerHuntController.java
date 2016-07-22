@@ -21,10 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Erik on 7/20/16.
@@ -52,20 +49,27 @@ public class ScavengerHuntController {
         parseClues("clues.tsv");
     }
 
-    @RequestMapping(path = "/create-team", method = RequestMethod.POST)
+    @RequestMapping(path = "/create-game", method = RequestMethod.POST)
     public Team newTeam(@RequestBody Team team, HttpSession session) {
         // {teamName: "something", game: {lobbyName: "whatever"}}
 
-        Random lc = new Random();
-        char c = (char) (lc.nextInt(26) + 'a' + 3);
+        String alphabet= "abcdefghijklmnopqrstuvwxyz";
+        String code = "";
+        Random random = new Random();
+        for (int i = 0; i < 4; i++) {
+            char c = alphabet.charAt(random.nextInt(26));
+            code += c;
+        }
 
         games.save(team.getGame());
 
-        teams.save(team);
+        team = teams.save(team);
 
         session.setAttribute("team_id", team.getId());
+//        session.setAttribute("lobby_code", team.getGame().getLobbyCode());
 
-        session.setAttribute("game_id",team.getGame().getId());
+
+//        session.setAttribute("game_id",team.getGame());
 
         return team;
     }
@@ -85,7 +89,6 @@ public class ScavengerHuntController {
         Team team = new Team();
         team.setTeamName(teamName);
 
-        session.getAttribute()
 
         session.setAttribute("team_id", team.getId());
 
@@ -101,14 +104,16 @@ public class ScavengerHuntController {
 
     }
 
-//    @RequestMapping(path = "/get-clues/{game_id}", method = RequestMethod.GET)
-//    public List<Clue> clueList (HttpSession session) {
-//
-//        ArrayList<Clue> gameClues = (ArrayList<Clue>) clues.findAll();
-//
-//        Random r = new Random();
-//        String random = .get(r.nextInt(clueList().size()));
-//    }
+    @RequestMapping(path = "/get-clues/{game_id}", method = RequestMethod.GET)
+    public List<Clue> clueList (HttpSession session) {
+
+        ArrayList<Clue> gameClues = (ArrayList<Clue>) clues.findAll();
+        Collections.shuffle(gameClues);
+        gameClues = (ArrayList<Clue>) gameClues.subList(0, 5);
+
+        return gameClues;
+
+    }
 
 
     @RequestMapping(path = "/at-location/{team_id}", method = RequestMethod.PUT)
