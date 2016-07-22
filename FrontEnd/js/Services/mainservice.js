@@ -1,18 +1,21 @@
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
+        var map = new GMaps({
+            div: '#map',
+            lat: 1,
+            lng: -1,
+        });
+      let myPosition = [];
         return {
-            getMap: function() {
-                var map = new GMaps({
-                    div: '#map',
-                    lat: 32.7807984,
-                    lng: -79.9367449,
-                });
-                return map
-            },
             getLocation: function() {
                 GMaps.geolocate({
                     success: function(position) {
-                        map.setCenter(map);
+                        map.setCenter(position.coords.latitude, position.coords.longitude);
+                        map.setZoom(20)
+                       myPosition.push(position.coords.latitude);
+                       myPosition.push(position.coords.longitude);
+                        console.log(position.coords.latitude);
+                        console.log(position.coords.longitude);
                     },
                     error: function(error) {
                         alert('Geolocation failed: ' + error.message);
@@ -24,8 +27,19 @@ module.exports = function(app) {
                         alert("Done!");
                     }
                 });
-
+                return myPosition
             },
+            CreateMarker: function() {
+                map.addMarker({
+                    lat:1,
+                    lng:1,
+                    title: 'Logans super special marker',
+                    click: function(e) {
+                        console.log('TSUUUUUUUU')
+                    }
+                });
+
+            }
         };
     }]);
 };
