@@ -10,6 +10,7 @@ module.exports = function(app) {
             getLocation: function() {
                 GMaps.geolocate({
                     success: function(position) {
+                        myPosition = [];
                         map.setCenter(position.coords.latitude, position.coords.longitude);
                         map.setZoom(20)
                        myPosition.push({
@@ -41,7 +42,7 @@ module.exports = function(app) {
                         console.log('TSUUUUUUUU')
                     }
                 });
-
+                map.setCenter(data.lat, data.lon);
             }
         };
     }]);

@@ -28,10 +28,11 @@ module.exports = function(app) {
 },{}],3:[function(require,module,exports){
 module.exports = function(app){
   app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
-    $scope.myLoc = MainService.getLocation()
+    $scope.myLoc = MainService.getLocation();
     $scope.marker = function(){
       console.log($scope.myLoc)
-      MainService.CreateMarker()
+      MainService.getLocation();
+      MainService.CreateMarker();
     }
 }])
 }
@@ -67,6 +68,7 @@ module.exports = function(app) {
             getLocation: function() {
                 GMaps.geolocate({
                     success: function(position) {
+                        myPosition = [];
                         map.setCenter(position.coords.latitude, position.coords.longitude);
                         map.setZoom(20)
                        myPosition.push({
@@ -98,7 +100,7 @@ module.exports = function(app) {
                         console.log('TSUUUUUUUU')
                     }
                 });
-
+                map.setCenter(data.lat, data.lon);
             }
         };
     }]);
