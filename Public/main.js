@@ -14,9 +14,10 @@ $scope.home= function(){
 },{}],2:[function(require,module,exports){
 module.exports = function(app){
   app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
-    MainService.getMap()
     MainService.getLocation()
-
+    $scope.marker = function(){
+       MainService.CreateMarker()
+    }
 }])
 }
 
@@ -41,19 +42,19 @@ $scope.joinsession = function(){
 },{}],4:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
+        var map = new GMaps({
+            div: '#map',
+            lat: 1,
+            lng: -1,
+        });
         return {
-            getMap: function() {
-                var map = new GMaps({
-                    div: '#map',
-                    lat: 32.7807984,
-                    lng: -79.9367449,
-                });
-                return map
-            },
             getLocation: function() {
                 GMaps.geolocate({
                     success: function(position) {
-                        map.setCenter(map);
+                      console.log(position.coords.latitude)
+                      console.log(position.coords.longitude)
+                        map.setCenter(position.coords.latitude, position.coords.longitude);
+                        map.setZoom(20)
                     },
                     error: function(error) {
                         alert('Geolocation failed: ' + error.message);
@@ -67,6 +68,17 @@ module.exports = function(app) {
                 });
 
             },
+            CreateMarker: function() {
+                map.addMarker({
+                    lat:1,
+                    lng:1,
+                    title: 'Logans super special marker',
+                    click: function(e) {
+                        console.log('TSUUUUUUUU')
+                    }
+                });
+
+            }
         };
     }]);
 };

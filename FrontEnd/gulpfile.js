@@ -8,7 +8,7 @@ var babel = require('gulp-babel');
 var surge = require('gulp-surge');
 
 
-gulp.task('default', ['html', 'css', 'js', 'img', 'modules', 'deploy'])
+gulp.task('default', ['html', 'css', 'js', 'img', 'modules'])
 
 gulp.task('css', function() {
     gulp.src('./styles/*.scss')
