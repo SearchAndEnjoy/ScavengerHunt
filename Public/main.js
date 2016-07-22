@@ -13,6 +13,73 @@ $scope.home= function(){
 
 },{}],2:[function(require,module,exports){
 module.exports = function(app) {
+    app.controller('JoinController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+
+            $scope.teamName = '',
+            $scope.lobbyName = '',
+            $scope.lobbyCode = 0,
+             newGameObj = {
+                    teamName: $scope.teamName,
+                    game: {
+                        lobbyName: $scope.lobbyName,
+                    }
+                },
+
+
+                $scope.newSessionCreate = function() {
+                    console.log("clicked New Session");
+                    console.log( newGameObj = {
+                            teamName: $scope.teamName,
+                            game: {
+                                lobbyName: $scope.lobbyName,
+                            }
+                        });
+
+                    $http({
+                        url: '/create-game',
+                        method: 'POST',
+                        data: newGameObj,
+
+                    }).then(function() {
+                        // $location.path('');
+
+                    }).catch(function() {
+                        console.error('new Session screw up');
+                        // $location.path('/shit')
+                    });
+                };
+
+        // $scope.joinSession = function() {
+        //     console.log("clicked New Session");
+        //     // $location.path('/available');
+        //
+        //     $http({
+        //         url: '/join-game',
+        //         method: 'POST',
+        //         data: {
+        //
+        //             teamName: $scope.teamName,
+        //             game: {
+        //                 lobbyName: $scope.lobbyName,
+        //                 lobbyCode: $scope.lobbyCode,
+        //             }
+        //
+        //         },
+        //     }).then(function() {
+        //         // $location.path('');
+        //
+        //     }).catch(function() {
+        //         console.error('join Session screw up');
+        //         // $location.path('/shit')
+        //     });
+        // };
+
+
+    }]);
+};
+
+},{}],3:[function(require,module,exports){
+module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http', function($scope, $http) {
 
 
@@ -25,18 +92,19 @@ module.exports = function(app) {
     }])
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = function(app){
   app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
-    MainService.getLocation()
+
+    $scope.myLoc = MainService.getLocation()
     $scope.marker = function(){
-       MainService.CreateMarker()
-       console.log(MainService.myPosition)
+      console.log($scope.myLoc)
+      MainService.CreateMarker()
     }
 }])
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function(app){
   app.controller('StartController',['$scope','$http','$location',function($scope,$http,$location){
 
@@ -54,7 +122,7 @@ $scope.joinsession = function(){
 }])
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
         var map = new GMaps({
@@ -62,17 +130,18 @@ module.exports = function(app) {
             lat: 1,
             lng: -1,
         });
-      let myPosition = [];
+          var myPosition = []
         return {
             getLocation: function() {
                 GMaps.geolocate({
                     success: function(position) {
                         map.setCenter(position.coords.latitude, position.coords.longitude);
                         map.setZoom(20)
-                       myPosition.push(position.coords.latitude);
-                       myPosition.push(position.coords.longitude);
-                        console.log(position.coords.latitude);
-                        console.log(position.coords.longitude);
+                       myPosition.push({
+                         lat:position.coords.latitude,
+                         lon:position.coords.longitude
+                       });
+                        console.log(myPosition);
                     },
                     error: function(error) {
                         alert('Geolocation failed: ' + error.message);
@@ -81,15 +150,17 @@ module.exports = function(app) {
                         alert("Your browser does not support geolocation");
                     },
                     always: function() {
-                        alert("Done!");
+                        alert("Done!")
                     }
-                });
-                return myPosition
+                })
+                return myPosition;
             },
             CreateMarker: function() {
+          var data = myPosition[0]
+              console.log(data.lat)
                 map.addMarker({
-                    lat:1,
-                    lng:1,
+                    lat:data.lat,
+                    lng:data.lon,
                     title: 'Logans super special marker',
                     click: function(e) {
                         console.log('TSUUUUUUUU')
@@ -101,7 +172,7 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 var app = angular.module('HuntApp', ['ngRoute']);
@@ -111,6 +182,7 @@ require('./Controllers/questioncontroller.js')(app);
 require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
+require('./Controllers/joincontroller.js')(app);
 
 // Services
 require('./Services/mainservice.js')(app);
@@ -129,7 +201,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/howtoplay2.html',
         controller: 'InfoController'
     }).when('/create', {
-        // controller: 'newcontroller',
+        controller: 'JoinController',
         templateUrl: 'templates/newsession.html'
     }).when('/join', {
         // controller: 'joincontroller',
@@ -148,4 +220,4 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/gameover.html'
     });
 }]);
-},{"./Controllers/infocontroller.js":1,"./Controllers/listcontroller.js":2,"./Controllers/questioncontroller.js":3,"./Controllers/startcontroller.js":4,"./Services/mainservice.js":5}]},{},[6])
+},{"./Controllers/infocontroller.js":1,"./Controllers/joincontroller.js":2,"./Controllers/listcontroller.js":3,"./Controllers/questioncontroller.js":4,"./Controllers/startcontroller.js":5,"./Services/mainservice.js":6}]},{},[7])
