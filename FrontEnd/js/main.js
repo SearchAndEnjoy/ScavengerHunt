@@ -38,7 +38,7 @@ app.config(['$routeProvider', function($routeProvider) {
             templateUrl: 'templates/newsession.html',
         })
         .when('/join', {
-            // controller: 'joincontroller',
+            controller: 'JoinController',
             templateUrl:'templates/joinsession.html',
         })
         .when('/lobby', {
