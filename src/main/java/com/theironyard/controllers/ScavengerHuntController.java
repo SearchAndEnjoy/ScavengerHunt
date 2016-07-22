@@ -12,10 +12,8 @@ import com.theironyard.services.TeamRepository;
 import org.apache.catalina.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
@@ -61,39 +59,36 @@ public class ScavengerHuntController {
             code += c;
         }
 
-        games.save(team.getGame());
+        Game game = team.getGame();
+        game.setLobbyCode(code);
+
+        games.save(game);
 
         team = teams.save(team);
 
         session.setAttribute("team_id", team.getId());
-//        session.setAttribute("lobby_code", team.getGame().getLobbyCode());
 
-
-//        session.setAttribute("game_id",team.getGame());
 
         return team;
     }
 
-//    @RequestMapping(path = "/create-game", method = RequestMethod.POST)
-//    public Game newGame(@RequestBody Game game, HttpSession session) {
-//
-//        games.save(game);
-//
-//        session.setAttribute("game_id", game.getId());
-//
-//        return game;
-//    }
+    @RequestMapping(path = "/add-team/{lobby_code}", method = RequestMethod.POST)
+    public ResponseEntity<Object> addTeam(@RequestBody Team team, @PathVariable("lobby_code") String lobbyCode, HttpSession session) {
+        //{teamName: "something"
 
-    @RequestMapping(path = "/add-team", method = RequestMethod.POST)
-    public Team addTeam (String teamName, int game_id, HttpSession session) {
-        Team team = new Team();
-        team.setTeamName(teamName);
+        Game game = games.findFirstByLobbyCode(lobbyCode);
 
+        if (game == null) {
+            return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+        }
+
+        team.setGame(game);
+
+        team = teams.save(team);
 
         session.setAttribute("team_id", team.getId());
 
-        return team;
-
+        return new ResponseEntity<Object>(team, HttpStatus.OK);
 
     }
 
