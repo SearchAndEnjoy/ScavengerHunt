@@ -26,8 +26,8 @@ module.exports = function(app) {
                     always: function() {
                         alert("Done!");
                     }
-                });
-                return myPosition
+                })
+                return myPosition;
             },
             CreateMarker: function() {
                 map.addMarker({

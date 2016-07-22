@@ -4,17 +4,13 @@
         <form>
             <fieldset class="form-group">
                 <label for="formGroupExampleInput"><h1>Game Session Name</h1></label>
-                <input type="text" class="form-control" placeholder="Game Session Name">
-            </fieldset>
-            <fieldset class="form-group">
-                <label for="formGroupExampleInput2"><h1>Game Session Code</h1></label>
-                <input type="tel" class="form-control"  placeholder="Game Session Code">
+                <input ng-model="lobbyName" type="text" class="form-control" placeholder="Game Session Name">
             </fieldset>
             <fieldset class="form-group">
                 <label for="formGroupExampleInput2"><h1>Team Name</h1></label>
-                <input type="text" class="form-control"  placeholder="Team Name">
+                <input ng-model="teamName" type="text" class="form-control"  placeholder="Team Name">
             </fieldset>
-            <button type="button" class="btn btn-primary btn-lg btn-block lrg-page-buttons">Start New Game Session</button>
+            <button ng-click="newSessionCreate()" type="button" class="btn btn-primary btn-lg btn-block lrg-page-buttons">Start New Game Session</button>
 
         </form>
     </div>
