@@ -2,6 +2,7 @@ package com.theironyard.entities;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Erik on 7/19/16.
@@ -20,16 +21,21 @@ public class Game {
     @Column(nullable = false)
     String lobbyCode;
 
-    @ManyToOne
-    Team team;
+    @OneToMany(mappedBy = "game")
+    List<Team> teamList;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="clue_game", joinColumns=@JoinColumn(name="game_id"), inverseJoinColumns=@JoinColumn(name="clue_id"))
+    List<Clue> clues;
 
     public Game() {
     }
 
-    public Game(String lobbyName, String lobbyCode, Team team) {
+    public Game(String lobbyName, String lobbyCode, List<Team> teamList, List<Clue> clues) {
         this.lobbyName = lobbyName;
         this.lobbyCode = lobbyCode;
-        this.team = team;
+        this.teamList = teamList;
+        this.clues = clues;
     }
 
     public int getId() {
@@ -56,12 +62,20 @@ public class Game {
         this.lobbyCode = lobbyCode;
     }
 
-    public Team getTeam() {
-        return team;
+    public List<Team> getTeamList() {
+        return teamList;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTeamList(List<Team> teamList) {
+        this.teamList = teamList;
+    }
+
+    public List<Clue> getClues() {
+        return clues;
+    }
+
+    public void setClues(List<Clue> clues) {
+        this.clues = clues;
     }
 }
 
