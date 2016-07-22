@@ -119,7 +119,7 @@ public class ScavengerHuntController {
     }
 
 
-    @RequestMapping(path = "/cancel-game/{game_id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/cancel-game", method = RequestMethod.DELETE)
     public HttpStatus cancelGame (HttpSession session) {
         session.invalidate();
 
