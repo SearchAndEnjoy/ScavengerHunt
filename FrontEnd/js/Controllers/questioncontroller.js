@@ -3,6 +3,7 @@ module.exports = function(app){
     MainService.getLocation()
     $scope.marker = function(){
        MainService.CreateMarker()
+       console.log(MainService.myPosition)
     }
 }])
 }

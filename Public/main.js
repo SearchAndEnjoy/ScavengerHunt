@@ -12,16 +12,31 @@ $scope.home= function(){
 }
 
 },{}],2:[function(require,module,exports){
+module.exports = function(app) {
+    app.controller('ListController', ['$scope', '$http', function($scope, $http) {
+
+
+        var clock = $('.clock').FlipClock(3600, {
+            autoStart: false,
+            countdown: true
+        });
+
+
+    }])
+}
+
+},{}],3:[function(require,module,exports){
 module.exports = function(app){
   app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
     MainService.getLocation()
     $scope.marker = function(){
        MainService.CreateMarker()
+       console.log(MainService.myPosition)
     }
 }])
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = function(app){
   app.controller('StartController',['$scope','$http','$location',function($scope,$http,$location){
 
@@ -39,7 +54,7 @@ $scope.joinsession = function(){
 }])
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
         var map = new GMaps({
@@ -47,14 +62,17 @@ module.exports = function(app) {
             lat: 1,
             lng: -1,
         });
+      let myPosition = [];
         return {
             getLocation: function() {
                 GMaps.geolocate({
                     success: function(position) {
-                      console.log(position.coords.latitude)
-                      console.log(position.coords.longitude)
                         map.setCenter(position.coords.latitude, position.coords.longitude);
                         map.setZoom(20)
+                       myPosition.push(position.coords.latitude);
+                       myPosition.push(position.coords.longitude);
+                        console.log(position.coords.latitude);
+                        console.log(position.coords.longitude);
                     },
                     error: function(error) {
                         alert('Geolocation failed: ' + error.message);
@@ -66,7 +84,7 @@ module.exports = function(app) {
                         alert("Done!");
                     }
                 });
-
+                return myPosition
             },
             CreateMarker: function() {
                 map.addMarker({
@@ -83,14 +101,18 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 var app = angular.module('HuntApp', ['ngRoute']);
+
 // Controllers
 require('./Controllers/questioncontroller.js')(app);
 require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
+require('./Controllers/listcontroller.js')(app);
+
+// Services
 require('./Services/mainservice.js')(app);
 
 app.config(['$routeProvider', function ($routeProvider) {
@@ -116,7 +138,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         // controller:'lobbycontroller',
         templateUrl: 'templates/lobby.html'
     }).when('/list', {
-        // controller:'listcontroller',
+        controller: 'ListController',
         templateUrl: 'templates/questionlist.html'
     }).when('/question', {
         controller: 'QuestionController',
@@ -126,4 +148,4 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/gameover.html'
     });
 }]);
-},{"./Controllers/infocontroller.js":1,"./Controllers/questioncontroller.js":2,"./Controllers/startcontroller.js":3,"./Services/mainservice.js":4}]},{},[5])
+},{"./Controllers/infocontroller.js":1,"./Controllers/listcontroller.js":2,"./Controllers/questioncontroller.js":3,"./Controllers/startcontroller.js":4,"./Services/mainservice.js":5}]},{},[6])

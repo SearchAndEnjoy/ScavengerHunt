@@ -1,9 +1,17 @@
 let app = angular.module('HuntApp', ['ngRoute']);
+
+
 // Controllers
 require('./Controllers/questioncontroller.js')(app);
 require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
+require('./Controllers/listcontroller.js')(app);
+
+// Services
 require('./Services/mainservice.js')(app);
+
+
+
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
@@ -36,7 +44,7 @@ app.config(['$routeProvider', function($routeProvider) {
           templateUrl:'templates/lobby.html',
         })
         .when('/list',{
-          // controller:'listcontroller',
+          controller:'ListController',
           templateUrl:'templates/questionlist.html',
         })
         .when('/question',{
