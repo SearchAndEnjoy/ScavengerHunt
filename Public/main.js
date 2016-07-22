@@ -28,10 +28,10 @@ module.exports = function(app) {
 },{}],3:[function(require,module,exports){
 module.exports = function(app){
   app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
-    MainService.getLocation()
+    $scope.myLoc = MainService.getLocation()
     $scope.marker = function(){
-       MainService.CreateMarker()
-       console.log(MainService.myPosition)
+      console.log($scope.myLoc)
+      MainService.CreateMarker()
     }
 }])
 }
@@ -62,17 +62,18 @@ module.exports = function(app) {
             lat: 1,
             lng: -1,
         });
-      let myPosition = [];
+          var myPosition = []
         return {
             getLocation: function() {
                 GMaps.geolocate({
                     success: function(position) {
                         map.setCenter(position.coords.latitude, position.coords.longitude);
                         map.setZoom(20)
-                       myPosition.push(position.coords.latitude);
-                       myPosition.push(position.coords.longitude);
-                        console.log(position.coords.latitude);
-                        console.log(position.coords.longitude);
+                       myPosition.push({
+                         lat:position.coords.latitude,
+                         lon:position.coords.longitude
+                       });
+                        console.log(myPosition);
                     },
                     error: function(error) {
                         alert('Geolocation failed: ' + error.message);
@@ -81,15 +82,17 @@ module.exports = function(app) {
                         alert("Your browser does not support geolocation");
                     },
                     always: function() {
-                        alert("Done!");
+                        alert("Done!")
                     }
                 });
                 return myPosition
             },
             CreateMarker: function() {
+          var data = myPosition[0]
+              console.log(data.lat)
                 map.addMarker({
-                    lat:1,
-                    lng:1,
+                    lat:data.lat,
+                    lng:data.lon,
                     title: 'Logans super special marker',
                     click: function(e) {
                         console.log('TSUUUUUUUU')
