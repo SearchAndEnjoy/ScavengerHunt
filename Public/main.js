@@ -26,9 +26,9 @@ module.exports = function(app) {
                 }
             },
             joinGameObj = {
-                teamName: $scope.teamName,
+                teamName: $scope.joinTeamName,
                 game: {
-                    lobbyCode: $scope.lobbyCode,
+                    lobbyCode: $scope.joinLobbyCode,
                 }
             },
 
