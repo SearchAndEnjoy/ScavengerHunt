@@ -12,9 +12,9 @@ module.exports = function(app) {
                 }
             },
             joinGameObj = {
-                teamName: $scope.teamName,
+                teamName: $scope.joinTeamName,
                 game: {
-                    lobbyCode: $scope.lobbyCode,
+                    lobbyCode: $scope.joinLobbyCode,
                 }
             },
 
@@ -29,7 +29,7 @@ module.exports = function(app) {
             });
 
             $http({
-                url: '/create-game',
+                url: 'http://tiny-tiny.herokuapp.com/collections/searchenjoy',
                 method: 'POST',
                 data: JSON.stringify(newGameObj),
 
