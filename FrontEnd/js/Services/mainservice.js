@@ -30,7 +30,7 @@ module.exports = function(app) {
             },
             CreateMarker: function() {
           var data = myPosition[0]
-              console.log(data.lat)
+              console.log(data.lat, data.lon)
                 map.addMarker({
                     lat:data.lat,
                     lng:data.lon,

@@ -26,9 +26,9 @@ module.exports = function(app) {
                 }
             },
             joinGameObj = {
-                teamName: $scope.teamName,
+                teamName: $scope.joinTeamName,
                 game: {
-                    lobbyCode: $scope.lobbyCode,
+                    lobbyCode: $scope.joinLobbyCode,
                 }
             },
 
@@ -43,7 +43,7 @@ module.exports = function(app) {
             });
 
             $http({
-                url: '/create-game',
+                url: 'http://tiny-tiny.herokuapp.com/collections/searchenjoy',
                 method: 'POST',
                 data: JSON.stringify(newGameObj),
 
@@ -121,10 +121,10 @@ $scope.info = function(){
   $location.path('/info1')
   console.log('something')
 }
-$scope.newsession = function(){
+$scope.newSession = function(){
 $location.path('/create')
 }
-$scope.joinsession = function(){
+$scope.joinSession = function(){
   $location.path('/join')
 }
 
@@ -164,7 +164,7 @@ module.exports = function(app) {
             },
             CreateMarker: function() {
           var data = myPosition[0]
-              console.log(data.lat)
+              console.log(data.lat, data.lon)
                 map.addMarker({
                     lat:data.lat,
                     lng:data.lon,
