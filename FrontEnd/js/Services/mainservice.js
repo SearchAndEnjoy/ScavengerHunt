@@ -28,8 +28,8 @@ module.exports = function(app) {
                     always: function() {
                         alert("Done!")
                     }
-                });
-                return myPosition
+                })
+                return myPosition;
             },
             CreateMarker: function() {
           var data = myPosition[0]

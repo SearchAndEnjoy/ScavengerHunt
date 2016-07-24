@@ -6,6 +6,8 @@ require('./Controllers/questioncontroller.js')(app);
 require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
+require('./Controllers/joincontroller.js')(app);
+
 
 // Services
 require('./Services/mainservice.js')(app);
@@ -32,11 +34,11 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'InfoController',
         })
         .when('/create', {
-            // controller: 'newcontroller',
+            controller: 'JoinController',
             templateUrl: 'templates/newsession.html',
         })
         .when('/join', {
-            // controller: 'joincontroller',
+            controller: 'JoinController',
             templateUrl:'templates/joinsession.html',
         })
         .when('/lobby', {

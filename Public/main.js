@@ -13,6 +13,81 @@ $scope.home= function(){
 
 },{}],2:[function(require,module,exports){
 module.exports = function(app) {
+    app.controller('JoinController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+            $scope.joinTeamName = '',
+            $scope.joinLobbyCode = '',
+            $scope.teamName = '',
+            $scope.lobbyName = '',
+            $scope.lobbyCode = '',
+            newGameObj = {
+                teamName: $scope.teamName,
+                game: {
+                    lobbyName: $scope.lobbyName,
+                }
+            },
+            joinGameObj = {
+                teamName: $scope.teamName,
+                game: {
+                    lobbyCode: $scope.lobbyCode,
+                }
+            },
+
+
+        $scope.newSessionCreate = function() {
+            console.log("clicked New Session");
+            console.log(newGameObj = {
+                teamName: $scope.teamName,
+                game: {
+                    lobbyName: $scope.lobbyName,
+                }
+            });
+
+            $http({
+                url: '/create-game',
+                method: 'POST',
+                data: JSON.stringify(newGameObj),
+
+            }).then(function(data) {
+                console.log(data);
+                // $location.path('');
+
+            }).catch(function(data) {
+                console.error('new Session screw up');
+                console.log(data);
+                // $location.path('/shit')
+            });
+        };
+
+        $scope.joinSessionCreate = function() {
+            console.log("clicked Join Session");
+            console.log(joinGameObj = {
+                teamName: $scope.joinTeamName,
+                game: {
+                    lobbyCode: $scope.joinLobbyCode,
+                }
+            });
+            // $location.path('/available');
+
+            $http({
+                url: '/join-game',
+                method: 'POST',
+                data: JSON.stringify(joinGameObj)
+            }).then(function(data) {
+              console.log(data);
+                // $location.path('');
+
+            }).catch(function() {
+                console.error('join Session screw up');
+                // $location.path('/shit')
+            });
+        };
+
+
+    }]);
+};
+
+},{}],3:[function(require,module,exports){
+module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http', function($scope, $http) {
 
 
@@ -25,10 +100,10 @@ module.exports = function(app) {
     }])
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = function(app){
   app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
-    $scope.myLoc = MainService.getLocation();
+    $scope.myLoc = MainService.getLocation()
     $scope.marker = function(){
       console.log($scope.myLoc)
       MainService.getLocation();
@@ -37,7 +112,7 @@ module.exports = function(app){
 }])
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function(app){
   app.controller('StartController',['$scope','$http','$location',function($scope,$http,$location){
 
@@ -55,7 +130,7 @@ $scope.joinsession = function(){
 }])
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
         var map = new GMaps({
@@ -86,8 +161,8 @@ module.exports = function(app) {
                     always: function() {
                         alert("Done!")
                     }
-                });
-                return myPosition
+                })
+                return myPosition;
             },
             CreateMarker: function() {
           var data = myPosition[0]
@@ -106,7 +181,7 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 var app = angular.module('HuntApp', ['ngRoute']);
@@ -116,6 +191,7 @@ require('./Controllers/questioncontroller.js')(app);
 require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
+require('./Controllers/joincontroller.js')(app);
 
 // Services
 require('./Services/mainservice.js')(app);
@@ -134,10 +210,10 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/howtoplay2.html',
         controller: 'InfoController'
     }).when('/create', {
-        // controller: 'newcontroller',
+        controller: 'JoinController',
         templateUrl: 'templates/newsession.html'
     }).when('/join', {
-        // controller: 'joincontroller',
+        controller: 'JoinController',
         templateUrl: 'templates/joinsession.html'
     }).when('/lobby', {
         // controller:'lobbycontroller',
@@ -153,4 +229,4 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/gameover.html'
     });
 }]);
-},{"./Controllers/infocontroller.js":1,"./Controllers/listcontroller.js":2,"./Controllers/questioncontroller.js":3,"./Controllers/startcontroller.js":4,"./Services/mainservice.js":5}]},{},[6])
+},{"./Controllers/infocontroller.js":1,"./Controllers/joincontroller.js":2,"./Controllers/listcontroller.js":3,"./Controllers/questioncontroller.js":4,"./Controllers/startcontroller.js":5,"./Services/mainservice.js":6}]},{},[7])
