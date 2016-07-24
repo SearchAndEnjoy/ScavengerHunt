@@ -84,3 +84,8 @@ body {
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
   .clock-box .clock {
     margin: auto 0; }
+
+.how-to-box {
+  background-color: #F27D5C;
+  height: 50em;
+  width: 100%; }

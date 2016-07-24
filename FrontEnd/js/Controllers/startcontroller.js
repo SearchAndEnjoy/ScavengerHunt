@@ -5,10 +5,10 @@ $scope.info = function(){
   $location.path('/info1')
   console.log('something')
 }
-$scope.newsession = function(){
+$scope.newSession = function(){
 $location.path('/create')
 }
-$scope.joinsession = function(){
+$scope.joinSession = function(){
   $location.path('/join')
 }
 
