@@ -1,41 +1,39 @@
 module.exports = function(app) {
     app.controller('QuestionController', ['$scope', '$http', 'MainService', function($scope, $http, MainService) {
+        MainService.getLocation();
 
         $scope.myLoc = MainService.getLocation()
+        console.log('controller', $scope.myLoc)
 
         $scope.marker = function() {
-            console.log($scope.myLoc)
-            function distance(lon1, lat1, lon2, lat2) {
-                var R = 6371; // Radius of the earth in km
-                var dLat = (lat2 - lat1).toRad(); // Javascript functions in radians
-                var dLon = (lon2 - lon1).toRad();
-                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
-                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                var d = R * c; // Distance in km
-                return d;
-            }
-
-            /** Converts numeric degrees to radians */
-            if (typeof(Number.prototype.toRad) === "undefined") {
-                Number.prototype.toRad = function() {
-                    return this * Math.PI / 180;
-                }
-            }
-
-
-                console.log($scope.myLoc);
-                console.log(
-                    $scope.myLoc[0].lat, $scope.myLoc[0].lon, 32.79147,-79.9337541
-                );
-                console.log(
-                    distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, 32.79147,-79.9337541)
-                );
+            // MainService.getLocation();
             MainService.CreateMarker();
+
+            console.log("click", $scope.myLoc);
+
+            // function distance(lat1, lon1, lat2, lon2, unit) {
+            //     var radlat1 = Math.PI * lat1 / 180
+            //     var radlat2 = Math.PI * lat2 / 180
+            //     var radlon1 = Math.PI * lon1 / 180
+            //     var radlon2 = Math.PI * lon2 / 180
+            //     var theta = lon1 - lon2
+            //     var radtheta = Math.PI * theta / 180
+            //     var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            //     dist = Math.acos(dist)
+            //     dist = dist * 180 / Math.PI
+            //     dist = dist * 60 * 1.1515
+            //     if (unit == "K") {
+            //         dist = dist * 1.609344
+            //     }
+            //     if (unit == "N") {
+            //         dist = dist * 0.8684
+            //     }
+            //     return dist
+            // }
+
+
         };
 
 
     }])
-
 }

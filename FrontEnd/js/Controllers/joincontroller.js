@@ -29,7 +29,7 @@ module.exports = function(app) {
             });
 
             $http({
-                url: 'http://tiny-tiny.herokuapp.com/collections/searchenjoy',
+                url: '/create-game',
                 method: 'POST',
                 data: JSON.stringify(newGameObj),
 
