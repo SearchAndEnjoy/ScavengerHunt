@@ -69,8 +69,8 @@ module.exports = function(app) {
             // $location.path('/available');
 
             $http({
-                url: '/join-game',
-                method: 'get',
+                url: '/add-team/gzne',
+                method: 'post',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
               console.log(data);
