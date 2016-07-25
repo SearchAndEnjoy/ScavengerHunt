@@ -3,11 +3,11 @@ module.exports = function(app) {
         return {
           getTeams: function(){
             $http({
-                url: '/get-teams',
+                url: '/get-teams/17',
                 method: 'GET',
-
             }).then(function(data) {
-              console.log(data)
+              //JSON.parse(data);
+              console.log(s+ ""+ data);
 
             }).catch(function(data) {
               console.log('error! error! bzzzt!')

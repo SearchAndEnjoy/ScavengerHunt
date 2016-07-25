@@ -35,7 +35,7 @@ module.exports = function(app) {
 
             }).then(function(data) {
                 console.log(data);
-                // $location.path('');
+                 $location.path('/lobby');
 
             }).catch(function(data) {
                 console.error('new Session screw up');
@@ -56,7 +56,7 @@ module.exports = function(app) {
 
             $http({
                 url: '/join-game',
-                method: 'POST',
+                method: 'get',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
               console.log(data);
