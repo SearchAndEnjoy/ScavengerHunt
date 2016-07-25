@@ -69,6 +69,7 @@ public class ScavengerHuntController {
 
         game.setClues(gameClues);
 
+
         games.save(game);
 
         team = teams.save(team);
@@ -103,6 +104,7 @@ public class ScavengerHuntController {
     public ResponseEntity<Object> getTeams (HttpSession session) {
 
         Team team = teams.findOne((Integer) session.getAttribute("team_id"));
+
 
         return new ResponseEntity<Object>(team.getGame().getTeamList(),HttpStatus.OK);
 
