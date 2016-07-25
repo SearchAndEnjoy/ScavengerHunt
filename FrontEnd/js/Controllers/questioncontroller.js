@@ -1,7 +1,10 @@
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService', function($scope, $http, MainService) {
+    app.controller('QuestionController', ['$scope', '$http', 'MainService','$location', function($scope, $http, MainService,$location) {
 
         $scope.myLoc = MainService.getLocation()
+        $scope.return = function(){
+          $location.path('/list')
+        }
 
         $scope.marker = function() {
             console.log($scope.myLoc)

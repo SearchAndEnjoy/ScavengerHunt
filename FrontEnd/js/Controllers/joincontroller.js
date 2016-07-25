@@ -21,41 +21,28 @@ module.exports = function(app) {
 
         $scope.newSessionCreate = function() {
             console.log("clicked New Session");
-            console.log(newGameObj = {
-                teamName: $scope.teamName,
-                game: {
-                    lobbyName: $scope.lobbyName,
-                }
-            });
-
+          if($scope.teamName === ''|| $scope.lobbyName === ''){
+            alert('Please select a name for your new game and team');
+          }
+        else{
             $http({
-                url: 'http://tiny-tiny.herokuapp.com/collections/searchenjoy',
+                url: '/create-game',
                 method: 'POST',
                 data: JSON.stringify(newGameObj),
 
             }).then(function(data) {
                 console.log(data);
-                // $location.path('');
+                $location.path('/lobby');
 
             }).catch(function(data) {
                 console.error('new Session screw up');
                 console.log(data);
-                // $location.path('/shit')
             });
-        };
+        }};
 
         $scope.joinSessionCreate = function() {
-            console.log("clicked Join Session");
-            console.log(joinGameObj = {
-                teamName: $scope.joinTeamName,
-                game: {
-                    lobbyCode: $scope.joinLobbyCode,
-                }
-            });
-            // $location.path('/available');
-
             $http({
-                url: '/join-game',
+                url: '/add-team',
                 method: 'POST',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
