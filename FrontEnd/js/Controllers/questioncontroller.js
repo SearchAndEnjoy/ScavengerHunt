@@ -27,10 +27,10 @@ module.exports = function(app) {
 
                 console.log($scope.myLoc);
                 console.log(
-                    $scope.myLoc[0].lat, $scope.myLoc[0].lon, 32.7785834,-79.9378045
+                    $scope.myLoc[0].lat, $scope.myLoc[0].lon, 32.79147,-79.9337541
                 );
                 console.log(
-                    distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, 32.7785834,-79.9378045)
+                    distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, 32.79147,-79.9337541)
                 );
             MainService.CreateMarker();
         };
