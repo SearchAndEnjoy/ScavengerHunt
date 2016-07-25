@@ -94,6 +94,14 @@ public class ScavengerHuntController {
 
     }
 
+    @RequestMapping(path = "/get-teams", method = RequestMethod.GET)
+    public ResponseEntity<Object> getTeams (HttpSession session, @PathVariable("game_id") int id) {
+
+
+        return new ResponseEntity<Object>(teams.findByGameId(id),HttpStatus.MULTI_STATUS.OK);
+
+    }
+
     @RequestMapping(path = "/get-clues/{game_id}", method = RequestMethod.GET)
     public List<Clue> clueList (HttpSession session) {
 
