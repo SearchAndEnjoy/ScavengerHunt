@@ -1,6 +1,5 @@
 package com.theironyard.controllers;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.theironyard.entities.Answer;
 import com.theironyard.entities.Clue;
 import com.theironyard.entities.Game;
@@ -94,15 +93,14 @@ public class ScavengerHuntController {
 
     }
 
-    @RequestMapping(path = "/get-teams/{game_id}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getTeams (HttpSession session, @PathVariable("game_id") int id) {
+    @RequestMapping(path = "/get-teams/{lobby_code}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getTeams (HttpSession session, @PathVariable("lobby_code") String lobbyCode) {
 
 
-        return new ResponseEntity<Object>(teams.findByGameId(id),HttpStatus.MULTI_STATUS.OK);
+        return new ResponseEntity<Object>(teams.findByLobbyCode(lobbyCode),HttpStatus.MULTI_STATUS.OK);
 
     }
-
-    @RequestMapping(path = "/get-clues/{game_id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/get-clues", method = RequestMethod.GET)
     public List<Clue> clueList (HttpSession session) {
 
         ArrayList<Clue> gameClues = (ArrayList<Clue>) clues.findAll();
@@ -114,10 +112,14 @@ public class ScavengerHuntController {
     }
 
 
-    @RequestMapping(path = "/at-location/{team_id}", method = RequestMethod.PUT)
-    public Answer atLocation () {
+    @RequestMapping(path = "/at-location/{team_id}", method = RequestMethod.POST)
+    public boolean atLocation (HttpSession session, boolean atLocation, @PathVariable("team_id") int id) {
+        if (atLocation == false) {
 
-        return atLocation();
+        }
+
+
+        return atLocation;
 
     }
 
