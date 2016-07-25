@@ -106,9 +106,9 @@ module.exports = function(app) {
 },{}],4:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('LobbyController', ['$scope', '$http','TeamService','$location', function($scope, $http, TeamService,$location) {
-
+      TeamService.getTeams()
       $scope.session = function() {
-        TeamService.getTeams()
+        $location.path('/list')
       }
     }])
 }
