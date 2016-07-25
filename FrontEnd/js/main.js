@@ -9,7 +9,6 @@ require('./Controllers/listcontroller.js')(app);
 require('./Controllers/joincontroller.js')(app);
 require('./Controllers/lobbycontroller.js')(app);
 
-
 // Services
 require('./Services/mainservice.js')(app);
 require('./Services/teamservice.js')(app);
