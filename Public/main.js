@@ -245,7 +245,7 @@ module.exports = function(app) {
                 method: 'GET',
             }).then(function(data) {
               //JSON.parse(data);
-              console.log(s+ ""+ data);
+              console.log(data);
 
             }).catch(function(data) {
               console.log('error! error! bzzzt!')
