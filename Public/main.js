@@ -223,8 +223,9 @@ module.exports = function(app) {
         return {
           getTeams: function(){
             $http({
-                url: '/create-game',
+                url: '/get-teams',
                 method: 'GET',
+                params:{game_id:1},
             }).then(function(data) {
               console.log(data)
 
