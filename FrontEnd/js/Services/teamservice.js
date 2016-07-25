@@ -3,7 +3,7 @@ module.exports = function(app) {
         return {
           getTeams: function(){
             $http({
-                url: '/get-teams/17',
+                url: '/get-teams',
                 method: 'GET',
             }).then(function(data) {
               //JSON.parse(data);
