@@ -49,7 +49,7 @@ module.exports = function(app) {
 
             }).then(function(data) {
                 console.log(data);
-                // $location.path('');
+                 $location.path('/lobby');
 
             }).catch(function(data) {
                 console.error('new Session screw up');
@@ -70,7 +70,7 @@ module.exports = function(app) {
 
             $http({
                 url: '/join-game',
-                method: 'POST',
+                method: 'get',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
               console.log(data);
@@ -88,9 +88,12 @@ module.exports = function(app) {
 
 },{}],3:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('ListController', ['$scope', '$http', function($scope, $http) {
+    app.controller('ListController', ['$scope', '$http','$location', function($scope, $http, $location) {
 
-
+      $scope.goback = function(){
+        $location.path('/lobby');
+        console.log('clicked');
+      }
         var clock = $('.clock').FlipClock(3600, {
             autoStart: false,
             countdown: true
@@ -102,7 +105,7 @@ module.exports = function(app) {
 
 },{}],4:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('LobbyController', ['$scope', '$http','TeamService', function($scope, $http, TeamService) {
+    app.controller('LobbyController', ['$scope', '$http','TeamService','$location', function($scope, $http, TeamService,$location) {
 
       $scope.session = function() {
         TeamService.getTeams()
@@ -236,11 +239,11 @@ module.exports = function(app) {
         return {
           getTeams: function(){
             $http({
-                url: '/get-teams',
+                url: '/get-teams/17',
                 method: 'GET',
-
             }).then(function(data) {
-              console.log(data)
+              //JSON.parse(data);
+              console.log(s+ ""+ data);
 
             }).catch(function(data) {
               console.log('error! error! bzzzt!')
