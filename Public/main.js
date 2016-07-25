@@ -223,7 +223,7 @@ module.exports = function(app) {
         return {
           getTeams: function(){
             $http({
-                url: '/get-teams/1',
+                url: '/get-teams',
                 method: 'GET',
 
             }).then(function(data) {
