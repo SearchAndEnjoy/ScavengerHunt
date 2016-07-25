@@ -41,22 +41,15 @@ module.exports = function(app) {
                 });
                 map.setCenter(data.lat, data.lon);
             },
-          // MarkerNearMe: function() {
-          //   // polygon = map.drawPolygon({
-          //   // paths: ???,
-          //   // strokeColor: '#BBD8E9',
-          //   // strokeOpacity: 1,
-          //   // strokeWeight: 3,
-          //   // fillColor: '#BBD8E9',
-          //   // fillOpacity: 0.6
-          //   // });
-          //   map.addMarker({
-          //       lat:32.78495,
-          //       lng:-79.93672,
-          //       // fences:[polygon],
-          //       title: 'What',
-          //   });
-          // },
+
+          MarkerNearMe: function() {
+            map.addMarker({
+                lat:32.78495,
+                lng:-79.93672,
+                // fences:[polygon],
+                title: 'What',
+            });
+          },
         };
     }]);
 };

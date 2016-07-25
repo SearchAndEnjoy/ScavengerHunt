@@ -9,7 +9,7 @@ import com.theironyard.services.AnswerRepository;
 import com.theironyard.services.ClueRepository;
 import com.theironyard.services.GameRepository;
 import com.theironyard.services.TeamRepository;
-import org.apache.catalina.Server;
+import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -43,7 +44,8 @@ public class ScavengerHuntController {
 
     // initialize the database
     @PostConstruct
-    public void init() throws FileNotFoundException {
+    public void init() throws FileNotFoundException, SQLException {
+        Server.createWebServer().start();
         parseClues("clues.tsv");
     }
 
@@ -92,10 +94,11 @@ public class ScavengerHuntController {
 
     }
 
-    @RequestMapping(path = "/start-game/{game_id}", method = RequestMethod.POST)
-    public Game startGame() {
+    @RequestMapping(path = "/get-teams/{game_id}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getTeams (HttpSession session, @PathVariable("game_id") int id) {
 
-        return startGame();
+
+        return new ResponseEntity<Object>(teams.findByGameId(id),HttpStatus.MULTI_STATUS.OK);
 
     }
 

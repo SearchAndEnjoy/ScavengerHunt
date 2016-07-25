@@ -7,27 +7,12 @@
             </div>
         </div>
         <ul class="list-group">
-            <li class="list-group-item">
-                <h1>Team Name</h1>
-                <span>Ready!</span>
-            </li>
-            <li class="list-group-item">
-                <h1>Team Name</h1>
-                <span>Ready!</span>
-
-            </li>
-            <li class="list-group-item">
-                <h1>Team Name</h1> <span>Ready!</span>
-
-
-            </li>
-            <li class="list-group-item">
-                <h1>Team Name</h1>
-                <span>Ready!</span>
-            </li>
+            <li class="list-group-item" ng-repeat='team in session'>
+                <h1>{{team}}</h1>
+                <button ng-click="">Ready!</button>
 
         </ul>
-        <button type="button" class="btn btn-primary btn-lg btn-block lrg-page-buttons">Ready to Play</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block lrg-page-buttons" ng-click="session()">Ready to Play</button>
 
     </div>
 </div>

@@ -1,5 +1,5 @@
 module.exports = function(app){
-  app.controller('InfoController',['$scope','$http','$location',function($scope,$http,$location){
+  app.controller('InfoController',['$scope','$location',function($scope,$location){
 
 $scope.next = function(){
   $location.path('/info2')
