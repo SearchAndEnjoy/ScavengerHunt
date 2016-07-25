@@ -27,9 +27,6 @@ module.exports = function(app) {
             },
             joinGameObj = {
                 teamName: $scope.joinTeamName,
-                game: {
-                    lobbyCode: $scope.joinLobbyCode,
-                }
             },
 
 
@@ -69,8 +66,8 @@ module.exports = function(app) {
             // $location.path('/available');
 
             $http({
-                url: '/join-game',
-                method: 'get',
+                url: '/add-team/'+`${$scope.joinLobbyCode}`,
+                method: 'post',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
               console.log(data);
