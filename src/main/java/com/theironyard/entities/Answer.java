@@ -1,5 +1,7 @@
 package com.theironyard.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -16,10 +18,10 @@ public class Answer {
     @ManyToOne
     Clue clue;
 
+    @JsonIgnore
     @ManyToOne
     Team team;
 
-    @Column
     boolean atLocation = false;
 
     public Answer() {
