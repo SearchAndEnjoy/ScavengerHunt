@@ -18,7 +18,7 @@ body {
 .temp-links {
     display: block;
 }
-.jumbotron {
+.title-header {
     background-color: rgba(#6cada9, 0.9);
     height: 5%;
     -webkit-box-shadow: 0 21px 26px -9px rgba(0,0,0,0.56);
@@ -32,6 +32,18 @@ body {
         font-size: 7em;
         text-shadow: rgb(3, 3, 3) 2px 7px 7px;
     }
+}
+.back-button {
+  color: #faf9f5;
+  background-color: #D96F52;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 4em;
+  width: 45%;
+  padding: 1%;
+  margin-bottom: 3%;
+  -webkit-box-shadow: 5px 16px 15px -1px rgba(0,0,0,0.56);
+  -moz-box-shadow: 5px 16px 15px -1px rgba(0,0,0,0.56);
+  box-shadow: 5px 16px 15px -1px rgba(0,0,0,0.56);
 }
 ///////oddly floating footer fix later
 // .footer {
