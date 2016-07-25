@@ -63,6 +63,12 @@ public class ScavengerHuntController {
         Game game = team.getGame();
         game.setLobbyCode(code);
 
+        ArrayList<Clue> gameClues = (ArrayList<Clue>) clues.findAll();
+        Collections.shuffle(gameClues);
+        gameClues = (ArrayList<Clue>) gameClues.subList(0, 5);
+
+        game.setClues(gameClues);
+
         games.save(game);
 
         team = teams.save(team);
@@ -93,26 +99,25 @@ public class ScavengerHuntController {
 
     }
 
-    @RequestMapping(path = "/get-teams/{lobby_code}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getTeams (HttpSession session, @PathVariable("lobby_code") String lobbyCode) {
+    @RequestMapping(path = "/get-teams", method = RequestMethod.GET)
+    public ResponseEntity<Object> getTeams (HttpSession session) {
 
+        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
 
-        return new ResponseEntity<Object>(teams.findByLobbyCode(lobbyCode),HttpStatus.MULTI_STATUS.OK);
+        return new ResponseEntity<Object>(team.getGame().getTeamList(),HttpStatus.OK);
 
     }
     @RequestMapping(path = "/get-clues", method = RequestMethod.GET)
-    public List<Clue> clueList (HttpSession session) {
+    public ResponseEntity<Object> clueList (HttpSession session) {
 
-        ArrayList<Clue> gameClues = (ArrayList<Clue>) clues.findAll();
-        Collections.shuffle(gameClues);
-        gameClues = (ArrayList<Clue>) gameClues.subList(0, 5);
+        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
 
-        return gameClues;
+        return new ResponseEntity<Object>(team.getGame().getClues(), HttpStatus.OK);
 
     }
 
 
-    @RequestMapping(path = "/at-location/{team_id}", method = RequestMethod.POST)
+    @RequestMapping(path = "/at-location/{team_id}", method = RequestMethod.PUT)
     public boolean atLocation (HttpSession session, boolean atLocation, @PathVariable("team_id") int id) {
         if (atLocation == false) {
 
