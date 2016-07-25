@@ -16,7 +16,6 @@ public class Answer {
     @ManyToOne
     Clue clue;
 
-
     @ManyToOne
     Team team;
 
