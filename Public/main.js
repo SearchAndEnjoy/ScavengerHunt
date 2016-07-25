@@ -1,6 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = function(app){
-  app.controller('InfoController',['$scope','$http','$location',function($scope,$http,$location){
+  app.controller('InfoController',['$scope','$location',function($scope,$location){
 
 $scope.next = function(){
   $location.path('/info2')
@@ -35,41 +35,28 @@ module.exports = function(app) {
 
         $scope.newSessionCreate = function() {
             console.log("clicked New Session");
-            console.log(newGameObj = {
-                teamName: $scope.teamName,
-                game: {
-                    lobbyName: $scope.lobbyName,
-                }
-            });
-
+          if($scope.teamName === ''|| $scope.lobbyName === ''){
+            alert('Please select a name for your new game and team');
+          }
+        else{
             $http({
-                url: 'http://tiny-tiny.herokuapp.com/collections/searchenjoy',
+                url: '/create-game',
                 method: 'POST',
                 data: JSON.stringify(newGameObj),
 
             }).then(function(data) {
                 console.log(data);
-                // $location.path('');
+                $location.path('/lobby');
 
             }).catch(function(data) {
                 console.error('new Session screw up');
                 console.log(data);
-                // $location.path('/shit')
             });
-        };
+        }};
 
         $scope.joinSessionCreate = function() {
-            console.log("clicked Join Session");
-            console.log(joinGameObj = {
-                teamName: $scope.joinTeamName,
-                game: {
-                    lobbyCode: $scope.joinLobbyCode,
-                }
-            });
-            // $location.path('/available');
-
             $http({
-                url: '/join-game',
+                url: '/add-team',
                 method: 'POST',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
@@ -102,9 +89,22 @@ module.exports = function(app) {
 
 },{}],4:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService', function($scope, $http, MainService) {
+    app.controller('LobbyController', ['$scope', '$http','TeamService', function($scope, $http, TeamService) {
+
+      $scope.session = function() {
+        TeamService.getTeams()
+      }
+    }])
+}
+
+},{}],5:[function(require,module,exports){
+module.exports = function(app) {
+    app.controller('QuestionController', ['$scope', '$http', 'MainService','$location', function($scope, $http, MainService,$location) {
 
         $scope.myLoc = MainService.getLocation()
+        $scope.return = function(){
+          $location.path('/list')
+        }
 
         $scope.marker = function() {
             console.log($scope.myLoc)
@@ -143,7 +143,7 @@ module.exports = function(app) {
 
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function(app){
   app.controller('StartController',['$scope','$http','$location',function($scope,$http,$location){
 
@@ -161,7 +161,7 @@ $scope.joinSession = function(){
 }])
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
         var map = new GMaps({
@@ -206,14 +206,6 @@ module.exports = function(app) {
                 map.setCenter(data.lat, data.lon);
             },
           MarkerNearMe: function() {
-            // polygon = map.drawPolygon({
-            // paths: ???,
-            // strokeColor: '#BBD8E9',
-            // strokeOpacity: 1,
-            // strokeWeight: 3,
-            // fillColor: '#BBD8E9',
-            // fillOpacity: 0.6
-            // });
             map.addMarker({
                 lat:32.78495,
                 lng:-79.93672,
@@ -225,7 +217,27 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+module.exports = function(app) {
+    app.factory('TeamService', ['$http', function($http) {
+        return {
+          getTeams: function(){
+            $http({
+                url: '/create-game',
+                method: 'GET',
+            }).then(function(data) {
+              console.log(data)
+
+            }).catch(function(data) {
+              console.log('error! error! bzzzt!')
+
+            });
+          }
+        }//end of return
+    }]);//end of factory
+};
+
+},{}],9:[function(require,module,exports){
 'use strict';
 
 var app = angular.module('HuntApp', ['ngRoute']);
@@ -236,9 +248,11 @@ require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
 require('./Controllers/joincontroller.js')(app);
+require('./Controllers/lobbycontroller.js')(app);
 
 // Services
 require('./Services/mainservice.js')(app);
+require('./Services/teamservice.js')(app);
 
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {
@@ -260,7 +274,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         controller: 'JoinController',
         templateUrl: 'templates/joinsession.html'
     }).when('/lobby', {
-        // controller:'lobbycontroller',
+        controller: 'LobbyController',
         templateUrl: 'templates/lobby.html'
     }).when('/list', {
         controller: 'ListController',
@@ -273,4 +287,4 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/gameover.html'
     });
 }]);
-},{"./Controllers/infocontroller.js":1,"./Controllers/joincontroller.js":2,"./Controllers/listcontroller.js":3,"./Controllers/questioncontroller.js":4,"./Controllers/startcontroller.js":5,"./Services/mainservice.js":6}]},{},[7])
+},{"./Controllers/infocontroller.js":1,"./Controllers/joincontroller.js":2,"./Controllers/listcontroller.js":3,"./Controllers/lobbycontroller.js":4,"./Controllers/questioncontroller.js":5,"./Controllers/startcontroller.js":6,"./Services/mainservice.js":7,"./Services/teamservice.js":8}]},{},[9])
