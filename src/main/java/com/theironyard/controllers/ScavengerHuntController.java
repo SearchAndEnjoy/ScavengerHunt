@@ -65,9 +65,10 @@ public class ScavengerHuntController {
 
         ArrayList<Clue> gameClues = (ArrayList<Clue>) clues.findAll();
         Collections.shuffle(gameClues);
-        gameClues = (ArrayList<Clue>) gameClues.subList(0, 5);
+        gameClues = new ArrayList<> ( gameClues.subList(0, 5) );
 
         game.setClues(gameClues);
+
 
         games.save(game);
 
@@ -103,6 +104,7 @@ public class ScavengerHuntController {
     public ResponseEntity<Object> getTeams (HttpSession session) {
 
         Team team = teams.findOne((Integer) session.getAttribute("team_id"));
+
 
         return new ResponseEntity<Object>(team.getGame().getTeamList(),HttpStatus.OK);
 

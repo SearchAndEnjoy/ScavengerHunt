@@ -11,12 +11,6 @@ module.exports = function(app) {
                     lobbyName: $scope.lobbyName,
                 }
             },
-            joinGameObj = {
-                teamName: $scope.joinTeamName,
-                game: {
-                    lobbyCode: $scope.joinLobbyCode,
-                }
-            },
 
 
         $scope.newSessionCreate = function() {
@@ -45,21 +39,26 @@ module.exports = function(app) {
         };
 
         $scope.joinSessionCreate = function() {
+          joinGameObj = {
+              teamName: $scope.joinTeamName,
+          },
             console.log("clicked Join Session");
-            console.log(joinGameObj = {
-                teamName: $scope.joinTeamName,
-                game: {
-                    lobbyCode: $scope.joinLobbyCode,
-                }
-            });
+            console.log(joinGameObj)
+            // console.log(joinGameObj = {
+            //     teamName: $scope.joinTeamName,
+            //     game: {
+            //         lobbyCode: $scope.joinLobbyCode,
+            //     }
+            // });
             // $location.path('/available');
 
             $http({
-                url: '/join-game',
-                method: 'get',
+                url: '/add-team/'+`${$scope.joinLobbyCode}`,
+                method: 'post',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
               console.log(data);
+
                 // $location.path('');
 
             }).catch(function() {
