@@ -103,11 +103,12 @@ module.exports = function(app) {
 },{}],4:[function(require,module,exports){
 module.exports = function(app){
   app.controller('QuestionController',['$scope','$http','MainService',function($scope,$http,MainService){
-
     $scope.myLoc = MainService.getLocation()
+    MainService.MarkerNearMe()
     $scope.marker = function(){
       console.log($scope.myLoc)
-      MainService.CreateMarker()
+      MainService.getLocation();
+      MainService.CreateMarker();
     }
 }])
 }
@@ -143,8 +144,9 @@ module.exports = function(app) {
             getLocation: function() {
                 GMaps.geolocate({
                     success: function(position) {
+                        myPosition = [];
                         map.setCenter(position.coords.latitude, position.coords.longitude);
-                        map.setZoom(20)
+                        map.setZoom(19)
                        myPosition.push({
                          lat:position.coords.latitude,
                          lon:position.coords.longitude
@@ -156,9 +158,6 @@ module.exports = function(app) {
                     },
                     not_supported: function() {
                         alert("Your browser does not support geolocation");
-                    },
-                    always: function() {
-                        alert("Done!")
                     }
                 })
                 return myPosition;
@@ -174,8 +173,24 @@ module.exports = function(app) {
                         console.log('TSUUUUUUUU')
                     }
                 });
-
-            }
+                map.setCenter(data.lat, data.lon);
+            },
+          MarkerNearMe: function() {
+            // polygon = map.drawPolygon({
+            // paths: ???,
+            // strokeColor: '#BBD8E9',
+            // strokeOpacity: 1,
+            // strokeWeight: 3,
+            // fillColor: '#BBD8E9',
+            // fillOpacity: 0.6
+            // });
+            map.addMarker({
+                lat:32.78495,
+                lng:-79.93672,
+                // fences:[polygon],
+                title: 'What',
+            });
+          },
         };
     }]);
 };
