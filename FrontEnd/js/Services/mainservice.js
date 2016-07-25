@@ -5,12 +5,11 @@ module.exports = function(app) {
             lat: 1,
             lng: -1,
         });
-          var myPosition = []
+          var myPosition = [];
         return {
             getLocation: function() {
                 GMaps.geolocate({
                     success: function(position) {
-                        myPosition = [];
                         map.setCenter(position.coords.latitude, position.coords.longitude);
                         map.setZoom(19)
                        myPosition.push({
@@ -41,6 +40,7 @@ module.exports = function(app) {
                 });
                 map.setCenter(data.lat, data.lon);
             },
+
           MarkerNearMe: function() {
             map.addMarker({
                 lat:32.78495,
