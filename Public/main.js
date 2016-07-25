@@ -223,9 +223,9 @@ module.exports = function(app) {
         return {
           getTeams: function(){
             $http({
-                url: '/get-teams',
+                url: '/get-teams/1',
                 method: 'GET',
-                params:{game_id:1},
+
             }).then(function(data) {
               console.log(data)
 
