@@ -94,7 +94,7 @@ public class ScavengerHuntController {
 
     }
 
-    @RequestMapping(path = "/get-teams", method = RequestMethod.GET)
+    @RequestMapping(path = "/get-teams/{game_id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getTeams (HttpSession session, @PathVariable("game_id") int id) {
 
 
