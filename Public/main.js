@@ -1,4 +1,44 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = function(app) {
+    app.controller('CreateGameController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+      $scope.teamName = '',
+      $scope.lobbyName = '',
+      $scope.lobbyCode = '',
+      newGameObj = {
+          teamName: $scope.teamName,
+          game: {
+              lobbyName: $scope.lobbyName,
+          }
+      },
+      $scope.newSessionCreate = function() {
+          console.log("clicked New Session");
+          // console.log(newGameObj = {
+          //     teamName: $scope.teamName,
+          //     game: {
+          //         lobbyName: $scope.lobbyName,
+          //     }
+          // });
+
+          $http({
+              url: '/create-game',
+              method: 'POST',
+              data: JSON.stringify(newGameObj),
+
+          }).then(function(data) {
+              console.log(data);
+               $location.path('/lobby');
+
+          }).catch(function(data) {
+              console.error('new Session screw up');
+              console.log(data);
+              // $location.path('/shit')
+          });
+      };
+
+    }]);
+  };
+
+},{}],2:[function(require,module,exports){
 module.exports = function(app){
   app.controller('InfoController',['$scope','$location',function($scope,$location){
 
@@ -11,7 +51,7 @@ $scope.home= function(){
 }])
 }
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('JoinController', ['$scope', '$http', '$location', function($scope, $http, $location) {
             $scope.joinTeamName = '',
@@ -24,6 +64,9 @@ module.exports = function(app) {
                 game: {
                     lobbyName: $scope.lobbyName,
                 }
+            },
+            joinGameObj = {
+                teamName: $scope.joinTeamName,
             },
 
 
@@ -52,13 +95,15 @@ module.exports = function(app) {
             });
         };
 
+
+/////////// join session http call////////////
         $scope.joinSessionCreate = function() {
           joinGameObj = {
               teamName: $scope.joinTeamName,
           },
             console.log("clicked Join Session");
             // console.log(joinGameObj)
-            
+
             // $location.path('/available');
 
             $http({
@@ -80,10 +125,11 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('ListController', ['$scope', '$http','$location', function($scope, $http, $location) {
-
+    app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
+      $scope.clues = QuestionService.getClues();
+      console.log($scope.clues);
       $scope.goback = function(){
         $location.path('/lobby');
         console.log('clicked');
@@ -103,7 +149,7 @@ module.exports = function(app) {
                     callbacks: {
 
                         init: function() {
-                          console.log('first in cbs', $.cookie('endDate'));
+                          console.log('first in callbacks', $.cookie('endDate'));
                             //store end date If it's not yet in cookies
                             if(!$.cookie('endDate')){
                                 // end date = current date + 60 minutes
@@ -113,7 +159,6 @@ module.exports = function(app) {
                                 $.cookie('endDate', Math.round(endDate / 1000));
                             }
                         },
-
                     }
                 });
                 console.log($.cookie('endDate'));
@@ -127,17 +172,14 @@ module.exports = function(app) {
 
                 clock.start();
             }
-
-
-
             //Lanching count down on ready
             countDown();
         });
-
+//////// get questions and populate list
     }])
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('LobbyController', ['$scope', '$http','TeamService','$location', function($scope, $http, TeamService,$location) {
       $scope.Game = TeamService.getTeams()
@@ -147,9 +189,9 @@ module.exports = function(app) {
     }])
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService', '$location', function($scope, $http, MainService, $location) {
+    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService', '$location', function($scope, $http, MainService, QuestionService, $location) {
         MainService.getLocation();
         $scope.myLoc = MainService.getLocation();
         console.log($scope.myLoc);
@@ -158,7 +200,8 @@ module.exports = function(app) {
         $scope.return = function() {
             $location.path('/list')
         };
-///////
+
+/////// getting location  checking distance and if passes creates marker/////////
         $scope.marker = function() {
             MainService.getLocation();
             console.log("click", $scope.myLoc);
@@ -195,7 +238,7 @@ module.exports = function(app) {
     }])
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = function(app){
   app.controller('StartController',['$scope','$http','$location',function($scope,$http,$location){
 
@@ -213,7 +256,7 @@ $scope.joinSession = function(){
 }])
 }
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
         var map = new GMaps({
@@ -270,31 +313,60 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
+module.exports = function(app) {
+    app.factory('QuestionService', ['$http', function($http) {
+      var clues = [];
+
+        return {
+          getClues: function(){
+            $http({
+                url: '/get-clues',
+                method: 'GET',
+            }).then(function(response) {
+            // let data = response.data
+            console.log('questionservice', response);
+              // angular.copy(data, clues)
+            }).catch(function(response) {
+              console.log('error! error! bzzzt!')
+
+            });
+            return clues;
+          }
+        }//end of return
+
+
+    }]);
+  };
+
+},{}],10:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('TeamService', ['$http', function($http) {
+      var teamName = [];
+
         return {
           getTeams: function(){
-          var teamName = []
+          var teamName = [];
             $http({
                 url: '/get-teams',
                 method: 'GET',
             }).then(function(response) {
             let data = response.data
-              response.data.forEach(function(el){
-                teamName.push(el.teamName)
-              })
+            console.log('teamservice', data);
+              // response.data.forEach(function(el){
+              //   teamName.push(el.teamName)
+              // })
             }).catch(function(response) {
               console.log('error! error! bzzzt!')
 
             });
-            return teamName
+            return teamName;
           }
         }//end of return
     }]);//end of factory
 };
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 var app = angular.module('HuntApp', ['ngRoute']);
@@ -305,11 +377,13 @@ require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
 require('./Controllers/joincontroller.js')(app);
+require('./Controllers/creategamecontroller.js')(app);
 require('./Controllers/lobbycontroller.js')(app);
 
 // Services
 require('./Services/mainservice.js')(app);
 require('./Services/teamservice.js')(app);
+require('./Services/questionservice.js')(app);
 
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {
@@ -325,7 +399,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/howtoplay2.html',
         controller: 'InfoController'
     }).when('/create', {
-        controller: 'JoinController',
+        controller: 'CreateGameController',
         templateUrl: 'templates/newsession.html'
     }).when('/join', {
         controller: 'JoinController',
@@ -344,4 +418,4 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/gameover.html'
     });
 }]);
-},{"./Controllers/infocontroller.js":1,"./Controllers/joincontroller.js":2,"./Controllers/listcontroller.js":3,"./Controllers/lobbycontroller.js":4,"./Controllers/questioncontroller.js":5,"./Controllers/startcontroller.js":6,"./Services/mainservice.js":7,"./Services/teamservice.js":8}]},{},[9])
+},{"./Controllers/creategamecontroller.js":1,"./Controllers/infocontroller.js":2,"./Controllers/joincontroller.js":3,"./Controllers/listcontroller.js":4,"./Controllers/lobbycontroller.js":5,"./Controllers/questioncontroller.js":6,"./Controllers/startcontroller.js":7,"./Services/mainservice.js":8,"./Services/questionservice.js":9,"./Services/teamservice.js":10}]},{},[11])

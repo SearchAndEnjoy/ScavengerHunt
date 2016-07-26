@@ -7,11 +7,14 @@ require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
 require('./Controllers/joincontroller.js')(app);
+require('./Controllers/creategamecontroller.js')(app);
 require('./Controllers/lobbycontroller.js')(app);
 
 // Services
 require('./Services/mainservice.js')(app);
 require('./Services/teamservice.js')(app);
+require('./Services/questionservice.js')(app);
+
 
 
 
@@ -35,7 +38,7 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'InfoController',
         })
         .when('/create', {
-            controller: 'JoinController',
+            controller: 'CreateGameController',
             templateUrl: 'templates/newsession.html',
         })
         .when('/join', {

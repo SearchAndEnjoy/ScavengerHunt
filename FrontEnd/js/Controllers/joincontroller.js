@@ -11,6 +11,9 @@ module.exports = function(app) {
                     lobbyName: $scope.lobbyName,
                 }
             },
+            joinGameObj = {
+                teamName: $scope.joinTeamName,
+            },
 
 
         $scope.newSessionCreate = function() {
@@ -38,13 +41,15 @@ module.exports = function(app) {
             });
         };
 
+
+/////////// join session http call////////////
         $scope.joinSessionCreate = function() {
           joinGameObj = {
               teamName: $scope.joinTeamName,
           },
             console.log("clicked Join Session");
             // console.log(joinGameObj)
-            
+
             // $location.path('/available');
 
             $http({

@@ -1,6 +1,7 @@
 module.exports = function(app) {
-    app.controller('ListController', ['$scope', '$http','$location', function($scope, $http, $location) {
-
+    app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
+      $scope.clues = QuestionService.getClues();
+      console.log($scope.clues);
       $scope.goback = function(){
         $location.path('/lobby');
         console.log('clicked');
@@ -20,7 +21,7 @@ module.exports = function(app) {
                     callbacks: {
 
                         init: function() {
-                          console.log('first in cbs', $.cookie('endDate'));
+                          console.log('first in callbacks', $.cookie('endDate'));
                             //store end date If it's not yet in cookies
                             if(!$.cookie('endDate')){
                                 // end date = current date + 60 minutes
@@ -30,7 +31,6 @@ module.exports = function(app) {
                                 $.cookie('endDate', Math.round(endDate / 1000));
                             }
                         },
-
                     }
                 });
                 console.log($.cookie('endDate'));
@@ -44,12 +44,9 @@ module.exports = function(app) {
 
                 clock.start();
             }
-
-
-
             //Lanching count down on ready
             countDown();
         });
-
+//////// get questions and populate list
     }])
 }
