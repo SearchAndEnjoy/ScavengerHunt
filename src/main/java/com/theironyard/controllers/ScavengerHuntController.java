@@ -49,7 +49,7 @@ public class ScavengerHuntController {
     }
 
     @RequestMapping(path = "/create-game", method = RequestMethod.POST)
-    public Team newTeam(@RequestBody Team team, HttpSession session) {
+    public Game newTeam(@RequestBody Team team, HttpSession session) {
         // {teamName: "something", game: {lobbyName: "whatever"}}
 
         String alphabet= "abcdefghijklmnopqrstuvwxyz";
@@ -70,14 +70,14 @@ public class ScavengerHuntController {
         game.setClues(gameClues);
 
 
-        games.save(game);
+        game = games.save(game);
 
         team = teams.save(team);
 
         session.setAttribute("team_id", team.getId());
 
 
-        return team;
+        return game;
     }
 
     @RequestMapping(path = "/add-team/{lobby_code}", method = RequestMethod.POST)
@@ -104,7 +104,6 @@ public class ScavengerHuntController {
     public ResponseEntity<Object> getTeams (HttpSession session) {
 
         Team team = teams.findOne((Integer) session.getAttribute("team_id"));
-
 
         return new ResponseEntity<Object>(team.getGame().getTeamList(),HttpStatus.OK);
 
