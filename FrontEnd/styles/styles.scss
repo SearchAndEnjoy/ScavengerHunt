@@ -1,11 +1,10 @@
-//////the apps primary colors rename as where they will be used as is decided////////
+//////the apps primary colors rename as where they will be used is decided////////
 // $bg-color: #F5E7AB;
 // $2-color: #85D6D1;
 // $3-color: #6CADA9;
 // $4-color: #F27D5C;
 // $5-color: #D96F52;
 // $font-color: #faf9f5;
-
 ////////////////// persistent background and header styling
 body {
     overflow: scroll;
@@ -47,12 +46,6 @@ body {
     -moz-box-shadow: 5px 16px 15px -1px rgba(0,0,0,0.56);
     box-shadow: 5px 16px 15px -1px rgba(0,0,0,0.56);
 }
-.how-to-box {
-    background-color: #F27D5C;
-    height: 50em;
-    width: 100%;
-}
-
 ///////oddly floating footer fix later
 // .footer {
 //     position:fixed;
@@ -114,7 +107,7 @@ body {
     box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
 ////////// Lobby group styling
-.lobby-list-item{
+.list-group-item {
     color: #faf9f5;
     text-shadow: #030303 1px 3px 3px;
     background-color: #85D6D1;
@@ -149,15 +142,8 @@ body {
         margin: auto 0;
     }
 }
-.quest-list-item {
-  color: #faf9f5;
-  text-shadow: #030303 1px 3px 3px;
-  background-color: #85D6D1;
-  // border: 2px solid #F27D5C ;
-  margin-bottom: 5%;
-  min-height: 20%;
-  -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-
+.how-to-box {
+    background-color: #F27D5C;
+    height: 50em;
+    width: 100%;
 }
