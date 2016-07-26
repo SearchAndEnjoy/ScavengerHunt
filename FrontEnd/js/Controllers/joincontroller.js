@@ -15,25 +15,20 @@ module.exports = function(app) {
 
         $scope.newSessionCreate = function() {
             console.log("clicked New Session");
-            console.log(newGameObj = {
-                teamName: $scope.teamName,
-                game: {
-                    lobbyName: $scope.lobbyName,
-                }
-            });
 
             $http({
                 url: '/create-game',
                 method: 'POST',
                 data: JSON.stringify(newGameObj),
 
-            }).then(function(data) {
-                console.log(data);
+            }).then(function(response) {
+                var data = response.data;
+                console.log(data)
                  $location.path('/lobby');
 
-            }).catch(function(data) {
+            }).catch(function(response) {
                 console.error('new Session screw up');
-                console.log(data);
+                console.log(response);
                 // $location.path('/shit')
             });
         };

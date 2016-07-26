@@ -1,8 +1,8 @@
 module.exports = function(app) {
     app.factory('TeamService', ['$http', function($http) {
         return {
-          getTeams: function(){
           var teamName = []
+          getTeams: function(){
             $http({
                 url: '/get-teams',
                 method: 'GET',
