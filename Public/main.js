@@ -29,12 +29,12 @@ module.exports = function(app) {
 
         $scope.newSessionCreate = function() {
             console.log("clicked New Session");
-            console.log(newGameObj = {
-                teamName: $scope.teamName,
-                game: {
-                    lobbyName: $scope.lobbyName,
-                }
-            });
+            // console.log(newGameObj = {
+            //     teamName: $scope.teamName,
+            //     game: {
+            //         lobbyName: $scope.lobbyName,
+            //     }
+            // });
 
             $http({
                 url: '/create-game',
@@ -57,13 +57,8 @@ module.exports = function(app) {
               teamName: $scope.joinTeamName,
           },
             console.log("clicked Join Session");
-            console.log(joinGameObj)
-            // console.log(joinGameObj = {
-            //     teamName: $scope.joinTeamName,
-            //     game: {
-            //         lobbyCode: $scope.joinLobbyCode,
-            //     }
-            // });
+            // console.log(joinGameObj)
+            
             // $location.path('/available');
 
             $http({
@@ -106,7 +101,9 @@ module.exports = function(app) {
                 var clock = $('.clock').FlipClock({
                     countdown: true,
                     callbacks: {
+
                         init: function() {
+                          console.log('first in cbs', $.cookie('endDate'));
                             //store end date If it's not yet in cookies
                             if(!$.cookie('endDate')){
                                 // end date = current date + 60 minutes
@@ -225,6 +222,7 @@ module.exports = function(app) {
             lng: -1,
         });
           var myPosition = [];
+          
         return {
             getLocation: function() {
                 GMaps.geolocate({
