@@ -10,7 +10,7 @@ module.exports = function(app) {
             }).then(function(response) {
             let data = response.data
             console.log('teamservice', data);
-              response.data.forEach(function(el){
+              response.data.teams.forEach(function(el){
                 teamName.push(el.teamName)
               })
             }).catch(function(response) {
