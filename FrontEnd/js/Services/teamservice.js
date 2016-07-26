@@ -9,6 +9,7 @@ module.exports = function(app) {
                 method: 'GET',
             }).then(function(response) {
             let data = response.data
+            console.log(response)
               response.data.forEach(function(el){
                 teamName.push(el.teamName)
               })
@@ -32,7 +33,7 @@ module.exports = function(app) {
                   data: JSON.stringify(newGameObj),
 
               }).then(function(response) {
-                  var data = response.data;
+                   var data = response.data;
                   // lobbyCode.push(data.lobbyCode)
                   lobbyCode = data.lobbyCode
                   console.log(lobbyCode)
