@@ -1,9 +1,6 @@
 package com.theironyard.controllers;
 
-import com.theironyard.entities.Answer;
-import com.theironyard.entities.Clue;
-import com.theironyard.entities.Game;
-import com.theironyard.entities.Team;
+import com.theironyard.entities.*;
 import com.theironyard.services.AnswerRepository;
 import com.theironyard.services.ClueRepository;
 import com.theironyard.services.GameRepository;
@@ -112,7 +109,11 @@ public class ScavengerHuntController {
 
         Team team = teams.findOne((Integer) session.getAttribute("team_id"));
 
-        return new ResponseEntity<Object>(team.getGame().getTeamList(),HttpStatus.OK);
+        GameTeams gameTeams = new GameTeams();
+        gameTeams.lobbyCode = team.getGame().getLobbyCode();
+        gameTeams.teams = team.getGame().getTeamList();
+
+        return new ResponseEntity<Object>(gameTeams,HttpStatus.OK);
 
     }
     @RequestMapping(path = "/get-clues", method = RequestMethod.GET)
