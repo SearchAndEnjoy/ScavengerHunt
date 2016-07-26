@@ -1,9 +1,6 @@
 package com.theironyard.controllers;
 
-import com.theironyard.entities.Answer;
-import com.theironyard.entities.Clue;
-import com.theironyard.entities.Game;
-import com.theironyard.entities.Team;
+import com.theironyard.entities.*;
 import com.theironyard.services.AnswerRepository;
 import com.theironyard.services.ClueRepository;
 import com.theironyard.services.GameRepository;
@@ -20,6 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.*;
+
 
 /**
  * Created by Erik on 7/20/16.
@@ -75,6 +73,7 @@ public class ScavengerHuntController {
         team = teams.save(team);
 
         session.setAttribute("team_id", team.getId());
+        session.setAttribute("game_id", game.getId());
 
 
         return game;
@@ -100,12 +99,21 @@ public class ScavengerHuntController {
 
     }
 
+//    @RequestMapping(path = "/lobby-code",method = RequestMethod.GET)
+//    public ResponseEntity<Object> getLobbyCode (HttpSession session) {
+//
+//    }
+
     @RequestMapping(path = "/get-teams", method = RequestMethod.GET)
     public ResponseEntity<Object> getTeams (HttpSession session) {
 
         Team team = teams.findOne((Integer) session.getAttribute("team_id"));
 
-        return new ResponseEntity<Object>(team.getGame().getTeamList(),HttpStatus.OK);
+        GameTeams gameTeams = new GameTeams();
+        gameTeams.lobbyCode = team.getGame().getLobbyCode();
+        gameTeams.teams = team.getGame().getTeamList();
+
+        return new ResponseEntity<Object>(gameTeams,HttpStatus.OK);
 
     }
     @RequestMapping(path = "/get-clues", method = RequestMethod.GET)
@@ -118,15 +126,32 @@ public class ScavengerHuntController {
     }
 
 
-    @RequestMapping(path = "/at-location/{team_id}", method = RequestMethod.PUT)
-    public boolean atLocation (HttpSession session, boolean atLocation, @PathVariable("team_id") int id) {
-        if (atLocation == false) {
+    @RequestMapping(path = "/at-location?{clue_id}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> atLocation (HttpSession session, @PathVariable("clue_id") int id) {
 
-        }
+        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
 
+        Clue clue = clues.findOne(id);
 
-        return atLocation;
+        Answer answer = new Answer(clue, team, true);
 
+        ArrayList<Answer> a = new ArrayList<>();
+        a.add(answer);
+
+        team.setAnswerList(a);
+
+        answers.save(a);
+
+        return new ResponseEntity<Object>(HttpStatus.OK);
+
+    }
+
+    @RequestMapping(path = "/game-over", method = RequestMethod.GET)
+    public ResponseEntity<Object> gameOver (HttpSession session) {
+
+        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
+
+        return new ResponseEntity<Object>(team.getGame().getTeamList(), HttpStatus.OK);
     }
 
 
