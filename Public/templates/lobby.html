@@ -3,15 +3,13 @@
         <div class="jumbotron jumbotron-fluid lobby-header">
             <div class="container">
                 <h1 class="display-3">Game Session Lobby</h1>
-                <h2>Lobby Code: lobbyCodefrom server</h2>
+                <h2>Lobby Code: {{displayCode}}</h2>
                 <h4>Share your code with your opponents!</h4>
             </div>
         </div>
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat='team in Game'>
+            <li class="list-group-item" ng-repeat='team in Game track by $index'>
                 <h1>{{team}}</h1>
-                <button ng-click="">Ready!</button>
-
         </ul>
         <button type="button" class="btn btn-primary btn-lg btn-block lrg-page-buttons" ng-click="session()">Ready to Play</button>
 
