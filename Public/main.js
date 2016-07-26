@@ -97,9 +97,9 @@ module.exports = function(app) {
 },{}],4:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
-      QuestionService.getClues();
+      $scope.clues = QuestionService.getClues();
 
-      console.log('listcontroller', QuestionService.getClues());
+      console.log('listcontroller', $scope.clues);
 
 ////// back-button //////
       $scope.goback = function(){
@@ -157,6 +157,9 @@ module.exports = function(app) {
       $scope.Game = TeamService.getTeams()
       $scope.displayCode = TeamService.getLobbyCode()
       $scope.session = function() {
+        ////// setting clock end cookie
+        var endDate = Date.now() + 90*60*1000;
+        $.cookie('endDate', Math.round(endDate / 1000));
         $location.path('/list')
       }
     }])
@@ -402,7 +405,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'templates/howtoplay2.html',
         controller: 'InfoController'
     }).when('/create', {
-        controller: 'CreateGameController',
+        controller: 'JoinController',
         templateUrl: 'templates/newsession.html'
     }).when('/join', {
         controller: 'JoinController',

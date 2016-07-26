@@ -1,8 +1,8 @@
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
-      QuestionService.getClues();
+      $scope.clues = QuestionService.getClues();
 
-      console.log('listcontroller', QuestionService.getClues());
+      console.log('listcontroller', $scope.clues);
 
 ////// back-button //////
       $scope.goback = function(){

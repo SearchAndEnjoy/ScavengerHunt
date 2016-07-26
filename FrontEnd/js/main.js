@@ -38,7 +38,7 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'InfoController',
         })
         .when('/create', {
-            controller: 'CreateGameController',
+            controller: 'JoinController',
             templateUrl: 'templates/newsession.html',
         })
         .when('/join', {
