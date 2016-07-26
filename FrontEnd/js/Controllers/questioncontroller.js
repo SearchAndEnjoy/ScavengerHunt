@@ -2,14 +2,13 @@ module.exports = function(app) {
     app.controller('QuestionController', ['$scope', '$http', 'MainService', '$location', function($scope, $http, MainService, $location) {
         MainService.getLocation();
         $scope.myLoc = MainService.getLocation();
-
-
         console.log($scope.myLoc);
-        //////// back-button function/////////
+
+//////// back-button function/////////
         $scope.return = function() {
             $location.path('/list')
-        }
-
+        };
+///////
         $scope.marker = function() {
             MainService.getLocation();
             console.log("click", $scope.myLoc);

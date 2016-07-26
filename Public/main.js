@@ -92,12 +92,50 @@ module.exports = function(app) {
       $scope.goback = function(){
         $location.path('/lobby');
         console.log('clicked');
-      }
-        var clock = $('.clock').FlipClock(3600, {
-            autoStart: false,
-            countdown: true
-        });
+      };
 
+
+////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
+////// flipclock courtesy of flipclockjs.com
+
+        $(function(){
+
+            countDown = function(){
+                var currentDate = Math.round(new Date() / 1000);
+
+                var clock = $('.clock').FlipClock({
+                    countdown: true,
+                    callbacks: {
+                        init: function() {
+                            //store end date If it's not yet in cookies
+                            if(!$.cookie('endDate')){
+                                // end date = current date + 60 minutes
+                                var endDate = Date.now() + 60*60*1000;
+
+                                // store end date in cookies
+                                $.cookie('endDate', Math.round(endDate / 1000));
+                            }
+                        },
+
+                    }
+                });
+                console.log($.cookie('endDate'));
+                /* counter will be at first 1 min if the user refresh the page the counter will
+                   be the difference between current and end Date, so like this counter can
+                   continue the countdown normally in case of refresh. */
+                var counter = $.cookie('endDate')-currentDate;
+                //
+                clock.setTime(counter);
+                clock.setCountdown(true);
+
+                clock.start();
+            }
+
+
+
+            //Lanching count down on ready
+            countDown();
+        });
 
     }])
 }
@@ -117,14 +155,13 @@ module.exports = function(app) {
     app.controller('QuestionController', ['$scope', '$http', 'MainService', '$location', function($scope, $http, MainService, $location) {
         MainService.getLocation();
         $scope.myLoc = MainService.getLocation();
-
-
         console.log($scope.myLoc);
-        //////// back-button function/////////
+
+//////// back-button function/////////
         $scope.return = function() {
             $location.path('/list')
-        }
-
+        };
+///////
         $scope.marker = function() {
             MainService.getLocation();
             console.log("click", $scope.myLoc);
