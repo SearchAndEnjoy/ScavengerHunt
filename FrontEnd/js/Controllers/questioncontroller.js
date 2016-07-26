@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService', '$location', function($scope, $http, MainService, $location) {
+    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService','$location', function($scope, $http, MainService, QuestionService, $location) {
         MainService.getLocation();
         $scope.myLoc = MainService.getLocation();
         console.log($scope.myLoc);
@@ -8,7 +8,8 @@ module.exports = function(app) {
         $scope.return = function() {
             $location.path('/list')
         };
-///////
+
+/////// getting location  checking distance and if passes creates marker/////////
         $scope.marker = function() {
             MainService.getLocation();
             console.log("click", $scope.myLoc);
@@ -40,7 +41,7 @@ module.exports = function(app) {
               alert('not here')
             }
         };
-
+/////// end marker code///////
 
     }])
 }

@@ -5,10 +5,13 @@ module.exports = function(app) {
             $scope.teamName = '',
             $scope.lobbyName = '',
             $scope.lobbyCode = '',
+
         $scope.newSessionCreate = function() {
           TeamService.newSessionCreate($scope.teamName,$scope.lobbyName)
         }
 
+
+/////////// join session http call////////////
         $scope.joinSessionCreate = function() {
           joinGameObj = {
               teamName: $scope.joinTeamName,

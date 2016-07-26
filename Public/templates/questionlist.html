@@ -3,13 +3,24 @@
 </div>
 
 <div class="col-xs-10 col-xs-offset-1 page-box">
-  <button type="button" class="btn btn-primary btn-lg back-button" ng-click="goback()">Back</button>
+    <button type="button" class="btn btn-primary btn-lg back-button" ng-click="goback()">Back</button>
 
-    <div class="list-group">
-        <button type="button" class="list-group-item">Cras justo odio</button>
+    <ul class="list-group">
+
+        <button ng-click='cluePage(clue.id)' type="button" name="button" ng-repeat='clue in clues'>
+            <li class="list-group-item lobby-list-item">
+                <h1>{{clue.clue}}</h1>
+            </li>
+        </button>
+
+
+    </ul>
+
+    <!-- <div class="list-group">
+        <button type="button" class="list-group-item quest-list-item">Cras justo odio</button>
         <button type="button" class="list-group-item">Dapibus ac facilisis in</button>
         <button type="button" class="list-group-item">Morbi leo risus</button>
         <button type="button" class="list-group-item">Porta ac consectetur ac</button>
         <button type="button" class="list-group-item">Vestibulum at eros</button>
     </div>
-</div>
+</div> -->
