@@ -32,6 +32,7 @@ module.exports = function(app) {
 
             }).catch(function() {
                 console.error('join Session screw up');
+                alert('Please enter an existing code')
                 // $location.path('/shit')
             });
         };

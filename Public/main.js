@@ -40,6 +40,14 @@ module.exports = function(app) {
 
 },{}],2:[function(require,module,exports){
 module.exports = function(app){
+  app.controller('GameOverController',['$scope','$location','MainService',function($scope,$location,Mainservice){
+
+
+}])
+}
+
+},{}],3:[function(require,module,exports){
+module.exports = function(app){
   app.controller('InfoController',['$scope','$location',function($scope,$location){
 
 $scope.next = function(){
@@ -51,7 +59,7 @@ $scope.home= function(){
 }])
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('JoinController', ['$scope', '$http', '$location','TeamService', function($scope, $http, $location,TeamService) {
             $scope.joinTeamName = '',
@@ -86,6 +94,7 @@ module.exports = function(app) {
 
             }).catch(function() {
                 console.error('join Session screw up');
+                alert('Please enter an existing code')
                 // $location.path('/shit')
             });
         };
@@ -94,7 +103,7 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
       $scope.clues = QuestionService.getClues();
@@ -156,11 +165,12 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('LobbyController', ['$scope', '$http','TeamService','$location', function($scope, $http, TeamService,$location) {
       $scope.Game = TeamService.getTeams()
       $scope.displayCode = TeamService.getLobbyCode()
+      console.log('working')
       $scope.session = function() {
         ////// setting clock end cookie////////////////
         var endDate = Date.now() + 90*60*1000;
@@ -171,7 +181,7 @@ module.exports = function(app) {
     }])
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService','$location', function($scope, $http, MainService, QuestionService, $location) {
         MainService.getLocation();
@@ -220,7 +230,7 @@ module.exports = function(app) {
     }])
 }
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = function(app){
   app.controller('StartController',['$scope','$http','$location',function($scope,$http,$location){
 
@@ -238,7 +248,7 @@ $scope.joinSession = function(){
 }])
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
         var map = new GMaps({
@@ -295,7 +305,7 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('QuestionService', ['$http', function($http) {
       var clues = [];
@@ -321,7 +331,7 @@ module.exports = function(app) {
     }]);
   };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('TeamService', ['$http','$location', function($http,$location) {
       var lobbyCode = ''
@@ -378,7 +388,7 @@ module.exports = function(app) {
     }]);//end of factory
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 var app = angular.module('HuntApp', ['ngRoute']);
@@ -391,7 +401,7 @@ require('./Controllers/listcontroller.js')(app);
 require('./Controllers/joincontroller.js')(app);
 require('./Controllers/creategamecontroller.js')(app);
 require('./Controllers/lobbycontroller.js')(app);
-
+require('./Controllers/gameovercontroller.js')(app);
 // Services
 require('./Services/mainservice.js')(app);
 require('./Services/teamservice.js')(app);
@@ -431,8 +441,8 @@ app.config(['$routeProvider', function ($routeProvider) {
     //   templatesUrl:'templates/questionpage.html'
     // })
     .when('/gameover', {
-        // controller:'gameovercontroller',
+        controller: 'GameOverController',
         templateUrl: 'templates/gameover.html'
     });
 }]);
-},{"./Controllers/creategamecontroller.js":1,"./Controllers/infocontroller.js":2,"./Controllers/joincontroller.js":3,"./Controllers/listcontroller.js":4,"./Controllers/lobbycontroller.js":5,"./Controllers/questioncontroller.js":6,"./Controllers/startcontroller.js":7,"./Services/mainservice.js":8,"./Services/questionservice.js":9,"./Services/teamservice.js":10}]},{},[11])
+},{"./Controllers/creategamecontroller.js":1,"./Controllers/gameovercontroller.js":2,"./Controllers/infocontroller.js":3,"./Controllers/joincontroller.js":4,"./Controllers/listcontroller.js":5,"./Controllers/lobbycontroller.js":6,"./Controllers/questioncontroller.js":7,"./Controllers/startcontroller.js":8,"./Services/mainservice.js":9,"./Services/questionservice.js":10,"./Services/teamservice.js":11}]},{},[12])
