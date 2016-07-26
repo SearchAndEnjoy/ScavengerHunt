@@ -9,10 +9,15 @@ module.exports = function(app) {
         $location.path('/lobby');
         console.log('clicked');
       };
-
+//////// tranfer to individual clue page
+      $scope.cluePage = function(id) {
+        console.log('clicked to clue page', id);
+        $location.path('/question/' + id);
+      }
 
 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
 ////// flipclock courtesy of flipclockjs.com
+///// endDate cookie init on lobby start
 
         $(function(){
 
@@ -28,7 +33,7 @@ module.exports = function(app) {
                             //store end date If it's not yet in cookies
                             if(!$.cookie('endDate')){
                                 // end date = current date + 60 minutes
-                                var endDate = Date.now() + 60*60*1000;
+                                var endDate = Date.now() + 90*60*1000;
 
                                 // store end date in cookies
                                 $.cookie('endDate', Math.round(endDate / 1000));

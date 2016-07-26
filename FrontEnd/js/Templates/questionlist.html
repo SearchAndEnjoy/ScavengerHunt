@@ -6,11 +6,13 @@
     <button type="button" class="btn btn-primary btn-lg back-button" ng-click="goback()">Back</button>
 
     <ul class="list-group">
-        <a href="#">
-            <li class="list-group-item lobby-list-item" ng-repeat='clue in clues'>
-                <h3>{{clue.clue}}</h3>
+
+        <button ng-click='cluePage(clue.id)' type="button" name="button" ng-repeat='clue in clues'>
+            <li class="list-group-item lobby-list-item">
+                <h1>{{clue.clue}}</h1>
             </li>
-        </a>
+        </button>
+
 
     </ul>
 

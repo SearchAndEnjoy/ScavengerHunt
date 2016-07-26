@@ -57,6 +57,10 @@ app.config(['$routeProvider', function($routeProvider) {
           controller:'QuestionController',
           templateUrl:'templates/questionpage.html',
         })
+        // .when('/question/:id '{
+        //   controller: 'QuestionController',
+        //   templatesUrl:'templates/questionpage.html'
+        // })
         .when('/gameover',{
           // controller:'gameovercontroller',
           templateUrl:'templates/gameover.html',
