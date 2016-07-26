@@ -1,7 +1,5 @@
 package com.theironyard.controllers;
 
-import com.sun.tools.javac.code.Attribute;
-import com.sun.tools.javac.util.*;
 import com.theironyard.entities.Answer;
 import com.theironyard.entities.Clue;
 import com.theironyard.entities.Game;
@@ -22,7 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.List;
+
 
 /**
  * Created by Erik on 7/20/16.
@@ -148,9 +146,9 @@ public class ScavengerHuntController {
     @RequestMapping(path = "/game-over", method = RequestMethod.GET)
     public ResponseEntity<Object> gameOver (HttpSession session) {
 
-        Game game = games.findOne((Integer) session.getAttribute("game_id"));
+        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
 
-        return new ResponseEntity<Object>(game.getTeamList(), HttpStatus.OK);
+        return new ResponseEntity<Object>(team.getGame().getTeamList(), HttpStatus.OK);
     }
 
 
