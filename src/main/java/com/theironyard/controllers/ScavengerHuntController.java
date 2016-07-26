@@ -139,6 +139,8 @@ public class ScavengerHuntController {
 
         team.setAnswerList(a);
 
+        answers.save(a);
+
         return new ResponseEntity<Object>(HttpStatus.OK);
 
     }
