@@ -8,7 +8,7 @@ require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
 require('./Controllers/joincontroller.js')(app);
 require('./Controllers/lobbycontroller.js')(app);
-
+require('./Controllers/gameovercontroller.js')(app);
 // Services
 require('./Services/mainservice.js')(app);
 require('./Services/teamservice.js')(app);
@@ -55,7 +55,7 @@ app.config(['$routeProvider', function($routeProvider) {
           templateUrl:'templates/questionpage.html',
         })
         .when('/gameover',{
-          // controller:'gameovercontroller',
+          controller:'GameOverController',
           templateUrl:'templates/gameover.html',
         });
 }]);
