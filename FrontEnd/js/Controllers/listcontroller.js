@@ -1,7 +1,10 @@
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
-      $scope.clues = QuestionService.getClues();
-      console.log($scope.clues);
+      QuestionService.getClues();
+
+      console.log('listcontroller', QuestionService.getClues());
+
+////// back-button //////
       $scope.goback = function(){
         $location.path('/lobby');
         console.log('clicked');
@@ -38,15 +41,15 @@ module.exports = function(app) {
                    be the difference between current and end Date, so like this counter can
                    continue the countdown normally in case of refresh. */
                 var counter = $.cookie('endDate')-currentDate;
-                //
                 clock.setTime(counter);
                 clock.setCountdown(true);
-
                 clock.start();
             }
             //Lanching count down on ready
             countDown();
         });
 //////// get questions and populate list
-    }])
-}
+
+
+    }]);
+};

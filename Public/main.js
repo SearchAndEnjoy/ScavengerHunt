@@ -97,8 +97,11 @@ module.exports = function(app) {
 },{}],4:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
-      $scope.clues = QuestionService.getClues();
-      console.log($scope.clues);
+      QuestionService.getClues();
+
+      console.log('listcontroller', QuestionService.getClues());
+
+////// back-button //////
       $scope.goback = function(){
         $location.path('/lobby');
         console.log('clicked');
@@ -135,18 +138,18 @@ module.exports = function(app) {
                    be the difference between current and end Date, so like this counter can
                    continue the countdown normally in case of refresh. */
                 var counter = $.cookie('endDate')-currentDate;
-                //
                 clock.setTime(counter);
                 clock.setCountdown(true);
-
                 clock.start();
             }
             //Lanching count down on ready
             countDown();
         });
 //////// get questions and populate list
-    }])
-}
+
+
+    }]);
+};
 
 },{}],5:[function(require,module,exports){
 module.exports = function(app) {
@@ -161,7 +164,7 @@ module.exports = function(app) {
 
 },{}],6:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService', '$location', function($scope, $http, MainService, QuestionService, $location) {
+    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService','$location', function($scope, $http, MainService, QuestionService, $location) {
         MainService.getLocation();
         $scope.myLoc = MainService.getLocation();
         console.log($scope.myLoc);
@@ -294,9 +297,9 @@ module.exports = function(app) {
                 url: '/get-clues',
                 method: 'GET',
             }).then(function(response) {
-            // let data = response.data
-            console.log('questionservice', response);
-              // angular.copy(data, clues)
+            let data = response.data
+            console.log('questionservice', data);
+              angular.copy(data, clues)
             }).catch(function(response) {
               console.log('error! error! bzzzt!')
 
@@ -322,9 +325,9 @@ module.exports = function(app) {
             }).then(function(response) {
             let data = response.data
             console.log('teamservice', data);
-              // response.data.forEach(function(el){
-              //   teamName.push(el.teamName)
-              // })
+              response.data.forEach(function(el){
+                teamName.push(el.teamName)
+              })
             }).catch(function(response) {
               console.log('error! error! bzzzt!')
 

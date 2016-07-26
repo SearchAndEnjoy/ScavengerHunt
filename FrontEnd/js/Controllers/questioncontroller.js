@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService', '$location', function($scope, $http, MainService, QuestionService, $location) {
+    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService','$location', function($scope, $http, MainService, QuestionService, $location) {
         MainService.getLocation();
         $scope.myLoc = MainService.getLocation();
         console.log($scope.myLoc);
