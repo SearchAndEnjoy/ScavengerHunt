@@ -18,7 +18,9 @@ module.exports = function(app) {
                 var clock = $('.clock').FlipClock({
                     countdown: true,
                     callbacks: {
+
                         init: function() {
+                          console.log('first in cbs', $.cookie('endDate'));
                             //store end date If it's not yet in cookies
                             if(!$.cookie('endDate')){
                                 // end date = current date + 60 minutes

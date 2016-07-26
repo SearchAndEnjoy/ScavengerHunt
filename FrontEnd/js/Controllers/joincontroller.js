@@ -15,7 +15,6 @@ module.exports = function(app) {
 
         $scope.newSessionCreate = function() {
             console.log("clicked New Session");
-
             $http({
                 url: '/create-game',
                 method: 'POST',
@@ -38,13 +37,8 @@ module.exports = function(app) {
               teamName: $scope.joinTeamName,
           },
             console.log("clicked Join Session");
-            console.log(joinGameObj)
-            // console.log(joinGameObj = {
-            //     teamName: $scope.joinTeamName,
-            //     game: {
-            //         lobbyCode: $scope.joinLobbyCode,
-            //     }
-            // });
+            // console.log(joinGameObj)
+
             // $location.path('/available');
 
             $http({

@@ -32,6 +32,7 @@ body {
   width: 45%;
   padding: 1%;
   margin-bottom: 3%;
+  margin-top: 3%;
   -webkit-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
   -moz-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
   box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56); }
@@ -51,7 +52,7 @@ body {
 .form-group {
   background-color: #6CADA9;
   margin-bottom: 10%;
-  margin-top: 10%;
+  margin-top: 5%;
   -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
