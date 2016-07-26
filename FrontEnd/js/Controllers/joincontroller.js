@@ -15,12 +15,12 @@ module.exports = function(app) {
 
         $scope.newSessionCreate = function() {
             console.log("clicked New Session");
-            console.log(newGameObj = {
-                teamName: $scope.teamName,
-                game: {
-                    lobbyName: $scope.lobbyName,
-                }
-            });
+            // console.log(newGameObj = {
+            //     teamName: $scope.teamName,
+            //     game: {
+            //         lobbyName: $scope.lobbyName,
+            //     }
+            // });
 
             $http({
                 url: '/create-game',
@@ -43,13 +43,8 @@ module.exports = function(app) {
               teamName: $scope.joinTeamName,
           },
             console.log("clicked Join Session");
-            console.log(joinGameObj)
-            // console.log(joinGameObj = {
-            //     teamName: $scope.joinTeamName,
-            //     game: {
-            //         lobbyCode: $scope.joinLobbyCode,
-            //     }
-            // });
+            // console.log(joinGameObj)
+            
             // $location.path('/available');
 
             $http({
