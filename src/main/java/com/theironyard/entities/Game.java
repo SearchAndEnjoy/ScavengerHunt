@@ -24,7 +24,7 @@ public class Game {
     @Column(nullable = false)
     String lobbyCode;
 
-    @Column(nullable = false)
+    @Column
     LocalDateTime startTime;
 
     @OneToMany(mappedBy = "game")

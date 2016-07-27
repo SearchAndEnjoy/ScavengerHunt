@@ -64,7 +64,7 @@ public class ScavengerHuntController {
 
         ArrayList<Clue> gameClues = (ArrayList<Clue>) clues.findAll();
         Collections.shuffle(gameClues);
-        gameClues = new ArrayList<> ( gameClues.subList(0, 5) );
+        gameClues = new ArrayList<> (gameClues.subList(0, 5) );
 
         game.setClues(gameClues);
 
