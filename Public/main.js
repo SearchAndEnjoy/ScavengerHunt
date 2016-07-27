@@ -118,7 +118,7 @@ module.exports = function(app) {
 //////// tranfer to individual clue page
       $scope.cluePage = function(id) {
         console.log('clicked to clue page', id);
-        $location.path('/question/' + id);
+        // $location.path('/question/' + id);
       }
 
 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
@@ -187,6 +187,7 @@ module.exports = function(app) {
         MainService.getLocation();
         $scope.myLoc = MainService.getLocation();
         console.log($scope.myLoc);
+        
 
 //////// back-button function/////////
         $scope.return = function() {
@@ -224,6 +225,13 @@ module.exports = function(app) {
             }else {
               alert('not here')
             }
+            // console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000), "meters");
+            // if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000)) <= 50) {
+            //   alert('here!');
+            //   MainService.CreateMarker();
+            // }else {
+            //   alert('not here')
+            // }
         };
 /////// end marker code///////
 
@@ -257,7 +265,7 @@ module.exports = function(app) {
             lng: -1,
         });
           var myPosition = [];
-          
+
         return {
             getLocation: function() {
                 GMaps.geolocate({
@@ -441,17 +449,21 @@ app.config(['$routeProvider', function ($routeProvider) {
     }).when('/list', {
         controller: 'ListController',
         templateUrl: 'templates/questionlist.html'
-    }).when('/question', {
-        controller: 'QuestionController',
-        templateUrl: 'templates/questionpage.html'
     })
     // .when('/question/:id '{
     //   controller: 'QuestionController',
     //   templatesUrl:'templates/questionpage.html'
     // })
-    .when('/gameover', {
+    .when('/question', {
+        controller: 'QuestionController',
+        templateUrl: 'templates/questionpage.html'
+    }).when('/gameover', {
         controller: 'GameOverController',
         templateUrl: 'templates/gameover.html'
     });
 }]);
+// .when('/question/:id '{
+//   controller: 'QuestionController',
+//   templatesUrl:'templates/questionpage.html'
+// })
 },{"./Controllers/creategamecontroller.js":1,"./Controllers/gameovercontroller.js":2,"./Controllers/infocontroller.js":3,"./Controllers/joincontroller.js":4,"./Controllers/listcontroller.js":5,"./Controllers/lobbycontroller.js":6,"./Controllers/questioncontroller.js":7,"./Controllers/startcontroller.js":8,"./Services/mainservice.js":9,"./Services/questionservice.js":10,"./Services/teamservice.js":11}]},{},[12])
