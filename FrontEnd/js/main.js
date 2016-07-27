@@ -57,7 +57,7 @@ app.config(['$routeProvider', function($routeProvider) {
         //   controller: 'QuestionController',
         //   templatesUrl:'templates/questionpage.html'
         // })
-        .when('/question',{
+        .when('/questionpage/:clueId',{
           controller:'QuestionController',
           templateUrl:'templates/questionpage.html',
         })

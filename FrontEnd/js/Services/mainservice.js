@@ -1,6 +1,6 @@
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
-          var myPosition = [];
+        var myPosition = [];
 
         return {
             getLocation: function(map) {
@@ -23,7 +23,7 @@ module.exports = function(app) {
                 })
                 return myPosition;
             },
-            CreateMarker: function(map) {
+            CreateMarker: function() {
           var data = myPosition[0]
               console.log(data.lat, data.lon)
                 map.addMarker({
@@ -34,7 +34,7 @@ module.exports = function(app) {
                         console.log('TSUUUUUUUU')
                     }
                 });
-                map.setCenter(data.lat, data.lon);
+                 map.setCenter(data.lat, data.lon);
             },
         };
     }]);

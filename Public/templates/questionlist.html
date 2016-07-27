@@ -7,9 +7,10 @@
 
     <ul class="list-group">
 
-        <button ng-click='cluePage(clue.id)' type="button" name="button" ng-repeat='clue in clues'>
+        <button type="button" name="button" ng-repeat='clue in clues'>
             <li class="list-group-item lobby-list-item">
-                <h1>{{clue.clue}}</h1>
+                <!-- <h1>{{clue.clue}}</h1> -->
+                <a href="#/questionpage/{{clue.id}}"><h1>{{clue.clue}}</h1></a>
             </li>
         </button>
 

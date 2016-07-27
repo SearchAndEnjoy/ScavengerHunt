@@ -10,6 +10,10 @@ module.exports = function(app) {
               lobbyName: $scope.lobbyName,
           }
       },
+      $scope.goback = function(){
+        $location.path('/start');
+        console.log('clicked');
+      };
       $scope.newSessionCreate = function() {
           console.log("clicked New Session");
           // console.log(newGameObj = {
@@ -61,41 +65,45 @@ $scope.home= function(){
 
 },{}],4:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('JoinController', ['$scope', '$http', '$location','TeamService', function($scope, $http, $location,TeamService) {
-            $scope.joinTeamName = '',
+    app.controller('JoinController', ['$scope', '$http', '$location', 'TeamService', function($scope, $http, $location, TeamService) {
+        $scope.joinTeamName = '',
             $scope.joinLobbyCode = '',
             $scope.teamName = '',
             $scope.lobbyName = '',
             $scope.lobbyCode = '',
 
+            $scope.goback = function() {
+                $location.path('/start');
+                console.log('clicked');
+            };
         $scope.newSessionCreate = function() {
-          TeamService.newSessionCreate($scope.teamName,$scope.lobbyName)
+            TeamService.newSessionCreate($scope.teamName, $scope.lobbyName)
         }
 
 
-/////////// join session http call////////////
+        /////////// join session http call////////////
         $scope.joinSessionCreate = function() {
-          joinGameObj = {
-              teamName: $scope.joinTeamName,
-          },
-            console.log("clicked Join Session");
+            joinGameObj = {
+                    teamName: $scope.joinTeamName,
+                },
+                console.log("clicked Join Session");
             // console.log(joinGameObj)
 
             // $location.path('/available');
 
             $http({
-                url: '/add-team/'+`${$scope.joinLobbyCode}`,
+                url: '/add-team/' + `${$scope.joinLobbyCode}`,
                 method: 'post',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
-              console.log(data);
+                console.log(data);
 
                 $location.path('/lobby');
 
             }).catch(function() {
                 console.error('join Session screw up');
                 alert('Please enter an existing code')
-                // $location.path('/shit')
+                    // $location.path('/shit')
             });
         };
 
@@ -105,10 +113,14 @@ module.exports = function(app) {
 
 },{}],5:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
+    app.controller('ListController', ['$scope', '$http','$location','QuestionService','$routeParams', function($scope, $http, $location, QuestionService, $routeParams) {
       $scope.clues = QuestionService.getClues();
-
       console.log('listcontroller', $scope.clues);
+      // if($routeParams.clueId !== undefined) {
+      //  QuestionService.getSingleClue($routeParams.id).then(function(singleClueObj) {
+      //      $scope.clueDetail = singleClueObj
+      //  })
+      // }
 
 ////// back-button //////
       $scope.goback = function(){
@@ -116,14 +128,19 @@ module.exports = function(app) {
         console.log('clicked');
       };
 //////// tranfer to individual clue page
-      $scope.cluePage = function(id) {
-        console.log('clicked to clue page', id);
+      $scope.cluePage = function() {
+        // console.log('clicked to clue page', id);
+        // if($routeParams.clueId !== undefined) {
+        //  QuestionService.getSingleClue($routeParams.id).then(function(singleClueObj) {
+        //      $scope.clueDetail = singleClueObj
+        //  })
+        // }
         // $location.path('/question/' + id);
       }
 
 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
 ////// flipclock courtesy of flipclockjs.com
-///// endDate cookie init on lobby start
+///// endDate cookie init on lobby start button
 
         $(function(){
 
@@ -159,7 +176,7 @@ module.exports = function(app) {
             //Lanching count down on ready
             countDown();
         });
-//////// get questions and populate list
+//////// end  clock function///////
 
 
     }]);
@@ -170,12 +187,14 @@ module.exports = function(app) {
     app.controller('LobbyController', ['$scope', '$http','TeamService','$location', function($scope, $http, TeamService,$location) {
       $scope.Game = TeamService.getTeams()
       $scope.displayCode = TeamService.getLobbyCode()
-      console.log('working')
+      console.log('lobby log', $scope.Game)
+      console.log($scope.Game);
+      ///// game start button
       $scope.session = function() {
         ////// setting clock end cookie////////////////
         var endDate = Date.now() + 90*60*1000;
         $.cookie('endDate', Math.round(endDate / 1000));
-        
+        ////////////////
         $location.path('/list')
       }
     }])
@@ -183,7 +202,7 @@ module.exports = function(app) {
 
 },{}],7:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService','$location', function($scope, $http, MainService, QuestionService, $location) {
+    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService','$location','$routeParams', function($scope, $http, MainService, QuestionService, $location, $routeParams) {
       var map = new GMaps({
           div: '#map',
           lat: 1,
@@ -192,8 +211,11 @@ module.exports = function(app) {
         MainService.getLocation(map);
         $scope.myLoc = MainService.getLocation(map);
         console.log($scope.myLoc);
-        
+        $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
+        console.log($scope.clue);
 
+
+        console.log($routeParams);
 //////// back-button function/////////
         $scope.return = function() {
             $location.path('/list')
@@ -223,20 +245,20 @@ module.exports = function(app) {
                 return dist;
             }
 
-            console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000), "meters");
-            if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000)) <= 50) {
-              alert('here!');
-              MainService.CreateMarker(map);
-            }else {
-              alert('not here')
-            }
-            // console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000), "meters");
-            // if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000)) <= 50) {
+            // console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000), "meters");
+            // if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000)) <= 50) {
             //   alert('here!');
-            //   MainService.CreateMarker();
+            //   MainService.CreateMarker(map);
             // }else {
             //   alert('not here')
             // }
+            console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude,'K') * 1000), "meters");
+            if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude,'K') * 1000)) <= 50) {
+              alert('here!');
+              MainService.CreateMarker();
+            }else {
+              alert('not here')
+            }
         };
 /////// end marker code///////
 
@@ -264,7 +286,7 @@ $scope.joinSession = function(){
 },{}],9:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
-          var myPosition = [];
+        var myPosition = [];
 
         return {
             getLocation: function(map) {
@@ -287,7 +309,7 @@ module.exports = function(app) {
                 })
                 return myPosition;
             },
-            CreateMarker: function(map) {
+            CreateMarker: function() {
           var data = myPosition[0]
               console.log(data.lat, data.lon)
                 map.addMarker({
@@ -298,7 +320,7 @@ module.exports = function(app) {
                         console.log('TSUUUUUUUU')
                     }
                 });
-                map.setCenter(data.lat, data.lon);
+                 map.setCenter(data.lat, data.lon);
             },
         };
     }]);
@@ -308,6 +330,7 @@ module.exports = function(app) {
 module.exports = function(app) {
     app.factory('QuestionService', ['$http', function($http) {
       var clues = [];
+      var singleClue = [];
 
         return {
           getClues: function(){
@@ -323,10 +346,21 @@ module.exports = function(app) {
 
             });
             return clues;
+          },
+          getSingleClue: function(id) {
+            $http({
+              url:'/get-single-clue' + '/' + id,
+              method: 'GET',
+            }).then(function(data){
+              var data = data.data
+              console.log('single clue', data);
+              angular.copy(data, singleClue)
+            }).catch(function(data){
+              console.log('error');
+            });
+            return singleClue;
           }
         }//end of return
-
-
     }]);
   };
 
@@ -383,14 +417,14 @@ module.exports = function(app) {
                 }).then(function(response) {
                     lobbyCode.push(response.data.lobbyCode)
                     // lobbyCode = response.data.lobbyCode
-                    console.log(lobbyCode)
+                    console.log(lobbyCode);
 
                 }).catch(function(response) {
                     console.error('EEERRT');
                     console.log(response);
                 })
-                return lobbyCode
-                console.log(lobbyCode)
+                return lobbyCode;
+              
             }
         } //end of return
     }]); //end of factory
@@ -445,7 +479,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     //   controller: 'QuestionController',
     //   templatesUrl:'templates/questionpage.html'
     // })
-    .when('/question', {
+    .when('/questionpage/:clueId', {
         controller: 'QuestionController',
         templateUrl: 'templates/questionpage.html'
     }).when('/gameover', {
