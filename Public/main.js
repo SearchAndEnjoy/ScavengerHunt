@@ -187,12 +187,14 @@ module.exports = function(app) {
     app.controller('LobbyController', ['$scope', '$http','TeamService','$location', function($scope, $http, TeamService,$location) {
       $scope.Game = TeamService.getTeams()
       $scope.displayCode = TeamService.getLobbyCode()
-      console.log('working')
+      console.log('lobby log', $scope.Game)
+      console.log($scope.Game);
+      ///// game start button
       $scope.session = function() {
         ////// setting clock end cookie////////////////
         var endDate = Date.now() + 90*60*1000;
         $.cookie('endDate', Math.round(endDate / 1000));
-        
+        ////////////////
         $location.path('/list')
       }
     }])
@@ -212,11 +214,7 @@ module.exports = function(app) {
         $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
         console.log($scope.clue);
 
-        // if($routeParams.clueId !== undefined) {
-        //  QuestionService.getSingleClue($routeParams.id).then(function(singleClueObj) {
-        //      $scope.clueDetail = singleClueObj
-        //  })
-        // }
+
         console.log($routeParams);
 //////// back-button function/////////
         $scope.return = function() {
@@ -254,8 +252,8 @@ module.exports = function(app) {
             // }else {
             //   alert('not here')
             // }
-            console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000), "meters");
-            if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000)) <= 50) {
+            console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude,'K') * 1000), "meters");
+            if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude,'K') * 1000)) <= 50) {
               alert('here!');
               MainService.CreateMarker();
             }else {
@@ -354,7 +352,9 @@ module.exports = function(app) {
               url:'/get-single-clue' + '/' + id,
               method: 'GET',
             }).then(function(data){
+              var data = data.data
               console.log('single clue', data);
+              angular.copy(data, singleClue)
             }).catch(function(data){
               console.log('error');
             });
@@ -417,14 +417,14 @@ module.exports = function(app) {
                 }).then(function(response) {
                     lobbyCode.push(response.data.lobbyCode)
                     // lobbyCode = response.data.lobbyCode
-                    console.log(lobbyCode)
+                    console.log(lobbyCode);
 
                 }).catch(function(response) {
                     console.error('EEERRT');
                     console.log(response);
                 })
-                return lobbyCode
-                console.log(lobbyCode)
+                return lobbyCode;
+              
             }
         } //end of return
     }]); //end of factory

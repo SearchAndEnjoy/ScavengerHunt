@@ -23,7 +23,9 @@ module.exports = function(app) {
               url:'/get-single-clue' + '/' + id,
               method: 'GET',
             }).then(function(data){
+              var data = data.data
               console.log('single clue', data);
+              angular.copy(data, singleClue)
             }).catch(function(data){
               console.log('error');
             });

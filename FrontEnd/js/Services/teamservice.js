@@ -50,14 +50,14 @@ module.exports = function(app) {
                 }).then(function(response) {
                     lobbyCode.push(response.data.lobbyCode)
                     // lobbyCode = response.data.lobbyCode
-                    console.log(lobbyCode)
+                    console.log(lobbyCode);
 
                 }).catch(function(response) {
                     console.error('EEERRT');
                     console.log(response);
                 })
-                return lobbyCode
-                console.log(lobbyCode)
+                return lobbyCode;
+              
             }
         } //end of return
     }]); //end of factory

@@ -11,11 +11,7 @@ module.exports = function(app) {
         $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
         console.log($scope.clue);
 
-        // if($routeParams.clueId !== undefined) {
-        //  QuestionService.getSingleClue($routeParams.id).then(function(singleClueObj) {
-        //      $scope.clueDetail = singleClueObj
-        //  })
-        // }
+
         console.log($routeParams);
 //////// back-button function/////////
         $scope.return = function() {
@@ -53,8 +49,8 @@ module.exports = function(app) {
             // }else {
             //   alert('not here')
             // }
-            console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000), "meters");
-            if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000)) <= 50) {
+            console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude,'K') * 1000), "meters");
+            if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude,'K') * 1000)) <= 50) {
               alert('here!');
               MainService.CreateMarker();
             }else {
