@@ -20,8 +20,6 @@ public class Team {
     @Column(nullable = false)
     String teamName;
 
-    boolean isReady = false;
-
     @JsonIgnore
     @JsonDeserialize
     @ManyToOne
@@ -34,9 +32,8 @@ public class Team {
 
     }
 
-    public Team(String teamName, boolean isReady, Game game, List<Answer> answerList) {
+    public Team(String teamName, Game game, List<Answer> answerList) {
         this.teamName = teamName;
-        this.isReady = isReady;
         this.game = game;
         this.answerList = answerList;
     }
@@ -63,18 +60,6 @@ public class Team {
 
     public void setGame(Game game) {
         this.game = game;
-    }
-
-    public boolean isReady() {
-        return isReady;
-    }
-
-    public void setIsReady(boolean isReady) {
-        isReady = isReady;
-    }
-
-    public List<Answer> getAnswerList() {
-        return answerList;
     }
 
     public void setAnswerList(List<Answer> answerList) {
