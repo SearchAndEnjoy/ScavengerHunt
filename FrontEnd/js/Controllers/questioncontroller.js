@@ -1,7 +1,12 @@
 module.exports = function(app) {
     app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService','$location', function($scope, $http, MainService, QuestionService, $location) {
-        MainService.getLocation();
-        $scope.myLoc = MainService.getLocation();
+      var map = new GMaps({
+          div: '#map',
+          lat: 1,
+          lng: -1,
+        });
+        MainService.getLocation(map);
+        $scope.myLoc = MainService.getLocation(map);
         console.log($scope.myLoc);
 
 //////// back-button function/////////
@@ -11,7 +16,7 @@ module.exports = function(app) {
 
 /////// getting location  checking distance and if passes creates marker/////////
         $scope.marker = function() {
-            MainService.getLocation();
+            MainService.getLocation(map);
             console.log("click", $scope.myLoc);
             function distance(lat1, lon1, lat2, lon2, unit) {
                 var radlat1 = Math.PI * lat1 / 180
@@ -36,7 +41,7 @@ module.exports = function(app) {
             console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000), "meters");
             if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000)) <= 50) {
               alert('here!');
-              MainService.CreateMarker();
+              MainService.CreateMarker(map);
             }else {
               alert('not here')
             }

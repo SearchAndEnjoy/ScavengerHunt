@@ -1,14 +1,9 @@
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
-        var map = new GMaps({
-            div: '#map',
-            lat: 1,
-            lng: -1,
-        });
           var myPosition = [];
-          
+
         return {
-            getLocation: function() {
+            getLocation: function(map) {
                 GMaps.geolocate({
                     success: function(position) {
                         map.setCenter(position.coords.latitude, position.coords.longitude);
@@ -28,7 +23,7 @@ module.exports = function(app) {
                 })
                 return myPosition;
             },
-            CreateMarker: function() {
+            CreateMarker: function(map) {
           var data = myPosition[0]
               console.log(data.lat, data.lon)
                 map.addMarker({
@@ -41,15 +36,6 @@ module.exports = function(app) {
                 });
                 map.setCenter(data.lat, data.lon);
             },
-
-          MarkerNearMe: function() {
-            map.addMarker({
-                lat:32.78495,
-                lng:-79.93672,
-                // fences:[polygon],
-                title: 'What',
-            });
-          },
         };
     }]);
 };
