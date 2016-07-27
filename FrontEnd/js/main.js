@@ -53,16 +53,20 @@ app.config(['$routeProvider', function($routeProvider) {
           controller:'ListController',
           templateUrl:'templates/questionlist.html',
         })
-        .when('/question',{
-          controller:'QuestionController',
-          templateUrl:'templates/questionpage.html',
-        })
         // .when('/question/:id '{
         //   controller: 'QuestionController',
         //   templatesUrl:'templates/questionpage.html'
         // })
+        .when('/question',{
+          controller:'QuestionController',
+          templateUrl:'templates/questionpage.html',
+        })
         .when('/gameover',{
           controller:'GameOverController',
           templateUrl:'templates/gameover.html',
         });
 }]);
+// .when('/question/:id '{
+//   controller: 'QuestionController',
+//   templatesUrl:'templates/questionpage.html'
+// })

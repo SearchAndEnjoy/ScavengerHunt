@@ -12,7 +12,7 @@ module.exports = function(app) {
 //////// tranfer to individual clue page
       $scope.cluePage = function(id) {
         console.log('clicked to clue page', id);
-        $location.path('/question/' + id);
+        // $location.path('/question/' + id);
       }
 
 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset

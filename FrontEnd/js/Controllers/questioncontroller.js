@@ -8,6 +8,7 @@ module.exports = function(app) {
         MainService.getLocation(map);
         $scope.myLoc = MainService.getLocation(map);
         console.log($scope.myLoc);
+        
 
 //////// back-button function/////////
         $scope.return = function() {
@@ -45,6 +46,13 @@ module.exports = function(app) {
             }else {
               alert('not here')
             }
+            // console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000), "meters");
+            // if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000)) <= 50) {
+            //   alert('here!');
+            //   MainService.CreateMarker();
+            // }else {
+            //   alert('not here')
+            // }
         };
 /////// end marker code///////
 
