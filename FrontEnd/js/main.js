@@ -7,11 +7,14 @@ require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
 require('./Controllers/joincontroller.js')(app);
+require('./Controllers/creategamecontroller.js')(app);
 require('./Controllers/lobbycontroller.js')(app);
-
+require('./Controllers/gameovercontroller.js')(app);
 // Services
 require('./Services/mainservice.js')(app);
 require('./Services/teamservice.js')(app);
+require('./Services/questionservice.js')(app);
+
 
 
 
@@ -50,12 +53,20 @@ app.config(['$routeProvider', function($routeProvider) {
           controller:'ListController',
           templateUrl:'templates/questionlist.html',
         })
+        // .when('/question/:id '{
+        //   controller: 'QuestionController',
+        //   templatesUrl:'templates/questionpage.html'
+        // })
         .when('/question',{
           controller:'QuestionController',
           templateUrl:'templates/questionpage.html',
         })
         .when('/gameover',{
-          // controller:'gameovercontroller',
+          controller:'GameOverController',
           templateUrl:'templates/gameover.html',
         });
 }]);
+// .when('/question/:id '{
+//   controller: 'QuestionController',
+//   templatesUrl:'templates/questionpage.html'
+// })

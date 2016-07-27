@@ -1,4 +1,52 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = function(app) {
+    app.controller('CreateGameController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+      $scope.teamName = '',
+      $scope.lobbyName = '',
+      $scope.lobbyCode = '',
+      newGameObj = {
+          teamName: $scope.teamName,
+          game: {
+              lobbyName: $scope.lobbyName,
+          }
+      },
+      $scope.newSessionCreate = function() {
+          console.log("clicked New Session");
+          // console.log(newGameObj = {
+          //     teamName: $scope.teamName,
+          //     game: {
+          //         lobbyName: $scope.lobbyName,
+          //     }
+          // });
+
+          $http({
+              url: '/create-game',
+              method: 'POST',
+              data: JSON.stringify(newGameObj),
+
+          }).then(function(data) {
+              console.log(data);
+               $location.path('/lobby');
+
+          }).catch(function(data) {
+              console.error('new Session screw up');
+              console.log(data);
+              // $location.path('/shit')
+          });
+      };
+
+    }]);
+  };
+
+},{}],2:[function(require,module,exports){
+module.exports = function(app){
+  app.controller('GameOverController',['$scope','$location','MainService',function($scope,$location,MainService){
+
+console.log('this is gameover');
+}])
+}
+
+},{}],3:[function(require,module,exports){
 module.exports = function(app){
   app.controller('InfoController',['$scope','$location',function($scope,$location){
 
@@ -11,7 +59,7 @@ $scope.home= function(){
 }])
 }
 
-},{}],2:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('JoinController', ['$scope', '$http', '$location','TeamService', function($scope, $http, $location,TeamService) {
             $scope.joinTeamName = '',
@@ -19,10 +67,13 @@ module.exports = function(app) {
             $scope.teamName = '',
             $scope.lobbyName = '',
             $scope.lobbyCode = '',
+
         $scope.newSessionCreate = function() {
           TeamService.newSessionCreate($scope.teamName,$scope.lobbyName)
         }
 
+
+/////////// join session http call////////////
         $scope.joinSessionCreate = function() {
           joinGameObj = {
               teamName: $scope.joinTeamName,
@@ -43,6 +94,7 @@ module.exports = function(app) {
 
             }).catch(function() {
                 console.error('join Session screw up');
+                alert('Please enter an existing code')
                 // $location.path('/shit')
             });
         };
@@ -51,18 +103,27 @@ module.exports = function(app) {
     }]);
 };
 
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('ListController', ['$scope', '$http','$location', function($scope, $http, $location) {
+    app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
+      $scope.clues = QuestionService.getClues();
 
+      console.log('listcontroller', $scope.clues);
+
+////// back-button //////
       $scope.goback = function(){
         $location.path('/lobby');
         console.log('clicked');
       };
-
+//////// tranfer to individual clue page
+      $scope.cluePage = function(id) {
+        console.log('clicked to clue page', id);
+        // $location.path('/question/' + id);
+      }
 
 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
 ////// flipclock courtesy of flipclockjs.com
+///// endDate cookie init on lobby start
 
         $(function(){
 
@@ -74,17 +135,16 @@ module.exports = function(app) {
                     callbacks: {
 
                         init: function() {
-                          console.log('first in cbs', $.cookie('endDate'));
+                          console.log('first in callbacks', $.cookie('endDate'));
                             //store end date If it's not yet in cookies
                             if(!$.cookie('endDate')){
                                 // end date = current date + 60 minutes
-                                var endDate = Date.now() + 60*60*1000;
+                                var endDate = Date.now() + 90*60*1000;
 
                                 // store end date in cookies
                                 $.cookie('endDate', Math.round(endDate / 1000));
                             }
                         },
-
                     }
                 });
                 console.log($.cookie('endDate'));
@@ -92,47 +152,56 @@ module.exports = function(app) {
                    be the difference between current and end Date, so like this counter can
                    continue the countdown normally in case of refresh. */
                 var counter = $.cookie('endDate')-currentDate;
-                //
                 clock.setTime(counter);
                 clock.setCountdown(true);
-
                 clock.start();
             }
-
-
-
             //Lanching count down on ready
             countDown();
         });
+//////// get questions and populate list
 
-    }])
-}
 
-},{}],4:[function(require,module,exports){
+    }]);
+};
+
+},{}],6:[function(require,module,exports){
 module.exports = function(app) {
     app.controller('LobbyController', ['$scope', '$http','TeamService','$location', function($scope, $http, TeamService,$location) {
       $scope.Game = TeamService.getTeams()
       $scope.displayCode = TeamService.getLobbyCode()
+      console.log('working')
       $scope.session = function() {
+        ////// setting clock end cookie////////////////
+        var endDate = Date.now() + 90*60*1000;
+        $.cookie('endDate', Math.round(endDate / 1000));
+        
         $location.path('/list')
       }
     }])
 }
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService', '$location', function($scope, $http, MainService, $location) {
-        MainService.getLocation();
-        $scope.myLoc = MainService.getLocation();
+    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService','$location', function($scope, $http, MainService, QuestionService, $location) {
+      var map = new GMaps({
+          div: '#map',
+          lat: 1,
+          lng: -1,
+        });
+        MainService.getLocation(map);
+        $scope.myLoc = MainService.getLocation(map);
         console.log($scope.myLoc);
+        
 
 //////// back-button function/////////
         $scope.return = function() {
             $location.path('/list')
         };
-///////
+
+/////// getting location  checking distance and if passes creates marker/////////
         $scope.marker = function() {
-            MainService.getLocation();
+            MainService.getLocation(map);
             console.log("click", $scope.myLoc);
             function distance(lat1, lon1, lat2, lon2, unit) {
                 var radlat1 = Math.PI * lat1 / 180
@@ -157,17 +226,24 @@ module.exports = function(app) {
             console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000), "meters");
             if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000)) <= 50) {
               alert('here!');
-              MainService.CreateMarker();
+              MainService.CreateMarker(map);
             }else {
               alert('not here')
             }
+            // console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000), "meters");
+            // if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.77994, -79.93419699999998,'K') * 1000)) <= 50) {
+            //   alert('here!');
+            //   MainService.CreateMarker();
+            // }else {
+            //   alert('not here')
+            // }
         };
-
+/////// end marker code///////
 
     }])
 }
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = function(app){
   app.controller('StartController',['$scope','$http','$location',function($scope,$http,$location){
 
@@ -185,18 +261,13 @@ $scope.joinSession = function(){
 }])
 }
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
-        var map = new GMaps({
-            div: '#map',
-            lat: 1,
-            lng: -1,
-        });
           var myPosition = [];
-          
+
         return {
-            getLocation: function() {
+            getLocation: function(map) {
                 GMaps.geolocate({
                     success: function(position) {
                         map.setCenter(position.coords.latitude, position.coords.longitude);
@@ -216,7 +287,7 @@ module.exports = function(app) {
                 })
                 return myPosition;
             },
-            CreateMarker: function() {
+            CreateMarker: function(map) {
           var data = myPosition[0]
               console.log(data.lat, data.lon)
                 map.addMarker({
@@ -229,75 +300,103 @@ module.exports = function(app) {
                 });
                 map.setCenter(data.lat, data.lon);
             },
-
-          MarkerNearMe: function() {
-            map.addMarker({
-                lat:32.78495,
-                lng:-79.93672,
-                // fences:[polygon],
-                title: 'What',
-            });
-          },
         };
     }]);
 };
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function(app) {
-    app.factory('TeamService', ['$http','$location', function($http,$location) {
-      var lobbyCode = ''
+    app.factory('QuestionService', ['$http', function($http) {
+      var clues = [];
+
         return {
-          getTeams: function(){
-            teamName = []
+          getClues: function(){
             $http({
-                url: '/get-teams',
+                url: '/get-clues',
                 method: 'GET',
             }).then(function(response) {
             let data = response.data
-              response.data.forEach(function(el){
-                teamName.push(el.teamName)
-              })
+            console.log('questionservice', data);
+              angular.copy(data, clues)
             }).catch(function(response) {
               console.log('error! error! bzzzt!')
 
             });
-            return teamName
-          },//end of getTeams
-          newSessionCreate: function(a,b) {
-            newGameObj = {
-                teamName: a,
-                game: {
-                    lobbyName: b,
-                }
-            }
-              console.log("clicked New Session");
-              $http({
-                  url: '/create-game',
-                  method: 'POST',
-                  data: JSON.stringify(newGameObj),
-
-              }).then(function(response) {
-                  var data = response.data;
-                  // lobbyCode.push(data.lobbyCode)
-                  lobbyCode = data.lobbyCode
-                  console.log(lobbyCode)
-                  $location.path('/lobby');
-
-              }).catch(function(response) {
-                  console.error('new Session screw up');
-                  console.log(response);
-                  // $location.path('/shit')
-              });
-              return lobbyCode
-          },
-        getLobbyCode: function(){
-          return lobbyCode
-        }
+            return clues;
+          }
         }//end of return
-    }]);//end of factory
+
+
+    }]);
+  };
+
+},{}],11:[function(require,module,exports){
+module.exports = function(app) {
+    app.factory('TeamService', ['$http', '$location', function($http, $location) {
+        return {
+            getTeams: function() {
+                teamName = []
+                $http({
+                    url: '/get-teams',
+                    method: 'GET',
+                }).then(function(response) {
+                    let data = response.data.teams
+                    console.log(response)
+                    data.forEach(function(el) {
+                        teamName.push(el.teamName)
+                    })
+                }).catch(function(response) {
+                    console.log('error! error! bzzzt!')
+
+                });
+                return teamName
+            }, //end of getTeams
+            newSessionCreate: function(a, b) {
+                newGameObj = {
+                    teamName: a,
+                    game: {
+                        lobbyName: b,
+                    }
+                }
+                console.log("clicked New Session");
+                $http({
+                    url: '/create-game',
+                    method: 'POST',
+                    data: JSON.stringify(newGameObj),
+
+                }).then(function(response) {
+                    console.log('This is working')
+                    $location.path('/lobby')
+
+                }).catch(function(response) {
+                    console.error('new Session screw up');
+                    console.log(response);
+                    // $location.path('/shit')
+                });
+            },
+            getLobbyCode: function() {
+              lobbyCode=[]
+                $http({
+                    url: '/get-teams',
+                    method: 'GET',
+
+                }).then(function(response) {
+                    lobbyCode.push(response.data.lobbyCode)
+                    // lobbyCode = response.data.lobbyCode
+                    console.log(lobbyCode)
+
+                }).catch(function(response) {
+                    console.error('EEERRT');
+                    console.log(response);
+                })
+                return lobbyCode
+                console.log(lobbyCode)
+            }
+        } //end of return
+    }]); //end of factory
 };
 
-},{}],9:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 var app = angular.module('HuntApp', ['ngRoute']);
@@ -308,11 +407,13 @@ require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
 require('./Controllers/joincontroller.js')(app);
+require('./Controllers/creategamecontroller.js')(app);
 require('./Controllers/lobbycontroller.js')(app);
-
+require('./Controllers/gameovercontroller.js')(app);
 // Services
 require('./Services/mainservice.js')(app);
 require('./Services/teamservice.js')(app);
+require('./Services/questionservice.js')(app);
 
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {
@@ -339,12 +440,21 @@ app.config(['$routeProvider', function ($routeProvider) {
     }).when('/list', {
         controller: 'ListController',
         templateUrl: 'templates/questionlist.html'
-    }).when('/question', {
+    })
+    // .when('/question/:id '{
+    //   controller: 'QuestionController',
+    //   templatesUrl:'templates/questionpage.html'
+    // })
+    .when('/question', {
         controller: 'QuestionController',
         templateUrl: 'templates/questionpage.html'
     }).when('/gameover', {
-        // controller:'gameovercontroller',
+        controller: 'GameOverController',
         templateUrl: 'templates/gameover.html'
     });
 }]);
-},{"./Controllers/infocontroller.js":1,"./Controllers/joincontroller.js":2,"./Controllers/listcontroller.js":3,"./Controllers/lobbycontroller.js":4,"./Controllers/questioncontroller.js":5,"./Controllers/startcontroller.js":6,"./Services/mainservice.js":7,"./Services/teamservice.js":8}]},{},[9])
+// .when('/question/:id '{
+//   controller: 'QuestionController',
+//   templatesUrl:'templates/questionpage.html'
+// })
+},{"./Controllers/creategamecontroller.js":1,"./Controllers/gameovercontroller.js":2,"./Controllers/infocontroller.js":3,"./Controllers/joincontroller.js":4,"./Controllers/listcontroller.js":5,"./Controllers/lobbycontroller.js":6,"./Controllers/questioncontroller.js":7,"./Controllers/startcontroller.js":8,"./Services/mainservice.js":9,"./Services/questionservice.js":10,"./Services/teamservice.js":11}]},{},[12])
