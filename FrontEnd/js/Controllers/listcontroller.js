@@ -1,8 +1,12 @@
 module.exports = function(app) {
-    app.controller('ListController', ['$scope', '$http','$location','QuestionService', function($scope, $http, $location, QuestionService) {
+    app.controller('ListController', ['$scope', '$http','$location','QuestionService','$routeParams', function($scope, $http, $location, QuestionService, $routeParams) {
       $scope.clues = QuestionService.getClues();
-
       console.log('listcontroller', $scope.clues);
+      // if($routeParams.clueId !== undefined) {
+      //  QuestionService.getSingleClue($routeParams.id).then(function(singleClueObj) {
+      //      $scope.clueDetail = singleClueObj
+      //  })
+      // }
 
 ////// back-button //////
       $scope.goback = function(){
@@ -10,14 +14,19 @@ module.exports = function(app) {
         console.log('clicked');
       };
 //////// tranfer to individual clue page
-      $scope.cluePage = function(id) {
-        console.log('clicked to clue page', id);
+      $scope.cluePage = function() {
+        // console.log('clicked to clue page', id);
+        // if($routeParams.clueId !== undefined) {
+        //  QuestionService.getSingleClue($routeParams.id).then(function(singleClueObj) {
+        //      $scope.clueDetail = singleClueObj
+        //  })
+        // }
         // $location.path('/question/' + id);
       }
 
 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
 ////// flipclock courtesy of flipclockjs.com
-///// endDate cookie init on lobby start
+///// endDate cookie init on lobby start button
 
         $(function(){
 
@@ -53,7 +62,7 @@ module.exports = function(app) {
             //Lanching count down on ready
             countDown();
         });
-//////// get questions and populate list
+//////// end  clock function///////
 
 
     }]);

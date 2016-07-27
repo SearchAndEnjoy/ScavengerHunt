@@ -9,6 +9,10 @@ module.exports = function(app) {
               lobbyName: $scope.lobbyName,
           }
       },
+      $scope.goback = function(){
+        $location.path('/start');
+        console.log('clicked');
+      };
       $scope.newSessionCreate = function() {
           console.log("clicked New Session");
           // console.log(newGameObj = {

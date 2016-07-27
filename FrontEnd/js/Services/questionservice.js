@@ -1,6 +1,7 @@
 module.exports = function(app) {
     app.factory('QuestionService', ['$http', function($http) {
       var clues = [];
+      var singleClue = [];
 
         return {
           getClues: function(){
@@ -16,9 +17,18 @@ module.exports = function(app) {
 
             });
             return clues;
+          },
+          getSingleClue: function(id) {
+            $http({
+              url:'/get-single-clue' + '/' + id,
+              method: 'GET',
+            }).then(function(data){
+              console.log('single clue', data);
+            }).catch(function(data){
+              console.log('error');
+            });
+            return singleClue;
           }
         }//end of return
-
-
     }]);
   };
