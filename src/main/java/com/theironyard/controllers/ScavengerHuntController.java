@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -99,11 +100,6 @@ public class ScavengerHuntController {
 
     }
 
-//    @RequestMapping(path = "/lobby-code",method = RequestMethod.GET)
-//    public ResponseEntity<Object> getLobbyCode (HttpSession session) {
-//
-//    }
-
     @RequestMapping(path = "/get-teams", method = RequestMethod.GET)
     public ResponseEntity<Object> getTeams (HttpSession session) {
 
@@ -116,6 +112,18 @@ public class ScavengerHuntController {
         return new ResponseEntity<Object>(gameTeams,HttpStatus.OK);
 
     }
+
+    @RequestMapping(path = "/start-game", method = RequestMethod.PUT)
+    public ResponseEntity<Object> readyCheck (HttpSession session) {
+
+        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
+
+        if (team.isReady() != false) {
+            return new  ResponseEntity<Object> (HttpStatus.ACCEPTED);
+        }
+        else return new ResponseEntity<Object>( HttpStatus.BAD_REQUEST);
+    }
+
     @RequestMapping(path = "/get-clues", method = RequestMethod.GET)
     public ResponseEntity<Object> clueList (HttpSession session) {
 
@@ -123,6 +131,14 @@ public class ScavengerHuntController {
 
         return new ResponseEntity<Object>(team.getGame().getClues(), HttpStatus.OK);
 
+    }
+
+    @RequestMapping(path = "/get-single-clue?{clue_id}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getSingleClue (@PathVariable("clue_id") int id) {
+
+        Clue clue = clues.findOne(id);
+
+        return new ResponseEntity<Object>(clue.getClue(), HttpStatus.OK);
     }
 
 
@@ -133,7 +149,7 @@ public class ScavengerHuntController {
 
         Clue clue = clues.findOne(id);
 
-        Answer answer = new Answer(clue, team, true);
+        Answer answer = new Answer(clue, team, true, LocalDateTime.now());
 
         ArrayList<Answer> a = new ArrayList<>();
         a.add(answer);
