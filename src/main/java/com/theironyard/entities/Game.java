@@ -4,6 +4,7 @@ package com.theironyard.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -23,6 +24,9 @@ public class Game {
     @Column(nullable = false)
     String lobbyCode;
 
+    @Column(nullable = false)
+    LocalDateTime startTime;
+
     @OneToMany(mappedBy = "game")
     List<Team> teamList;
 
@@ -33,9 +37,10 @@ public class Game {
     public Game() {
     }
 
-    public Game(String lobbyName, String lobbyCode, List<Team> teamList, List<Clue> clues) {
+    public Game(String lobbyName, String lobbyCode, LocalDateTime startTime, List<Team> teamList, List<Clue> clues) {
         this.lobbyName = lobbyName;
         this.lobbyCode = lobbyCode;
+        this.startTime = startTime;
         this.teamList = teamList;
         this.clues = clues;
     }
@@ -78,6 +83,14 @@ public class Game {
 
     public void setClues(List<Clue> clues) {
         this.clues = clues;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 }
 
