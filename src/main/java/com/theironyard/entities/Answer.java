@@ -3,6 +3,7 @@ package com.theironyard.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Created by Erik on 7/21/16.
@@ -24,14 +25,18 @@ public class Answer {
 
     boolean atLocation = false;
 
+    @Column(nullable = false)
+    LocalDateTime timestamp;
+
     public Answer() {
 
     }
 
-    public Answer(Clue clue, Team team, boolean atLocation) {
+    public Answer(Clue clue, Team team, boolean atLocation, LocalDateTime timestamp) {
         this.clue = clue;
         this.team = team;
         this.atLocation = atLocation;
+        this.timestamp = timestamp;
     }
 
     public int getId() {
@@ -58,7 +63,15 @@ public class Answer {
         this.team = team;
     }
 
-    public boolean isAtLocation() {
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public boolean atLocation() {
         return atLocation;
     }
 
