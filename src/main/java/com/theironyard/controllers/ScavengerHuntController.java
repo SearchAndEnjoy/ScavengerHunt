@@ -113,15 +113,25 @@ public class ScavengerHuntController {
 
     }
 
-    @RequestMapping(path = "/start-game", method = RequestMethod.PUT)
+    @RequestMapping(path = "/get-game-start", method = RequestMethod.GET)
     public ResponseEntity<Object> readyCheck (HttpSession session) {
 
-        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
+        Game game = games.findOne((Integer) session.getAttribute("game_id"));
 
-        if (team.isReady() != false) {
-            return new  ResponseEntity<Object> (HttpStatus.ACCEPTED);
-        }
-        else return new ResponseEntity<Object>( HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Object>(game.getStartTime(), HttpStatus.OK);
+
+    }
+
+    @RequestMapping(path = "/start-game", method = RequestMethod.POST)
+    public ResponseEntity<Object> startGame (HttpSession session) {
+
+        Game game = games.findOne((Integer) session.getAttribute("game_id"));
+
+        game.setStartTime(LocalDateTime.now());
+
+        games.save(game);
+
+        return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/get-clues", method = RequestMethod.GET)
