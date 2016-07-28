@@ -181,11 +181,11 @@
                 //   TeamService.getTeams();
                 // },10000)
                 $scope.ready = LobbyService.checkReady();
-                console.log(LobbyService.checkReady());
+                console.log(LobbyService.checkReady(), $scope.ready);
 
                 setInterval(function () {
                     console.log("checking for ready", LobbyService.checkReady());
-                    if (false) {
+                    if ($scope.ready !== []) {
                         $location.path('/list');
                         console.log("ready true");
                     }
@@ -227,6 +227,7 @@
                 console.log($scope.myLoc);
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
                 console.log($scope.clue);
+                var clueId = $routeParams.clueId;
 
                 console.log($routeParams);
                 //////// back-button function/////////
@@ -265,7 +266,7 @@
                         // MainService.CreateMarker();
 
                         $http({
-                            url: '/at-location/clueId',
+                            url: '/at-location' + '/' + clueId,
                             method: 'PUT',
                             data: ""
 
