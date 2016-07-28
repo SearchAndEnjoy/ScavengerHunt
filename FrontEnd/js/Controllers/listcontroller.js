@@ -1,5 +1,13 @@
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService','$routeParams', function($scope, $http, $location, QuestionService, $routeParams) {
+      var jq = jQuery.noConflict();
+      ////// setting clock end cookie////////////////
+      // var endDate = Date.now() + 90 * 60 * 1000;
+      var endDate = Date.now() + 1 * 3 * 1000;
+
+      jq.cookie('endDate', Math.round(endDate / 1000));
+      ////////////////
+
       $scope.clues = QuestionService.getClues();
       console.log('listcontroller', $scope.clues);
       // if($routeParams.clueId !== undefined) {
@@ -28,39 +36,43 @@ module.exports = function(app) {
 ////// flipclock courtesy of flipclockjs.com
 ///// endDate cookie init on lobby start button
 
-        $(function(){
+        // jq(function(){
 
              var countDown = function(){
                 var currentDate = Math.round(new Date() / 1000);
 
-                var clock = $('.clock').FlipClock({
+                var clock = jq('.clock').FlipClock({
                     countdown: true,
                     callbacks: {
 
                         init: function() {
-                          console.log('first in callbacks', $.cookie('endDate'));
                             //store end date If it's not yet in cookies
-                            if(!$.cookie('endDate')){
+                            if(!jq.cookie('endDate')){
                                 // end date = current date + 60 minutes
                                 var endDate = Date.now() + 90*60*1000;
                                 // store end date in cookies
-                                $.cookie('endDate', Math.round(endDate / 1000));
+                                jq.cookie('endDate', Math.round(endDate / 1000));
                             }
+                        },
+                        stop: function() {
+                          $location.path('/gameover');
+                          $scope.$apply();
+                          console.log('clockstopped game over');
+
                         },
                     }
                 });
-                console.log($.cookie('endDate'));
                 /* counter will be at first 1 min if the user refresh the page the counter will
                    be the difference between current and end Date, so like this counter can
                    continue the countdown normally in case of refresh. */
-                var counter = $.cookie('endDate')-currentDate;
+                var counter = jq.cookie('endDate')-currentDate;
                 clock.setTime(counter);
                 clock.setCountdown(true);
                 clock.start();
             }
             //Lanching count down on ready
             countDown();
-        });
+        // });
 //////// end  clock function///////
 
 

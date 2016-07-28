@@ -1,5 +1,7 @@
 module.exports = function(app) {
     app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', function($scope, $http, TeamService, LobbyService, $location) {
+        var jq = jQuery.noConflict();
+
         $scope.Game = TeamService.getTeams();
         // setInterval(function(){
         //   TeamService.getTeams();
@@ -19,10 +21,10 @@ module.exports = function(app) {
             // console.log('lobby log', $scope.Game)
             ///// game start button
         $scope.session = function() {
-            ////// setting clock end cookie////////////////
-            var endDate = Date.now() + 90 * 60 * 1000;
-            $.cookie('endDate', Math.round(endDate / 1000));
-            ////////////////
+            // ////// setting clock end cookie////////////////
+            // // var endDate = Date.now() + 90 * 60 * 1000;            //
+            // jq.cookie('endDate', Math.round(endDate / 1000));
+            // ////////////////
             console.log("clicked Post readyState");
             $http({
                 url: '/start-game',
@@ -30,6 +32,8 @@ module.exports = function(app) {
 
             }).then(function(response) {
                 console.log('start game POST working', response)
+                       $location.path('/list')
+
 
             }).catch(function(response) {
                 console.error('start game POST failed');

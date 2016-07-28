@@ -112,6 +112,14 @@
     }, {}], 5: [function (require, module, exports) {
         module.exports = function (app) {
             app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', function ($scope, $http, $location, QuestionService, $routeParams) {
+                var jq = jQuery.noConflict();
+                ////// setting clock end cookie////////////////
+                // var endDate = Date.now() + 90 * 60 * 1000;
+                var endDate = Date.now() + 1 * 3 * 1000;
+
+                jq.cookie('endDate', Math.round(endDate / 1000));
+                ////////////////
+
                 $scope.clues = QuestionService.getClues();
                 console.log('listcontroller', $scope.clues);
                 // if($routeParams.clueId !== undefined) {
@@ -140,39 +148,42 @@
                 ////// flipclock courtesy of flipclockjs.com
                 ///// endDate cookie init on lobby start button
 
-                ;$(function () {
+                // jq(function(){
 
-                    var countDown = function countDown() {
-                        var currentDate = Math.round(new Date() / 1000);
+                ;var countDown = function countDown() {
+                    var currentDate = Math.round(new Date() / 1000);
 
-                        var clock = $('.clock').FlipClock({
-                            countdown: true,
-                            callbacks: {
+                    var clock = jq('.clock').FlipClock({
+                        countdown: true,
+                        callbacks: {
 
-                                init: function init() {
-                                    console.log('first in callbacks', $.cookie('endDate'));
-                                    //store end date If it's not yet in cookies
-                                    if (!$.cookie('endDate')) {
-                                        // end date = current date + 60 minutes
-                                        var endDate = Date.now() + 90 * 60 * 1000;
-                                        // store end date in cookies
-                                        $.cookie('endDate', Math.round(endDate / 1000));
-                                    }
+                            init: function init() {
+                                //store end date If it's not yet in cookies
+                                if (!jq.cookie('endDate')) {
+                                    // end date = current date + 60 minutes
+                                    var endDate = Date.now() + 90 * 60 * 1000;
+                                    // store end date in cookies
+                                    jq.cookie('endDate', Math.round(endDate / 1000));
                                 }
+                            },
+                            stop: function stop() {
+                                $location.path('/gameover');
+                                $scope.$apply();
+                                console.log('clockstopped game over');
                             }
-                        });
-                        console.log($.cookie('endDate'));
-                        /* counter will be at first 1 min if the user refresh the page the counter will
-                           be the difference between current and end Date, so like this counter can
-                           continue the countdown normally in case of refresh. */
-                        var counter = $.cookie('endDate') - currentDate;
-                        clock.setTime(counter);
-                        clock.setCountdown(true);
-                        clock.start();
-                    };
-                    //Lanching count down on ready
-                    countDown();
-                });
+                        }
+                    });
+                    /* counter will be at first 1 min if the user refresh the page the counter will
+                       be the difference between current and end Date, so like this counter can
+                       continue the countdown normally in case of refresh. */
+                    var counter = jq.cookie('endDate') - currentDate;
+                    clock.setTime(counter);
+                    clock.setCountdown(true);
+                    clock.start();
+                };
+                //Lanching count down on ready
+                countDown();
+                // });
                 //////// end  clock function///////
 
             }]);
@@ -180,6 +191,8 @@
     }, {}], 6: [function (require, module, exports) {
         module.exports = function (app) {
             app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', function ($scope, $http, TeamService, LobbyService, $location) {
+                var jq = jQuery.noConflict();
+
                 $scope.Game = TeamService.getTeams();
                 // setInterval(function(){
                 //   TeamService.getTeams();
@@ -199,10 +212,10 @@
                 // console.log('lobby log', $scope.Game)
                 ///// game start button
                 $scope.session = function () {
-                    ////// setting clock end cookie////////////////
-                    var endDate = Date.now() + 90 * 60 * 1000;
-                    $.cookie('endDate', Math.round(endDate / 1000));
-                    ////////////////
+                    // ////// setting clock end cookie////////////////
+                    // // var endDate = Date.now() + 90 * 60 * 1000;            //
+                    // jq.cookie('endDate', Math.round(endDate / 1000));
+                    // ////////////////
                     console.log("clicked Post readyState");
                     $http({
                         url: '/start-game',
@@ -210,6 +223,7 @@
 
                     }).then(function (response) {
                         console.log('start game POST working', response);
+                        $location.path('/list');
                     }).catch(function (response) {
                         console.error('start game POST failed');
                     });
@@ -489,6 +503,7 @@
         };
     }, {}], 13: [function (require, module, exports) {
         var app = angular.module('HuntApp', ['ngRoute']);
+        var jq = jQuery.noConflict();
 
         // Controllers
         require('./Controllers/questioncontroller.js')(app);

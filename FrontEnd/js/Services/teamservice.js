@@ -18,7 +18,7 @@ module.exports = function(app) {
                     console.log('error! error! bzzzt!')
 
                 });
-                return teamName
+                return teamName;
             }, //end of getTeams
             newSessionCreate: function(a, b) {
               var newGameObj = {
