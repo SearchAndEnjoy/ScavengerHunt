@@ -49,7 +49,7 @@ module.exports = function(app) {
                 // MainService.CreateMarker();
 
                 $http({
-                    url: '/at-location',
+                    url: '/at-location/clueId',
                     method: 'PUT',
                     data:"",
 
