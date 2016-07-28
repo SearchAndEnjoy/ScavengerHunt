@@ -6,14 +6,15 @@
 
         </div>
     </div>
-    <ul class="list-group">
+    <ul class="list-group" ng-repeat="team in gameOver">
 
         <li class=>
           <div class="team-info">
-            <h1>team</h1>
-            <h2>Answers</h2>
-            <h2>Rank</h2>
+            <h1>Team Name: {{team.teamName}}</h1>
+            <h2>Correct Answers: {{team.answerList.length}}</h2>
+            <h2>Time Finished: {{team.answerList[team.answerList.length -1].timestamp.hour}}:{{team.answerList[team.answerList.length -1].timestamp.minute}}</h2>
           </div>
+<!-- google maps instance -->
             <div id="mini-map"></div>
 
     </ul>
