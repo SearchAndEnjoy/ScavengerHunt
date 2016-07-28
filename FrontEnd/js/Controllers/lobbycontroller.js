@@ -1,23 +1,28 @@
 module.exports = function(app) {
-    app.controller('LobbyController', ['$scope', '$http','TeamService','LobbyService','$location', function($scope, $http, TeamService, LobbyService, $location) {
-      $scope.Game = TeamService.getTeams();
-      $scope.ready = LobbyService.checkReady();
-      console.log(LobbyService.checkReady());
+    app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', function($scope, $http, TeamService, LobbyService, $location) {
+        $scope.Game = TeamService.getTeams();
+        // setInterval(function(){
+        //   TeamService.getTeams();
+        // },10000)
+        $scope.ready = LobbyService.checkReady();
+        console.log(LobbyService.checkReady());
 
-      // setInterval(function() {
-      //         $scope.Game;
-      //         console.log('lobby log', $scope.Game)
-      //         console.log($scope.ready);
-      // },5000);
+        setInterval(function() {
+          console.log("checking for ready", LobbyService.checkReady());
+            if (false) {
+                $location.path('/list')
+                console.log("ready true");
+            }
+        }, 5000);
 
-      $scope.displayCode = TeamService.getLobbyCode()
-      // console.log('lobby log', $scope.Game)
-      ///// game start button
-      $scope.session = function() {
-        ////// setting clock end cookie////////////////
-        var endDate = Date.now() + 90*60*1000;
-        $.cookie('endDate', Math.round(endDate / 1000));
-        ////////////////
+        $scope.displayCode = TeamService.getLobbyCode()
+            // console.log('lobby log', $scope.Game)
+            ///// game start button
+        $scope.session = function() {
+            ////// setting clock end cookie////////////////
+            var endDate = Date.now() + 90 * 60 * 1000;
+            $.cookie('endDate', Math.round(endDate / 1000));
+            ////////////////
             console.log("clicked Post readyState");
             $http({
                 url: '/start-game',
@@ -31,7 +36,7 @@ module.exports = function(app) {
 
             });
 
-        // $location.path('/list')
-      }
+            // $location.path('/list')
+        }
     }])
 }

@@ -50,13 +50,14 @@ module.exports = function(app) {
 
                 $http({
                     url: '/at-location',
-                    method: 'POST',
+                    method: 'PUT',
+                    data:"",
 
                 }).then(function(response) {
-                    console.log('clue answer POST working', response)
+                    console.log('clue answer PUT working', response)
 
                 }).catch(function(response) {
-                    console.error('clue answer POST failed');
+                    console.error('clue answer PUT failed');
 
                 });
 
