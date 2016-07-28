@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    app.factory('LobbyService', ['$http', function($http) {
+    app.factory('LobbyService', ['$http','$location', function($http, $location) {
       var readyState = [];
       var setReadyState = [];
 
@@ -26,7 +26,7 @@ module.exports = function(app) {
                 method: 'GET',
 
             }).then(function(response) {
-                console.log('checkReady works', response);
+                // console.log('checkReady works', response);
                 let data = response.data;
                 angular.copy(data, readyState)
 

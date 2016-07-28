@@ -59,7 +59,11 @@ module.exports = function(app) {
                 })
                 return lobbyCode;
 
-            }
+            },
+            getOverInfo: function(){
+              $http
+
+            },
         } //end of return
     }]); //end of factory
 };

@@ -9,7 +9,7 @@
         </div>
         <ul class="list-group">
 
-            <li class="list-group-item" ng-repeat='team in Game track by $index'>
+            <li class="list-group-item lobby-list-item" ng-repeat='team in Game track by $index'>
                 <h1>{{team}}</h1>
         </ul>
         <button ngShow="team === game[0]" type="button" class="btn btn-primary btn-lg btn-block lrg-page-buttons" ng-click="session()">Ready to Play</button>

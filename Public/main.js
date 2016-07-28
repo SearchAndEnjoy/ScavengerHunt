@@ -51,7 +51,7 @@
         };
     }, {}], 2: [function (require, module, exports) {
         module.exports = function (app) {
-            app.controller('GameOverController', ['$scope', '$location', 'MainService', function ($scope, $location, MainService) {
+            app.controller('GameOverController', ['$scope', '$location', 'MainService', 'TeamService', function ($scope, $location, MainService, TeamService) {
 
                 console.log('this is gameover');
             }]);
@@ -177,14 +177,19 @@
         module.exports = function (app) {
             app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', function ($scope, $http, TeamService, LobbyService, $location) {
                 $scope.Game = TeamService.getTeams();
+                // setInterval(function(){
+                //   TeamService.getTeams();
+                // },10000)
                 $scope.ready = LobbyService.checkReady();
                 console.log(LobbyService.checkReady());
 
-                // setInterval(function() {
-                //         $scope.Game;
-                //         console.log('lobby log', $scope.Game)
-                //         console.log($scope.ready);
-                // },5000);
+                setInterval(function () {
+                    console.log("checking for ready", LobbyService.checkReady());
+                    if (false) {
+                        $location.path('/list');
+                        console.log("ready true");
+                    }
+                }, 5000);
 
                 $scope.displayCode = TeamService.getLobbyCode();
                 // console.log('lobby log', $scope.Game)
@@ -260,13 +265,14 @@
                         // MainService.CreateMarker();
 
                         $http({
-                            url: '/at-location',
-                            method: 'POST'
+                            url: '/at-location/clueId',
+                            method: 'PUT',
+                            data: ""
 
                         }).then(function (response) {
-                            console.log('clue answer POST working', response);
+                            console.log('clue answer PUT working', response);
                         }).catch(function (response) {
-                            console.error('clue answer POST failed');
+                            console.error('clue answer PUT failed');
                         });
                     } else {
                         alert('not here');
@@ -293,7 +299,7 @@
         };
     }, {}], 9: [function (require, module, exports) {
         module.exports = function (app) {
-            app.factory('LobbyService', ['$http', function ($http) {
+            app.factory('LobbyService', ['$http', '$location', function ($http, $location) {
                 var readyState = [];
                 var setReadyState = [];
 
@@ -320,7 +326,7 @@
                             method: 'GET'
 
                         }).then(function (response) {
-                            console.log('checkReady works', response);
+                            // console.log('checkReady works', response);
                             var data = response.data;
                             angular.copy(data, readyState);
                         }).catch(function (response) {
@@ -455,6 +461,9 @@
                             console.log(response);
                         });
                         return lobbyCode;
+                    },
+                    getOverInfo: function getOverInfo() {
+                        $http;
                     }
                 }; //end of return
             }]); //end of factory

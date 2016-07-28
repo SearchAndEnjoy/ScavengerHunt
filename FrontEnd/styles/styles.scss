@@ -161,3 +161,24 @@ body {
   box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 
 }
+///////// game over page styling
+#mini-map {
+  float: right;
+  display: inline-block;
+  background-color: lightblue;
+  height: 25em;
+  width: 50%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+
+}
+.team-info {
+  display: inline-block;
+  background-color: lightgreen;
+  width: 50%;
+  height: 25em;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+}
