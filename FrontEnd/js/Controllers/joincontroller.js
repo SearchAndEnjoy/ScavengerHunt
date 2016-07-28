@@ -17,9 +17,9 @@ module.exports = function(app) {
 
         /////////// join session http call////////////
         $scope.joinSessionCreate = function() {
-            joinGameObj = {
+            var joinGameObj = {
                     teamName: $scope.joinTeamName,
-                },
+                }
                 console.log("clicked Join Session");
             // console.log(joinGameObj)
 

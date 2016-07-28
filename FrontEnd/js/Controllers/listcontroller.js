@@ -43,7 +43,6 @@ module.exports = function(app) {
                             if(!$.cookie('endDate')){
                                 // end date = current date + 60 minutes
                                 var endDate = Date.now() + 90*60*1000;
-
                                 // store end date in cookies
                                 $.cookie('endDate', Math.round(endDate / 1000));
                             }

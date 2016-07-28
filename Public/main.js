@@ -81,9 +81,10 @@
 
                 /////////// join session http call////////////
                 $scope.joinSessionCreate = function () {
-                    joinGameObj = {
+                    var joinGameObj = {
                         teamName: $scope.joinTeamName
-                    }, console.log("clicked Join Session");
+                    };
+                    console.log("clicked Join Session");
                     // console.log(joinGameObj)
 
                     // $location.path('/available');
@@ -150,7 +151,6 @@
                                     if (!$.cookie('endDate')) {
                                         // end date = current date + 60 minutes
                                         var endDate = Date.now() + 90 * 60 * 1000;
-
                                         // store end date in cookies
                                         $.cookie('endDate', Math.round(endDate / 1000));
                                     }
@@ -257,14 +257,14 @@
                     // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                     if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                         alert('here!');
-                        MainService.CreateMarker();
+                        // MainService.CreateMarker();
 
                         $http({
-                            url: '/start-game',
+                            url: '/at-location',
                             method: 'POST'
 
                         }).then(function (response) {
-                            console.log('clue answer POST working');
+                            console.log('clue answer POST working', response);
                         }).catch(function (response) {
                             console.error('clue answer POST failed');
                         });
@@ -357,19 +357,6 @@
                             }
                         });
                         return myPosition;
-                    },
-                    CreateMarker: function CreateMarker() {
-                        var data = myPosition[0];
-                        console.log(data.lat, data.lon);
-                        map.addMarker({
-                            lat: data.lat,
-                            lng: data.lon,
-                            title: 'Logans super special marker',
-                            click: function click(e) {
-                                console.log('TSUUUUUUUU');
-                            }
-                        });
-                        map.setCenter(data.lat, data.lon);
                     }
                 };
             }]);

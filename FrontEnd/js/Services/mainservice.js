@@ -23,19 +23,19 @@ module.exports = function(app) {
                 })
                 return myPosition;
             },
-            CreateMarker: function() {
-          var data = myPosition[0]
-              console.log(data.lat, data.lon)
-                map.addMarker({
-                    lat:data.lat,
-                    lng:data.lon,
-                    title: 'Logans super special marker',
-                    click: function(e) {
-                        console.log('TSUUUUUUUU')
-                    }
-                });
-                 map.setCenter(data.lat, data.lon);
-            },
+          //   CreateMarker: function() {
+          // var data = myPosition[0]
+          //     console.log(data.lat, data.lon)
+          //       map.addMarker({
+          //           lat:data.lat,
+          //           lng:data.lon,
+          //           title: 'Logans super special marker',
+          //           click: function(e) {
+          //               console.log('TSUUUUUUUU')
+          //           }
+          //       });
+          //        map.setCenter(data.lat, data.lon);
+          //   },
         };
     }]);
 };

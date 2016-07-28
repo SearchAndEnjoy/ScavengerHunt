@@ -46,14 +46,14 @@ module.exports = function(app) {
             // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
             if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                 alert('here!');
-                MainService.CreateMarker();
+                // MainService.CreateMarker();
 
                 $http({
-                    url: '/start-game',
+                    url: '/at-location',
                     method: 'POST',
 
                 }).then(function(response) {
-                    console.log('clue answer POST working')
+                    console.log('clue answer POST working', response)
 
                 }).catch(function(response) {
                     console.error('clue answer POST failed');
