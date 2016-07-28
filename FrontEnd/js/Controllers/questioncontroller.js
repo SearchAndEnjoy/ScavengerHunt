@@ -5,7 +5,7 @@ module.exports = function(app) {
             lat: 1,
             lng: -1,
         });
-        MainService.getLocation(map);
+
         $scope.myLoc = MainService.getLocation(map);
         console.log($scope.myLoc);
         $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
@@ -47,14 +47,17 @@ module.exports = function(app) {
             if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                 alert('here!');
                 // MainService.CreateMarker();
-
+                var answerObj = {
+                    answerlat:$scope.myLoc[0].lat,
+                    answerlong:$scope.myLoc[0].lon,
+                }
                 $http({
                     url: '/at-location' + '/' + clueId,
                     method: 'PUT',
-                    data:"",
+                    data: answerObj,
 
                 }).then(function(response) {
-                    console.log('clue answer PUT working', response)
+                    console.log('clue answer PUT working', answerObj, response)
 
                 }).catch(function(response) {
                     console.error('clue answer PUT failed');

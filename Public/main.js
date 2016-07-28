@@ -183,13 +183,13 @@
                 $scope.ready = LobbyService.checkReady();
                 console.log(LobbyService.checkReady(), $scope.ready);
 
-                setInterval(function () {
-                    console.log("checking for ready", LobbyService.checkReady());
-                    if ($scope.ready !== []) {
-                        $location.path('/list');
-                        console.log("ready true");
-                    }
-                }, 5000);
+                // setInterval(function() {
+                //   console.log("checking for ready", LobbyService.checkReady());
+                //     if ($scope.ready ) {
+                //         $location.path('/list')
+                //         console.log("ready true");
+                //     }
+                // }, 5000);
 
                 $scope.displayCode = TeamService.getLobbyCode();
                 // console.log('lobby log', $scope.Game)
@@ -222,7 +222,7 @@
                     lat: 1,
                     lng: -1
                 });
-                MainService.getLocation(map);
+
                 $scope.myLoc = MainService.getLocation(map);
                 console.log($scope.myLoc);
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
@@ -264,14 +264,17 @@
                     if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                         alert('here!');
                         // MainService.CreateMarker();
-
+                        var answerObj = {
+                            answerlat: $scope.myLoc[0].lat,
+                            answerlong: $scope.myLoc[0].lon
+                        };
                         $http({
                             url: '/at-location' + '/' + clueId,
                             method: 'PUT',
-                            data: ""
+                            data: answerObj
 
                         }).then(function (response) {
-                            console.log('clue answer PUT working', response);
+                            console.log('clue answer PUT working', answerObj, response);
                         }).catch(function (response) {
                             console.error('clue answer PUT failed');
                         });
