@@ -159,16 +159,16 @@ public class ScavengerHuntController {
 
         Clue clue = clues.findOne(clueId);
 
-        Answer newAnswer = new Answer(clue, team, answer.getAnswerLat(), answer.getAnswerLong(), true, LocalDateTime.now());
+        answer = new Answer(clue, team, answer.getAnswerLat(), answer.getAnswerLong(), true, LocalDateTime.now());
 
 //        ArrayList<Answer> a = new ArrayList<>();
 //        a.add(newAnswer);
 //
 //        team.setAnswerList(a);
 
-        answers.save(newAnswer);
+        answers.save(answer);
 
-        return new ResponseEntity<Object>(newAnswer, HttpStatus.OK);
+        return new ResponseEntity<Object>(answer, HttpStatus.OK);
 
     }
 
@@ -177,7 +177,7 @@ public class ScavengerHuntController {
 
         Team team = teams.findOne((Integer) session.getAttribute("team_id"));
 
-        return new ResponseEntity<Object>(team.getGame().getTeamList(), HttpStatus.OK);
+        return new ResponseEntity<Object>(team, HttpStatus.OK);
     }
 
 

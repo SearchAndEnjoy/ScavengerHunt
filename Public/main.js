@@ -181,15 +181,15 @@
                 //   TeamService.getTeams();
                 // },10000)
                 $scope.ready = LobbyService.checkReady();
-                console.log(LobbyService.checkReady(), $scope.ready);
+                console.log(LobbyService.checkReady());
 
-                // setInterval(function() {
-                //   console.log("checking for ready", LobbyService.checkReady());
-                //     if ($scope.ready ) {
-                //         $location.path('/list')
-                //         console.log("ready true");
-                //     }
-                // }, 5000);
+                setInterval(function () {
+                    console.log("checking for ready", LobbyService.checkReady());
+                    if (false) {
+                        $location.path('/list');
+                        console.log("ready true");
+                    }
+                }, 5000);
 
                 $scope.displayCode = TeamService.getLobbyCode();
                 // console.log('lobby log', $scope.Game)
@@ -222,12 +222,11 @@
                     lat: 1,
                     lng: -1
                 });
-
+                MainService.getLocation(map);
                 $scope.myLoc = MainService.getLocation(map);
                 console.log($scope.myLoc);
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
                 console.log($scope.clue);
-                var clueId = $routeParams.clueId;
 
                 console.log($routeParams);
                 //////// back-button function/////////
@@ -264,17 +263,14 @@
                     if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                         alert('here!');
                         // MainService.CreateMarker();
-                        var answerObj = {
-                            answerlat: $scope.myLoc[0].lat,
-                            answerlong: $scope.myLoc[0].lon
-                        };
+
                         $http({
-                            url: '/at-location' + '/' + clueId,
+                            url: '/at-location/clueId',
                             method: 'PUT',
-                            data: answerObj
+                            data: ""
 
                         }).then(function (response) {
-                            console.log('clue answer PUT working', answerObj, response);
+                            console.log('clue answer PUT working', response);
                         }).catch(function (response) {
                             console.error('clue answer PUT failed');
                         });
