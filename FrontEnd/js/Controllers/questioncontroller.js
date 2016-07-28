@@ -10,7 +10,7 @@ module.exports = function(app) {
         console.log($scope.myLoc);
         $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
         console.log($scope.clue);
-
+        var clueId = $routeParams.clueId;
 
         console.log($routeParams);
         //////// back-button function/////////
@@ -49,7 +49,7 @@ module.exports = function(app) {
                 // MainService.CreateMarker();
 
                 $http({
-                    url: '/at-location/clueId',
+                    url: '/at-location' + '/' + clueId,
                     method: 'PUT',
                     data:"",
 
