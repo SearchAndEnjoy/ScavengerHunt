@@ -30,7 +30,7 @@ module.exports = function(app) {
 
         $(function(){
 
-            countDown = function(){
+             var countDown = function(){
                 var currentDate = Math.round(new Date() / 1000);
 
                 var clock = $('.clock').FlipClock({
