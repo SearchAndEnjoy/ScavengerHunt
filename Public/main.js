@@ -52,8 +52,12 @@
     }, {}], 2: [function (require, module, exports) {
         module.exports = function (app) {
             app.controller('GameOverController', ['$scope', '$location', 'MainService', 'TeamService', function ($scope, $location, MainService, TeamService) {
-
+                $scope.gameOver = TeamService.getOverInfo();
                 console.log('this is gameover');
+
+                $scope.gameOverButton = function () {
+                    console.log(TeamService.getOverInfo());
+                };
             }]);
         };
     }, {}], 3: [function (require, module, exports) {
@@ -181,15 +185,15 @@
                 //   TeamService.getTeams();
                 // },10000)
                 $scope.ready = LobbyService.checkReady();
-                console.log(LobbyService.checkReady());
+                console.log(LobbyService.checkReady(), $scope.ready);
 
-                setInterval(function () {
-                    console.log("checking for ready", LobbyService.checkReady());
-                    if (false) {
-                        $location.path('/list');
-                        console.log("ready true");
-                    }
-                }, 5000);
+                // setInterval(function() {
+                //   console.log("checking for ready", LobbyService.checkReady());
+                //     if ($scope.ready ) {
+                //         $location.path('/list')
+                //         console.log("ready true");
+                //     }
+                // }, 5000);
 
                 $scope.displayCode = TeamService.getLobbyCode();
                 // console.log('lobby log', $scope.Game)
@@ -222,11 +226,12 @@
                     lat: 1,
                     lng: -1
                 });
-                MainService.getLocation(map);
+
                 $scope.myLoc = MainService.getLocation(map);
                 console.log($scope.myLoc);
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
                 console.log($scope.clue);
+                var clueId = $routeParams.clueId;
 
                 console.log($routeParams);
                 //////// back-button function/////////
@@ -263,14 +268,17 @@
                     if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                         alert('here!');
                         // MainService.CreateMarker();
-
+                        var answerObj = {
+                            answerLat: $scope.myLoc[0].lat,
+                            answerLong: $scope.myLoc[0].lon
+                        };
                         $http({
-                            url: '/at-location/clueId',
+                            url: '/at-location' + '/' + clueId,
                             method: 'PUT',
-                            data: ""
+                            data: answerObj
 
                         }).then(function (response) {
-                            console.log('clue answer PUT working', response);
+                            console.log('clue answer PUT working', answerObj, response);
                         }).catch(function (response) {
                             console.error('clue answer PUT failed');
                         });
@@ -407,6 +415,7 @@
         module.exports = function (app) {
             app.factory('TeamService', ['$http', '$location', function ($http, $location) {
                 var teamName = [];
+                var endGameinfo = [];
                 return {
                     getTeams: function getTeams() {
                         // teamName = [];
@@ -463,7 +472,15 @@
                         return lobbyCode;
                     },
                     getOverInfo: function getOverInfo() {
-                        $http;
+                        $http({
+                            url: '/game-over',
+                            method: 'Get'
+                        }).then(function (response) {
+                            console.log(response);
+                        }).catch(function (response) {
+                            console.error("gameover fail");
+                        });
+                        return endGameinfo;
                     }
                 }; //end of return
             }]); //end of factory

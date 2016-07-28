@@ -1,6 +1,7 @@
 module.exports = function(app) {
     app.factory('TeamService', ['$http', '$location', function($http, $location) {
       var teamName = [];
+      var endGameinfo = [];
         return {
             getTeams: function() {
                 // teamName = [];
@@ -61,8 +62,16 @@ module.exports = function(app) {
 
             },
             getOverInfo: function(){
-              $http
+              $http({
+                url: '/game-over',
+                method: 'Get',
+              }).then(function(response){
+                console.log(response);
 
+              }).catch(function(response){
+                console.error("gameover fail");
+              })
+              return endGameinfo;
             },
         } //end of return
     }]); //end of factory
