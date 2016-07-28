@@ -7,13 +7,13 @@ module.exports = function(app) {
         $scope.ready = LobbyService.checkReady();
         console.log(LobbyService.checkReady(),$scope.ready);
 
-        setInterval(function() {
-          console.log("checking for ready", LobbyService.checkReady());
-            if ($scope.ready !== []) {
-                $location.path('/list')
-                console.log("ready true");
-            }
-        }, 5000);
+        // setInterval(function() {
+        //   console.log("checking for ready", LobbyService.checkReady());
+        //     if ($scope.ready ) {
+        //         $location.path('/list')
+        //         console.log("ready true");
+        //     }
+        // }, 5000);
 
         $scope.displayCode = TeamService.getLobbyCode()
             // console.log('lobby log', $scope.Game)
