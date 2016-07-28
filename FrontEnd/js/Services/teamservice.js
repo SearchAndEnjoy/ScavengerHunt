@@ -66,7 +66,9 @@ module.exports = function(app) {
                 url: '/game-over',
                 method: 'Get',
               }).then(function(response){
+                var response = response.data;
                 console.log(response);
+                angular.copy(response, endGameinfo)
 
               }).catch(function(response){
                 console.error("gameover fail");
