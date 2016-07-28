@@ -66,6 +66,8 @@ public class Team {
         this.answerList = answerList;
     }
 
-
+    public List<Answer> getAnswerList() {
+        return answerList;
+    }
 }
 
