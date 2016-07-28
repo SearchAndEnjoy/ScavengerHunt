@@ -52,8 +52,12 @@
     }, {}], 2: [function (require, module, exports) {
         module.exports = function (app) {
             app.controller('GameOverController', ['$scope', '$location', 'MainService', 'TeamService', function ($scope, $location, MainService, TeamService) {
-
+                $scope.gameOver = TeamService.getOverInfo();
                 console.log('this is gameover');
+
+                $scope.gameOverButton = function () {
+                    console.log(TeamService.getOverInfo());
+                };
             }]);
         };
     }, {}], 3: [function (require, module, exports) {
@@ -265,8 +269,8 @@
                         alert('here!');
                         // MainService.CreateMarker();
                         var answerObj = {
-                            answerlat: $scope.myLoc[0].lat,
-                            answerlong: $scope.myLoc[0].lon
+                            answerLat: $scope.myLoc[0].lat,
+                            answerLong: $scope.myLoc[0].lon
                         };
                         $http({
                             url: '/at-location' + '/' + clueId,
@@ -411,6 +415,7 @@
         module.exports = function (app) {
             app.factory('TeamService', ['$http', '$location', function ($http, $location) {
                 var teamName = [];
+                var endGameinfo = [];
                 return {
                     getTeams: function getTeams() {
                         // teamName = [];
@@ -467,7 +472,15 @@
                         return lobbyCode;
                     },
                     getOverInfo: function getOverInfo() {
-                        $http;
+                        $http({
+                            url: '/game-over',
+                            method: 'Get'
+                        }).then(function (response) {
+                            console.log(response);
+                        }).catch(function (response) {
+                            console.error("gameover fail");
+                        });
+                        return endGameinfo;
                     }
                 }; //end of return
             }]); //end of factory

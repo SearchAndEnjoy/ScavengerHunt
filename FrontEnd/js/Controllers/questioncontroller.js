@@ -48,8 +48,8 @@ module.exports = function(app) {
                 alert('here!');
                 // MainService.CreateMarker();
                 var answerObj = {
-                    answerlat:$scope.myLoc[0].lat,
-                    answerlong:$scope.myLoc[0].lon,
+                    answerLat:$scope.myLoc[0].lat,
+                    answerLong:$scope.myLoc[0].lon,
                 }
                 $http({
                     url: '/at-location' + '/' + clueId,
