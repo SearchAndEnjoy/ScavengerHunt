@@ -1,4 +1,5 @@
 let app = angular.module('HuntApp', ['ngRoute']);
+var jq = jQuery.noConflict();
 
 
 // Controllers
