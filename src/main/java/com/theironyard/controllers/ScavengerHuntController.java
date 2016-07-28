@@ -175,9 +175,9 @@ public class ScavengerHuntController {
     @RequestMapping(path = "/game-over", method = RequestMethod.GET)
     public ResponseEntity<Object> gameOver (HttpSession session) {
 
-        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
+        Game game = games.findOne((Integer) session.getAttribute("game_id"));
 
-        return new ResponseEntity<Object>(team, HttpStatus.OK);
+        return new ResponseEntity<Object>(game.getTeamList(), HttpStatus.OK);
     }
 
 
