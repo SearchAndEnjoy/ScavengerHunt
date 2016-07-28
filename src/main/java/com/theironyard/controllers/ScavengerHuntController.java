@@ -152,23 +152,23 @@ public class ScavengerHuntController {
     }
 
 
-    @RequestMapping(path = "/at-location", method = RequestMethod.PUT)
-    public ResponseEntity<Object> atLocation (HttpSession session, int id) {
+    @RequestMapping(path = "/at-location/{clueId}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> atLocation (HttpSession session, @RequestBody Answer answer, @PathVariable int clueId) {
 
         Team team = teams.findOne((Integer) session.getAttribute("team_id"));
 
-        Clue clue = clues.findOne(id);
+        Clue clue = clues.findOne(clueId);
 
-        Answer answer = new Answer(clue, team, true, LocalDateTime.now());
+        Answer newAnswer = new Answer(clue, team, answer.getAnswerLat(), answer.getAnswerLong(), true, LocalDateTime.now());
 
-        ArrayList<Answer> a = new ArrayList<>();
-        a.add(answer);
+//        ArrayList<Answer> a = new ArrayList<>();
+//        a.add(newAnswer);
+//
+//        team.setAnswerList(a);
 
-        team.setAnswerList(a);
+        answers.save(newAnswer);
 
-        answers.save(a);
-
-        return new ResponseEntity<Object>(HttpStatus.OK);
+        return new ResponseEntity<Object>(newAnswer, HttpStatus.OK);
 
     }
 
