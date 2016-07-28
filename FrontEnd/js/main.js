@@ -14,9 +14,7 @@ require('./Controllers/gameovercontroller.js')(app);
 require('./Services/mainservice.js')(app);
 require('./Services/teamservice.js')(app);
 require('./Services/questionservice.js')(app);
-
-
-
+require('./Services/lobbyservice.js')(app);
 
 
 app.config(['$routeProvider', function($routeProvider) {

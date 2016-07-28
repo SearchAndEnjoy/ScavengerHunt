@@ -1,8 +1,9 @@
 module.exports = function(app) {
     app.factory('TeamService', ['$http', '$location', function($http, $location) {
+      var teamName = [];
         return {
             getTeams: function() {
-                teamName = []
+                // teamName = [];
                 $http({
                     url: '/get-teams',
                     method: 'GET',
@@ -19,7 +20,7 @@ module.exports = function(app) {
                 return teamName
             }, //end of getTeams
             newSessionCreate: function(a, b) {
-                newGameObj = {
+              var newGameObj = {
                     teamName: a,
                     game: {
                         lobbyName: b,
@@ -32,7 +33,7 @@ module.exports = function(app) {
                     data: JSON.stringify(newGameObj),
 
                 }).then(function(response) {
-                    console.log('This is working')
+                    console.log('This is working new sess POST')
                     $location.path('/lobby')
 
                 }).catch(function(response) {
@@ -42,7 +43,7 @@ module.exports = function(app) {
                 });
             },
             getLobbyCode: function() {
-              lobbyCode=[]
+              var lobbyCode = [];
                 $http({
                     url: '/get-teams',
                     method: 'GET',
@@ -57,7 +58,7 @@ module.exports = function(app) {
                     console.log(response);
                 })
                 return lobbyCode;
-              
+
             }
         } //end of return
     }]); //end of factory

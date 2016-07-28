@@ -1,0 +1,42 @@
+/get-single-clue?id
+
+angular.module('something')
+  .controlelr('somethingCTRL', function($scope, somethingFactory, $routeParams) {
+
+     somethingFactory.getClues().then(function (cluearray) {
+        $scope.clues = cluearray
+     })
+
+     if($routeParams.id !== undefined) {
+      somethingFactory.getSingleClue($routeParams.id).then(function(singleClueObj) {
+          $scope.clueDetail = singleClueObj
+      })
+     }
+
+
+  })
+
+  .factory('somethingFactory', function($http) {
+    var url = '/getClues';
+    var urlSingle = '/getSingleClue'
+    function getClues () {
+
+    }
+    function getSingleClue(id) {
+      return $http.get(urlSingle + '/' + id );
+    }
+    return {
+    getClues: getClues,
+    getSingleClue: getSingleClue
+    }
+
+  })
+
+
+  //
+  <div ng-repeat='clue in clues'>
+     {{clue.title}}
+     <a href='#/clues/{{clue.id}}'
+
+     // clue detail
+     <h2>{{clueDetail.title}}</h2>

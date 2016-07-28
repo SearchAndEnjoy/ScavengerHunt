@@ -26,10 +26,11 @@ gulp.task('html', function() {
 
 gulp.task('js', function() {
     return gulp.src('./js/main.js')
+        .pipe(browserify())
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(browserify())
+        // .pipe(browserify())
         .pipe(gulp.dest('../public'))
 
 });
