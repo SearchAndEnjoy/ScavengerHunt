@@ -1,6 +1,5 @@
 let app = angular.module('HuntApp', ['ngRoute']);
 
-
 // Controllers
 require('./Controllers/questioncontroller.js')(app);
 require('./Controllers/infocontroller.js')(app);

@@ -167,7 +167,7 @@ module.exports = function(app) {
 
 },{}],6:[function(require,module,exports){
 module.exports = function(app) {
-    app.controller('LobbyController', ['$scope', '$http','TeamService','$location', function($scope, $http, TeamService,$location) {
+    app.controller('LobbyController', ['$scope', '$http','TeamService','$location','$interval', function($scope, $http, TeamService,$location,$interval) {
       $scope.Game = TeamService.getTeams()
       $scope.displayCode = TeamService.getLobbyCode()
       console.log('working')
@@ -175,10 +175,13 @@ module.exports = function(app) {
         ////// setting clock end cookie////////////////
         var endDate = Date.now() + 90*60*1000;
         $.cookie('endDate', Math.round(endDate / 1000));
-        
+
         $location.path('/list')
       }
+      $interval(TeamService.getTeams, 5000);
+
     }])
+    var callAtInterval = function(){console.log('penis')};
 }
 
 },{}],7:[function(require,module,exports){
@@ -324,7 +327,7 @@ module.exports = function(app) {
 
 },{}],11:[function(require,module,exports){
 module.exports = function(app) {
-    app.factory('TeamService', ['$http', '$location', function($http, $location) {
+    app.factory('TeamService', ['$http', '$location','$interval', function($http, $location,$interval) {
         return {
             getTeams: function() {
                 teamName = []
@@ -343,6 +346,11 @@ module.exports = function(app) {
                 });
                 return teamName
             }, //end of getTeams
+            teamRefresh: function(){
+              $interval(function callAtInterval() {
+    console.log("Interval occurred");
+},1000)
+            },
             newSessionCreate: function(a, b) {
                 newGameObj = {
                     teamName: a,

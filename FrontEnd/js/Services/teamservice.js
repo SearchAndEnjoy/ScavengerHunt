@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    app.factory('TeamService', ['$http', '$location', function($http, $location) {
+    app.factory('TeamService', ['$http', '$location','$interval', function($http, $location,$interval) {
         return {
             getTeams: function() {
                 teamName = []
@@ -18,6 +18,11 @@ module.exports = function(app) {
                 });
                 return teamName
             }, //end of getTeams
+            teamRefresh: function(){
+              $interval(function callAtInterval() {
+    console.log("Interval occurred");
+},1000)
+            },
             newSessionCreate: function(a, b) {
                 newGameObj = {
                     teamName: a,
