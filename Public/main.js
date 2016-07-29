@@ -118,9 +118,7 @@
         module.exports = function (app) {
             app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', function ($scope, $http, $location, QuestionService, $routeParams) {
                 var jq = jQuery.noConflict();
-
                 $scope.clues = QuestionService.getClues();
-                console.log('listcontroller', $scope.clues);
 
                 ////// back-button //////
                 $scope.goback = function () {
@@ -400,7 +398,7 @@
                             url: '/get-clues',
                             method: 'GET'
                         }).then(function (response) {
-                            var data = response.data;
+                            var data = response.data.clues;
                             console.log('questionservice', data);
                             angular.copy(data, clues);
                         }).catch(function (response) {
