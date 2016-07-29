@@ -1,11 +1,8 @@
 module.exports = function(app) {
-    app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', function($scope, $http, TeamService, LobbyService, $location) {
+    app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', '$interval', function($scope, $http, TeamService, LobbyService, $location,$interval) {
         var jq = jQuery.noConflict();
-
         $scope.Game = TeamService.getTeams();
-        // setInterval(function(){
-        //   TeamService.getTeams();
-        // },10000)
+        $interval(function(){TeamService.refreshTeams()}, 5000)
         $scope.ready = LobbyService.checkReady();
         console.log(LobbyService.checkReady(),$scope.ready);
 
@@ -17,7 +14,7 @@ module.exports = function(app) {
         // var endDate = Date.now() + 90 * 60 * 1000;
         // jq.cookie('endDate', Math.round(endDate / 1000));
         ////////////////
-        
+
         //         $location.path('/list')
         //         console.log("ready true");
         //     }

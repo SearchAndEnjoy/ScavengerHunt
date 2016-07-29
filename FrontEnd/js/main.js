@@ -1,7 +1,6 @@
 let app = angular.module('HuntApp', ['ngRoute']);
 var jq = jQuery.noConflict();
 
-
 // Controllers
 require('./Controllers/questioncontroller.js')(app);
 require('./Controllers/infocontroller.js')(app);
