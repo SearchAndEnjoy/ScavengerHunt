@@ -12,6 +12,12 @@ module.exports = function(app) {
         // setInterval(function() {
         //   console.log("checking for ready", LobbyService.checkReady());
         //     if ($scope.ready ) {
+
+        ////// setting clock end cookie////////////////
+        // var endDate = Date.now() + 90 * 60 * 1000;
+        // jq.cookie('endDate', Math.round(endDate / 1000));
+        ////////////////
+        
         //         $location.path('/list')
         //         console.log("ready true");
         //     }
@@ -22,7 +28,7 @@ module.exports = function(app) {
             ///// game start button
         $scope.session = function() {
             ////// setting clock end cookie////////////////
-            var endDate = Date.now() + 90 * 60 * 1000;            
+            var endDate = Date.now() + 90 * 60 * 1000;
             jq.cookie('endDate', Math.round(endDate / 1000));
             ////////////////
             console.log("clicked Post readyState");
@@ -32,7 +38,7 @@ module.exports = function(app) {
 
             }).then(function(response) {
                 console.log('start game POST working', response)
-                       $location.path('/list')
+                       $location.path('/list');
 
 
             }).catch(function(response) {

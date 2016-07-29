@@ -51,10 +51,15 @@
         };
     }, {}], 2: [function (require, module, exports) {
         module.exports = function (app) {
-            app.controller('GameOverController', ['$scope', '$location', 'MainService', 'TeamService', function ($scope, $location, MainService, TeamService) {
+            app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService', function ($scope, $location, $http, MainService, TeamService) {
                 $scope.gameOver = TeamService.getOverInfo();
-                console.log('this is gameover');
-
+                var map = new GMaps({
+                    div: '#map',
+                    lat: 1,
+                    lng: -1
+                });
+                $scope.currentLocation = MainService.getLocation(map);
+                console.log(MainService.getLocation());
                 $scope.gameOverButton = function () {
                     console.log(TeamService.getOverInfo());
                 };
@@ -113,14 +118,8 @@
         module.exports = function (app) {
             app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', function ($scope, $http, $location, QuestionService, $routeParams) {
                 var jq = jQuery.noConflict();
-
                 $scope.clues = QuestionService.getClues();
                 console.log('listcontroller', $scope.clues);
-                // if($routeParams.clueId !== undefined) {
-                //  QuestionService.getSingleClue($routeParams.id).then(function(singleClueObj) {
-                //      $scope.clueDetail = singleClueObj
-                //  })
-                // }
 
                 ////// back-button //////
                 $scope.goback = function () {
@@ -197,6 +196,12 @@
                 // setInterval(function() {
                 //   console.log("checking for ready", LobbyService.checkReady());
                 //     if ($scope.ready ) {
+
+                ////// setting clock end cookie////////////////
+                // var endDate = Date.now() + 90 * 60 * 1000;
+                // jq.cookie('endDate', Math.round(endDate / 1000));
+                ////////////////
+
                 //         $location.path('/list')
                 //         console.log("ready true");
                 //     }

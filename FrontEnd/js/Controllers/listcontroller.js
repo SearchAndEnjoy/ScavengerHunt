@@ -1,15 +1,8 @@
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService','$routeParams', function($scope, $http, $location, QuestionService, $routeParams) {
       var jq = jQuery.noConflict();
-      
-
       $scope.clues = QuestionService.getClues();
       console.log('listcontroller', $scope.clues);
-      // if($routeParams.clueId !== undefined) {
-      //  QuestionService.getSingleClue($routeParams.id).then(function(singleClueObj) {
-      //      $scope.clueDetail = singleClueObj
-      //  })
-      // }
 
 ////// back-button //////
       $scope.goback = function(){

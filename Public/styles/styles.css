@@ -65,13 +65,18 @@ body {
     text-align: center;
     color: #faf9f5; }
 
-#map {
+.map-box {
   background-color: lightblue;
   height: 50em;
   width: 100%;
   -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+
+#map {
+  background-color: lightblue;
+  height: 100%;
+  width: 100%; }
 
 .clue-box {
   color: #faf9f5;
@@ -125,7 +130,7 @@ body {
   -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
 
-#mini-map {
+.mini-map {
   float: right;
   display: inline-block;
   background-color: lightblue;
