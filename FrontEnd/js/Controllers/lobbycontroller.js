@@ -1,6 +1,7 @@
 module.exports = function(app) {
     app.controller('LobbyController', ['$scope', '$http','TeamService','$location','$interval', function($scope, $http, TeamService,$location,$interval) {
-      $scope.Game = TeamService.getTeams()
+    $interval(function(){TeamService.refreshTeams()}, 5000)
+    $scope.Game = TeamService.getTeams()
       $scope.displayCode = TeamService.getLobbyCode()
       console.log('working')
       $scope.session = function() {
@@ -10,8 +11,5 @@ module.exports = function(app) {
 
         $location.path('/list')
       }
-      $interval(TeamService.getTeams, 5000);
-
     }])
-    var callAtInterval = function(){console.log('penis')};
 }

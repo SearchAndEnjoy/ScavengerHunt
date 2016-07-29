@@ -9,8 +9,8 @@
         </div>
         <ul class="list-group">
 
-            <li class="list-group-item" ng-repeat='team in Game track by $index'>
-                <h1>{{team}}</h1>
+            <li ng-cloak class="list-group-item" ng-repeat='team in Game track by $index'>
+                <h1>{{team.teamName}}</h1>
         </ul>
         <button type="button" class="btn btn-primary btn-lg btn-block lrg-page-buttons" ng-click="session()">Ready to Play</button>
 
