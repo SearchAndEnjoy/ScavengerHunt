@@ -62,14 +62,12 @@ public class Team {
         this.game = game;
     }
 
-    public List<Answer> getAnswerList() {
-        return answerList;
-    }
-
     public void setAnswerList(List<Answer> answerList) {
         this.answerList = answerList;
     }
 
-
+    public List<Answer> getAnswerList() {
+        return answerList;
+    }
 }
 

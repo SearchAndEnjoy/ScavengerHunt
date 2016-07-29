@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -63,7 +64,7 @@ public class ScavengerHuntController {
 
         ArrayList<Clue> gameClues = (ArrayList<Clue>) clues.findAll();
         Collections.shuffle(gameClues);
-        gameClues = new ArrayList<> ( gameClues.subList(0, 5) );
+        gameClues = new ArrayList<> (gameClues.subList(0, 5) );
 
         game.setClues(gameClues);
 
@@ -99,11 +100,6 @@ public class ScavengerHuntController {
 
     }
 
-//    @RequestMapping(path = "/lobby-code",method = RequestMethod.GET)
-//    public ResponseEntity<Object> getLobbyCode (HttpSession session) {
-//
-//    }
-
     @RequestMapping(path = "/get-teams", method = RequestMethod.GET)
     public ResponseEntity<Object> getTeams (HttpSession session) {
 
@@ -116,6 +112,28 @@ public class ScavengerHuntController {
         return new ResponseEntity<Object>(gameTeams,HttpStatus.OK);
 
     }
+
+    @RequestMapping(path = "/get-game-start", method = RequestMethod.GET)
+    public ResponseEntity<Object> readyCheck (HttpSession session) {
+
+        Game game = games.findOne((Integer) session.getAttribute("game_id"));
+
+        return new ResponseEntity<Object>(game.getStartTime(), HttpStatus.OK);
+
+    }
+
+    @RequestMapping(path = "/start-game", method = RequestMethod.POST)
+    public ResponseEntity<Object> startGame (HttpSession session) {
+
+        Game game = games.findOne((Integer) session.getAttribute("game_id"));
+
+        game.setStartTime(LocalDateTime.now());
+
+        games.save(game);
+
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
     @RequestMapping(path = "/get-clues", method = RequestMethod.GET)
     public ResponseEntity<Object> clueList (HttpSession session) {
 
@@ -125,33 +143,41 @@ public class ScavengerHuntController {
 
     }
 
+    @RequestMapping(path = "/get-single-clue/{clue_id}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getSingleClue (@PathVariable("clue_id") int id) {
 
-    @RequestMapping(path = "/at-location?{clue_id}", method = RequestMethod.PUT)
-    public ResponseEntity<Object> atLocation (HttpSession session, @PathVariable("clue_id") int id) {
+       Clue clue = clues.findOne(id);
+
+        return new ResponseEntity<Object>(clue, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(path = "/at-location/{clueId}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> atLocation (HttpSession session, @RequestBody Answer answer, @PathVariable int clueId) {
 
         Team team = teams.findOne((Integer) session.getAttribute("team_id"));
 
-        Clue clue = clues.findOne(id);
+        Clue clue = clues.findOne(clueId);
 
-        Answer answer = new Answer(clue, team, true);
+        answer = new Answer(clue, team, answer.getAnswerLat(), answer.getAnswerLong(), true, LocalDateTime.now());
 
-        ArrayList<Answer> a = new ArrayList<>();
-        a.add(answer);
+//        ArrayList<Answer> a = new ArrayList<>();
+//        a.add(newAnswer);
+//
+//        team.setAnswerList(a);
 
-        team.setAnswerList(a);
+        answers.save(answer);
 
-        answers.save(a);
-
-        return new ResponseEntity<Object>(HttpStatus.OK);
+        return new ResponseEntity<Object>(answer, HttpStatus.OK);
 
     }
 
     @RequestMapping(path = "/game-over", method = RequestMethod.GET)
     public ResponseEntity<Object> gameOver (HttpSession session) {
 
-        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
+        Game game = games.findOne((Integer) session.getAttribute("game_id"));
 
-        return new ResponseEntity<Object>(team.getGame().getTeamList(), HttpStatus.OK);
+        return new ResponseEntity<Object>(game.getTeamList(), HttpStatus.OK);
     }
 
 

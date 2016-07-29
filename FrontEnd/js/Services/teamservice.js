@@ -42,7 +42,7 @@ module.exports = function(app) {
               })
             },
             newSessionCreate: function(a, b) {
-                newGameObj = {
+              var newGameObj = {
                     teamName: a,
                     game: {
                         lobbyName: b,
@@ -55,7 +55,7 @@ module.exports = function(app) {
                     data: JSON.stringify(newGameObj),
 
                 }).then(function(response) {
-                    console.log('This is working')
+                    console.log('This is working new sess POST')
                     $location.path('/lobby')
 
                 }).catch(function(response) {
@@ -65,7 +65,7 @@ module.exports = function(app) {
                 });
             },
             getLobbyCode: function() {
-              lobbyCode=[]
+              var lobbyCode = [];
                 $http({
                     url: '/get-teams',
                     method: 'GET',
@@ -73,15 +73,29 @@ module.exports = function(app) {
                 }).then(function(response) {
                     lobbyCode.push(response.data.lobbyCode)
                     // lobbyCode = response.data.lobbyCode
-                    console.log(lobbyCode)
+                    console.log(lobbyCode);
 
                 }).catch(function(response) {
                     console.error('EEERRT');
                     console.log(response);
                 })
-                return lobbyCode
-                console.log(lobbyCode)
-            }
+                return lobbyCode;
+
+            },
+            getOverInfo: function(){
+              $http({
+                url: '/game-over',
+                method: 'Get',
+              }).then(function(response){
+                var response = response.data;
+                console.log(response);
+                angular.copy(response, endGameinfo)
+
+              }).catch(function(response){
+                console.error("gameover fail");
+              })
+              return endGameinfo;
+            },
         } //end of return
     }]); //end of factory
 };

@@ -1,4 +1,5 @@
 let app = angular.module('HuntApp', ['ngRoute']);
+var jq = jQuery.noConflict();
 
 // Controllers
 require('./Controllers/questioncontroller.js')(app);
@@ -13,9 +14,7 @@ require('./Controllers/gameovercontroller.js')(app);
 require('./Services/mainservice.js')(app);
 require('./Services/teamservice.js')(app);
 require('./Services/questionservice.js')(app);
-
-
-
+require('./Services/lobbyservice.js')(app);
 
 
 app.config(['$routeProvider', function($routeProvider) {
@@ -52,16 +51,20 @@ app.config(['$routeProvider', function($routeProvider) {
           controller:'ListController',
           templateUrl:'templates/questionlist.html',
         })
-        .when('/question',{
-          controller:'QuestionController',
-          templateUrl:'templates/questionpage.html',
-        })
         // .when('/question/:id '{
         //   controller: 'QuestionController',
         //   templatesUrl:'templates/questionpage.html'
         // })
+        .when('/questionpage/:clueId',{
+          controller:'QuestionController',
+          templateUrl:'templates/questionpage.html',
+        })
         .when('/gameover',{
           controller:'GameOverController',
           templateUrl:'templates/gameover.html',
         });
 }]);
+// .when('/question/:id '{
+//   controller: 'QuestionController',
+//   templatesUrl:'templates/questionpage.html'
+// })

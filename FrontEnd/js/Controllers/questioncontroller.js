@@ -1,23 +1,28 @@
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService','QuestionService','$location', function($scope, $http, MainService, QuestionService, $location) {
-      var map = new GMaps({
-          div: '#map',
-          lat: 1,
-          lng: -1,
+    app.controller('QuestionController', ['$scope', '$http', 'MainService', 'QuestionService', '$location', '$routeParams', function($scope, $http, MainService, QuestionService, $location, $routeParams) {
+        var map = new GMaps({
+            div: '#map',
+            lat: 1,
+            lng: -1,
         });
-        MainService.getLocation(map);
+
         $scope.myLoc = MainService.getLocation(map);
         console.log($scope.myLoc);
+        $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
+        console.log($scope.clue);
+        var clueId = $routeParams.clueId;
 
-//////// back-button function/////////
+        console.log($routeParams);
+        //////// back-button function/////////
         $scope.return = function() {
             $location.path('/list')
         };
 
-/////// getting location  checking distance and if passes creates marker/////////
+        /////// getting location  checking distance and if passes creates marker/////////
         $scope.marker = function() {
             MainService.getLocation(map);
             console.log("click", $scope.myLoc);
+
             function distance(lat1, lon1, lat2, lon2, unit) {
                 var radlat1 = Math.PI * lat1 / 180
                 var radlat2 = Math.PI * lat2 / 180
@@ -37,16 +42,33 @@ module.exports = function(app) {
                 }
                 return dist;
             }
+            console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
+            // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
+            if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
+                alert('here!');
+                // MainService.CreateMarker();
+                var answerObj = {
+                    answerLat:$scope.myLoc[0].lat,
+                    answerLong:$scope.myLoc[0].lon,
+                }
+                $http({
+                    url: '/at-location' + '/' + clueId,
+                    method: 'PUT',
+                    data: answerObj,
 
-            console.log(Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000), "meters");
-            if ((Math.floor(distance($scope.myLoc[0].lat,$scope.myLoc[0].lon, 32.7785522, -79.93435,'K') * 1000)) <= 50) {
-              alert('here!');
-              MainService.CreateMarker(map);
-            }else {
-              alert('not here')
+                }).then(function(response) {
+                    console.log('clue answer PUT working', answerObj, response)
+
+                }).catch(function(response) {
+                    console.error('clue answer PUT failed');
+
+                });
+
+            } else {
+                alert('not here')
             }
         };
-/////// end marker code///////
+        /////// end marker code///////
 
     }])
 }
