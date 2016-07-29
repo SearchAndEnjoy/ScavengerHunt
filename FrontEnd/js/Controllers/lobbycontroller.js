@@ -21,10 +21,10 @@ module.exports = function(app) {
             // console.log('lobby log', $scope.Game)
             ///// game start button
         $scope.session = function() {
-            // ////// setting clock end cookie////////////////
-            // // var endDate = Date.now() + 90 * 60 * 1000;            //
-            // jq.cookie('endDate', Math.round(endDate / 1000));
-            // ////////////////
+            ////// setting clock end cookie////////////////
+            var endDate = Date.now() + 90 * 60 * 1000;            
+            jq.cookie('endDate', Math.round(endDate / 1000));
+            ////////////////
             console.log("clicked Post readyState");
             $http({
                 url: '/start-game',

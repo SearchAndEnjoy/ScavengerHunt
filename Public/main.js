@@ -113,12 +113,6 @@
         module.exports = function (app) {
             app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', function ($scope, $http, $location, QuestionService, $routeParams) {
                 var jq = jQuery.noConflict();
-                ////// setting clock end cookie////////////////
-                // var endDate = Date.now() + 90 * 60 * 1000;
-                var endDate = Date.now() + 1 * 3 * 1000;
-
-                jq.cookie('endDate', Math.round(endDate / 1000));
-                ////////////////
 
                 $scope.clues = QuestionService.getClues();
                 console.log('listcontroller', $scope.clues);
@@ -212,10 +206,10 @@
                 // console.log('lobby log', $scope.Game)
                 ///// game start button
                 $scope.session = function () {
-                    // ////// setting clock end cookie////////////////
-                    // // var endDate = Date.now() + 90 * 60 * 1000;            //
-                    // jq.cookie('endDate', Math.round(endDate / 1000));
-                    // ////////////////
+                    ////// setting clock end cookie////////////////
+                    var endDate = Date.now() + 90 * 60 * 1000;
+                    jq.cookie('endDate', Math.round(endDate / 1000));
+                    ////////////////
                     console.log("clicked Post readyState");
                     $http({
                         url: '/start-game',
