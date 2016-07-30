@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', function($scope, $http, TeamService, LobbyService, $location) {
+    app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location','$interval', function($scope, $http, TeamService, LobbyService, $location,$interval) {
         var jq = jQuery.noConflict();
         $scope.Game = TeamService.getTeams();
         $interval(function(){TeamService.refreshTeams()}, 5000)

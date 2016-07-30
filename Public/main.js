@@ -184,7 +184,7 @@
         };
     }, {}], 6: [function (require, module, exports) {
         module.exports = function (app) {
-            app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', function ($scope, $http, TeamService, LobbyService, $location) {
+            app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', '$interval', function ($scope, $http, TeamService, LobbyService, $location, $interval) {
                 var jq = jQuery.noConflict();
                 $scope.Game = TeamService.getTeams();
                 $interval(function () {
@@ -344,8 +344,10 @@
                             // console.log('checkReady works', response);
                             var data = response.data;
                             angular.copy(data, readyState);
+                            console.log(readyState);
                         }).catch(function (response) {
                             console.error('checkready err');
+                            console.log(readyState);
                         });
                         return readyState;
                     }
