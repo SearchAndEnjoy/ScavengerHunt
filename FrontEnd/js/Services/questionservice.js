@@ -9,7 +9,7 @@ module.exports = function(app) {
                 url: '/get-clues',
                 method: 'GET',
             }).then(function(response) {
-            let data = response.data.clues
+            let data = response.data
             console.log('questionservice', data);
               angular.copy(data, clues)
             }).catch(function(response) {

@@ -5,7 +5,6 @@
 // $4-color: #F27D5C;
 // $5-color: #D96F52;
 // $font-color: #faf9f5;
-
 ////////////////// persistent background and header styling
 body {
     overflow: scroll;
@@ -52,7 +51,6 @@ body {
     height: 50em;
     width: 100%;
 }
-
 ///////oddly floating footer fix later
 // .footer {
 //     position:fixed;
@@ -103,7 +101,6 @@ body {
     box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
 #map {
-    background-color: lightblue;
     height: 100%;
     width: 100%;
     // -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
@@ -122,7 +119,7 @@ body {
     box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
 ////////// Lobby group styling
-.lobby-list-item{
+.lobby-list-item {
     color: #faf9f5;
     text-shadow: #030303 1px 3px 3px;
     background-color: #85D6D1;
@@ -144,6 +141,11 @@ body {
     -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
     box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
+#lobby-code {
+  font-style: italic;
+  font-weight: bolder;
+  font-size: 2em;
+}
 ////////// question list styling
 .clock-box {
     background-color: #F27D5C;
@@ -158,35 +160,33 @@ body {
     }
 }
 .quest-list-item {
-  color: #faf9f5;
-  text-shadow: #030303 1px 3px 3px;
-  background-color: #85D6D1;
-  // border: 2px solid #F27D5C ;
-  margin-bottom: 5%;
-  min-height: 20%;
-  -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-
+    color: #faf9f5;
+    text-shadow: #030303 1px 3px 3px;
+    background-color: #85D6D1;
+    // border: 2px solid #F27D5C ;
+    margin-bottom: 5%;
+    min-height: 20%;
+    -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
 ///////// game over page styling
 .mini-map {
-  float: right;
-  display: inline-block;
-  background-color: lightblue;
-  height: 25em;
-  width: 50%;
-  -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-
+    float: right;
+    display: inline-block;
+    background-color: lightblue;
+    height: 25em;
+    width: 50%;
+    -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
 .team-info {
-  display: inline-block;
-  background-color: lightgreen;
-  width: 50%;
-  height: 25em;
-  -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    display: inline-block;
+    background-color: lightgreen;
+    width: 50%;
+    height: 25em;
+    -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
