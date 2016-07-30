@@ -28,7 +28,7 @@ module.exports = function(app) {
             }).then(function(response) {
                 // console.log('checkReady works', response);
                 let data = response.data;
-                angular.copy(data, readyState)
+                angular.copy(data, readyState);
 
             }).catch(function(response) {
                 console.error('checkready err');

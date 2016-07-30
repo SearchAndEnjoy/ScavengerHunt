@@ -15,7 +15,10 @@
             <h2>Time Finished: {{team.answerList[team.answerList.length -1].timestamp.hour}}:{{team.answerList[team.answerList.length -1].timestamp.minute}}</h2>
           </div>
 <!-- google maps instance -->
-            <div id="mini-map"></div>
+            <div class="mini-map">
+              <div id="map"></div>
+
+            </div>
 
     </ul>
     <button ng-click='gameOverButton()' type="button" class="btn btn-primary btn-lg btn-block lrg-page-buttons">test pulling team info</button>

@@ -13,6 +13,7 @@ module.exports = function(app) {
         $scope.newSessionCreate = function() {
             TeamService.newSessionCreate($scope.teamName, $scope.lobbyName)
         }
+        // doubling up on stuff in teamservice.js check make sure there are no issues
 
 
         /////////// join session http call////////////
@@ -30,7 +31,7 @@ module.exports = function(app) {
                 method: 'post',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
-                console.log(data);
+                // console.log(data);
 
                 $location.path('/lobby');
 

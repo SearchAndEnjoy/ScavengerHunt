@@ -1,18 +1,25 @@
 module.exports = function(app) {
-    app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', function($scope, $http, TeamService, LobbyService, $location) {
+    app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', '$interval', function($scope, $http, TeamService, LobbyService, $location,$interval) {
         var jq = jQuery.noConflict();
+        $scope.startButton = jq.cookie('start');
         $scope.Game = TeamService.getTeams();
         $interval(function(){TeamService.refreshTeams()}, 5000)
         $scope.ready = LobbyService.checkReady();
-        console.log(LobbyService.checkReady(),$scope.ready);
+        console.log('ready test Lobbyctrl',LobbyService.checkReady(),$scope.ready);
 
-        // setInterval(function() {
-        //   console.log("checking for ready", LobbyService.checkReady());
-        //     if ($scope.ready ) {
-        //         $location.path('/list')
-        //         console.log("ready true");
-        //     }
-        // }, 5000);
+        $interval(function() {
+          console.log("checking for ready", LobbyService.checkReady());
+            if ($scope.ready == true) {
+
+        //// setting clock end cookie////////////////
+        var endDate = Date.now() + 90 * 60 * 1000;
+        jq.cookie('endDate', Math.round(endDate / 1000));
+        //////////////
+
+                // $location.path('/list')
+                console.log("ready true");
+            }
+        }, 10000);
 
         $scope.displayCode = TeamService.getLobbyCode()
             // console.log('lobby log', $scope.Game)
@@ -29,7 +36,7 @@ module.exports = function(app) {
 
             }).then(function(response) {
                 console.log('start game POST working', response)
-                       $location.path('/list')
+                       $location.path('/list');
 
 
             }).catch(function(response) {

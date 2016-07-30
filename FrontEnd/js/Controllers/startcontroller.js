@@ -1,5 +1,7 @@
 module.exports = function(app){
   app.controller('StartController',['$scope','$http','$location',function($scope,$http,$location){
+    var jq = jQuery.noConflict();
+    jq.removeCookie('start');
 
 $scope.info = function(){
   $location.path('/info1')
