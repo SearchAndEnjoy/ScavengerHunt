@@ -87,19 +87,18 @@ module.exports = function(app) {
                 return lobbyCode;
 
             },
-            getOverInfo: function() {
-                $http({
-                    url: '/game-over',
-                    method: 'Get',
-                }).then(function(response) {
-                    var response = response.data;
-                    console.log(response);
-                    angular.copy(response, endGameinfo)
-
-                }).catch(function(response) {
-                    console.error("gameover fail");
-                })
-                return endGameinfo;
+            getOverInfo: function(){
+              $http({
+                url: '/game-over',
+                method: 'Get',
+              }).then(function(response){
+                var response = response.data;
+                console.log(response);
+                angular.copy(response, endGameinfo)
+              }).catch(function(response){
+                console.error("gameover fail");
+              })
+              return endGameinfo;
             },
         } //end of return
     }]); //end of factory

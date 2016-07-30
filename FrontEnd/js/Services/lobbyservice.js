@@ -32,6 +32,7 @@ module.exports = function(app) {
 
             }).catch(function(response) {
                 console.error('checkready err');
+                console.log(readyState)
             });
             return readyState;
         }

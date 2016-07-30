@@ -1,5 +1,6 @@
 module.exports = function(app) {
     app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', '$interval', function($scope, $http, TeamService, LobbyService, $location,$interval) {
+
         var jq = jQuery.noConflict();
         $scope.startButton = jq.cookie('start');
         $scope.Game = TeamService.getTeams();
@@ -47,4 +48,4 @@ module.exports = function(app) {
             // $location.path('/list')
         }
     }])
-}
+};

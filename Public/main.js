@@ -16,7 +16,6 @@
         module.exports = function (app) {
             app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService', function ($scope, $location, $http, MainService, TeamService) {
                 $scope.gameOver = TeamService.getOverInfo();
-
                 // $scope.currentLocation = MainService.getLocation(map);
                 // console.log(MainService.getLocation());
                 $scope.gameOverButton = function () {
@@ -144,6 +143,7 @@
     }, {}], 5: [function (require, module, exports) {
         module.exports = function (app) {
             app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', '$interval', function ($scope, $http, TeamService, LobbyService, $location, $interval) {
+
                 var jq = jQuery.noConflict();
                 $scope.startButton = jq.cookie('start');
                 $scope.Game = TeamService.getTeams();
@@ -314,6 +314,7 @@
                             angular.copy(data, readyState);
                         }).catch(function (response) {
                             console.error('checkready err');
+                            console.log(readyState);
                         });
                         return readyState;
                     }
