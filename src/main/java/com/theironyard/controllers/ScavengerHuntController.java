@@ -23,6 +23,7 @@ import java.util.*;
 /**
  * Created by Erik on 7/20/16.
  */
+@CrossOrigin
 @RestController
 public class ScavengerHuntController {
 
@@ -37,7 +38,6 @@ public class ScavengerHuntController {
 
     @Autowired
     AnswerRepository answers;
-
 
 
     // initialize the database
@@ -79,6 +79,7 @@ public class ScavengerHuntController {
 
         return game;
     }
+
 
     @RequestMapping(path = "/add-team/{lobby_code}", method = RequestMethod.POST)
     public ResponseEntity<Object> addTeam(@RequestBody Team team, @PathVariable("lobby_code") String lobbyCode, HttpSession session) {
