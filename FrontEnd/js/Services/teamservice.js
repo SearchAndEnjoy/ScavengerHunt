@@ -1,6 +1,7 @@
 module.exports = function(app) {
     app.factory('TeamService', ['$http', '$location','$interval', function($http, $location,$interval) {
-      var teamName = []
+      var teamName = [];
+      var endGameinfo = [];
         return {
             getTeams: function() {
               teamName = []
@@ -90,7 +91,11 @@ module.exports = function(app) {
                 var response = response.data;
                 console.log(response);
                 angular.copy(response, endGameinfo)
-
+                new GMaps({
+                    div:'mini-map',
+                    lat: 1,
+                    lng: -1,
+                });
               }).catch(function(response){
                 console.error("gameover fail");
               })

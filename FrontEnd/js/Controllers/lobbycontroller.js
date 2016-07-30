@@ -40,4 +40,4 @@ module.exports = function(app) {
             // $location.path('/list')
         }
     }])
-}
+};

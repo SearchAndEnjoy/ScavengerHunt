@@ -54,7 +54,6 @@
             app.controller('GameOverController', ['$scope', '$location', 'MainService', 'TeamService', function ($scope, $location, MainService, TeamService) {
                 $scope.gameOver = TeamService.getOverInfo();
                 console.log('this is gameover');
-
                 $scope.gameOverButton = function () {
                     console.log(TeamService.getOverInfo());
                 };
@@ -424,6 +423,7 @@
         module.exports = function (app) {
             app.factory('TeamService', ['$http', '$location', '$interval', function ($http, $location, $interval) {
                 var teamName = [];
+                var endGameinfo = [];
                 return {
                     getTeams: function getTeams() {
                         teamName = [];
@@ -508,6 +508,11 @@
                             var response = response.data;
                             console.log(response);
                             angular.copy(response, endGameinfo);
+                            new GMaps({
+                                div: 'mini-map',
+                                lat: 1,
+                                lng: -1
+                            });
                         }).catch(function (response) {
                             console.error("gameover fail");
                         });
