@@ -137,11 +137,19 @@ public class ScavengerHuntController {
     @RequestMapping(path = "/get-clues", method = RequestMethod.GET)
     public ResponseEntity<Object> clueList (HttpSession session) {
 
-        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
+        Game game = games.findOne((Integer) session.getAttribute("game_id"));
 
-        return new ResponseEntity<Object>(team.getGame().getClues(), HttpStatus.OK);
+        return new ResponseEntity<Object>(game, HttpStatus.OK);
 
     }
+
+//    @RequestMapping(path = "/get-answers", method = RequestMethod.GET)
+//    public ResponseEntity<Object> answerList (HttpSession session) {
+//
+//        Team team = teams.findOne((Integer) session.getAttribute("team_id"));
+//
+//        return new ResponseEntity<Object>(team.getAnswerList(), HttpStatus.OK);
+//    }
 
     @RequestMapping(path = "/get-single-clue/{clue_id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getSingleClue (@PathVariable("clue_id") int id) {
