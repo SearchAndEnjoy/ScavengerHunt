@@ -1,10 +1,11 @@
 module.exports = function(app) {
-    app.factory('TeamService', ['$http', '$location','$interval', function($http, $location,$interval) {
-      var teamName = [];
-      var endGameinfo = [];
+    app.factory('TeamService', ['$http', '$location', '$interval', function($http, $location, $interval) {
+        var jq = jQuery.noConflict();
+        var teamName = [];
+        var endGameinfo = [];
         return {
             getTeams: function() {
-              teamName = []
+                teamName = []
                 $http({
                     url: '/get-teams',
                     method: 'GET',
@@ -13,7 +14,7 @@ module.exports = function(app) {
                     console.log(data);
                     angular.copy(data, teamName);
 
-                  // do a check to see if the array has changed from the one bound.   if it has do an angular copy, if not do nothing.
+                    // do a check to see if the array has changed from the one bound.   if it has do an angular copy, if not do nothing.
 
                     // console.log(response)
                     // data.forEach(function(el,ind) {
@@ -26,24 +27,20 @@ module.exports = function(app) {
 
                 });
                 return teamName
-            },//end of getTeam
+            }, //end of getTeam
             refreshTeams: function() {
-              $http({
-                url:'/get-teams',
-                method: 'GET',
-              }).then(function(response){
-                let data = response.data.teams
-                if(teamName === data){
-                  console.log('no changes');
-                }
-                else if(teamName !== data){
-                  angular.copy(data, teamName);
-                  console.log('changes')
-                }
-              })
+                $http({
+                    url: '/get-teams',
+                    method: 'GET',
+                }).then(function(response) {
+                    let data = response.data.teams
+                    if (teamName === data) {} else if (teamName !== data) {
+                        angular.copy(data, teamName);
+                    }
+                })
             },
             newSessionCreate: function(a, b) {
-              var newGameObj = {
+                var newGameObj = {
                     teamName: a,
                     game: {
                         lobbyName: b,
@@ -57,6 +54,13 @@ module.exports = function(app) {
 
                 }).then(function(response) {
                     console.log('This is working new sess POST')
+        /////// creates cookie to evaluate who started game and only lets them access start game button////////
+                    var date = new Date();
+                    date.setTime(date.getTime() + (120 * 60 * 1000));
+                    jq.cookie('start', 1, {
+                        expires: date
+                    });
+                    ////////end////////
                     $location.path('/lobby')
 
                 }).catch(function(response) {
@@ -66,14 +70,14 @@ module.exports = function(app) {
                 });
             },
             getLobbyCode: function() {
-              var lobbyCode = [];
+                var lobbyCode = [];
                 $http({
                     url: '/get-teams',
                     method: 'GET',
 
                 }).then(function(response) {
                     lobbyCode.push(response.data.lobbyCode)
-                    // lobbyCode = response.data.lobbyCode
+                        // lobbyCode = response.data.lobbyCode
                     console.log(lobbyCode);
 
                 }).catch(function(response) {
@@ -91,11 +95,6 @@ module.exports = function(app) {
                 var response = response.data;
                 console.log(response);
                 angular.copy(response, endGameinfo)
-                new GMaps({
-                    div:'mini-map',
-                    lat: 1,
-                    lng: -1,
-                });
               }).catch(function(response){
                 console.error("gameover fail");
               })
