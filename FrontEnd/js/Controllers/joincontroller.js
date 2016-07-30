@@ -11,7 +11,14 @@ module.exports = function(app) {
                 console.log('clicked');
             };
         $scope.newSessionCreate = function() {
-            TeamService.newSessionCreate($scope.teamName, $scope.lobbyName)
+          if ($scope.lobbyName === '') {
+            alert("Please Enter Lobby Name");
+
+          }else if ($scope.teamName === '') {
+            alert('Please Enter Team Name')
+          }else {
+            TeamService.newSessionCreate($scope.teamName, $scope.lobbyName);
+          }
         }
         // doubling up on stuff in teamservice.js check make sure there are no issues
 
