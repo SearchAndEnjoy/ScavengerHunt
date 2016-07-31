@@ -15,11 +15,19 @@
 })({ 1: [function (require, module, exports) {
         module.exports = function (app) {
             app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService', function ($scope, $location, $http, MainService, TeamService) {
+                var map = new GMaps({
+                    div: '#map',
+                    lat: 1,
+                    lng: -1
+                });
+                $scope.myLoc = MainService.getLocation(map);
+
                 $scope.gameOver = TeamService.getOverInfo();
-                // $scope.currentLocation = MainService.getLocation(map);
-                // console.log(MainService.getLocation());
+                $scope.teamPaths = TeamService.getOverPaths();
+
                 $scope.gameOverButton = function () {
-                    console.log(TeamService.getOverInfo());
+                    // console.log("G-O stuff",TeamService.getOverInfo());
+                    console.log('info for paths', TeamService.getOverPaths());
                 };
             }]);
         };
@@ -159,19 +167,19 @@
                 $scope.ready = LobbyService.checkReady();
                 console.log('ready test Lobbyctrl', LobbyService.checkReady(), $scope.ready);
 
-                $interval(function () {
-                    console.log("checking for ready", LobbyService.checkReady());
-                    if ($scope.ready == true) {
-
-                        //// setting clock end cookie////////////////
-                        var endDate = Date.now() + 90 * 60 * 1000;
-                        jq.cookie('endDate', Math.round(endDate / 1000));
-                        //////////////
-
-                        // $location.path('/list')
-                        console.log("ready true");
-                    }
-                }, 10000);
+                // $interval(function() {
+                //   console.log("checking for ready", LobbyService.checkReady());
+                //     if ($scope.ready == true) {
+                //
+                // //// setting clock end cookie////////////////
+                // var endDate = Date.now() + 90 * 60 * 1000;
+                // jq.cookie('endDate', Math.round(endDate / 1000));
+                // //////////////
+                //
+                //         // $location.path('/list')
+                //         console.log("ready true");
+                //     }
+                // }, 10000);
 
                 $scope.displayCode = TeamService.getLobbyCode();
                 // console.log('lobby log', $scope.Game)
@@ -211,7 +219,7 @@
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
                 console.log($scope.clue);
                 var clueId = $routeParams.clueId;
-
+                // $scope.correct = false;
                 console.log($routeParams);
                 //////// back-button function/////////
                 $scope.return = function () {
@@ -243,14 +251,24 @@
                         return dist;
                     }
                     console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
-                    // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
-                    if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
+                    if (Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
+                        // if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                         alert('here!');
                         // MainService.CreateMarker();
                         var answerObj = {
                             answerLat: $scope.myLoc[0].lat,
                             answerLong: $scope.myLoc[0].lon
                         };
+                        console.log();
+                        map.addMarker({
+                            lat: $scope.myLoc[0].lat,
+                            lng: $scope.myLoc[0].lon,
+                            title: $scope.clue.locationName,
+                            click: function click(e) {
+                                alert($scope.clue.locationName);
+                            }
+                        });
+                        // $scope.correct = true;
                         $http({
                             url: '/at-location' + '/' + clueId,
                             method: 'PUT',
@@ -263,6 +281,14 @@
                         });
                     } else {
                         alert('not here');
+                        map.addMarker({
+                            lat: $scope.myLoc[0].lat,
+                            lng: $scope.myLoc[0].lon,
+                            title: $scope.clue.locationName,
+                            click: function click(e) {
+                                alert($scope.clue.locationName);
+                            }
+                        });
                     }
                 };
                 /////// end marker code///////
@@ -338,12 +364,12 @@
                         GMaps.geolocate({
                             success: function success(position) {
                                 map.setCenter(position.coords.latitude, position.coords.longitude);
-                                map.setZoom(19);
+                                map.setZoom(16);
                                 myPosition.push({
                                     lat: position.coords.latitude,
                                     lon: position.coords.longitude
                                 });
-                                console.log(myPosition);
+                                console.log("My current Location", myPosition);
                             },
                             error: function error(_error) {
                                 alert('Geolocation failed: ' + _error.message);
@@ -399,6 +425,7 @@
                 var jq = jQuery.noConflict();
                 var teamName = [];
                 var endGameinfo = [];
+                var teamAnswerPath = [];
 
                 return {
                     getTeams: function getTeams() {
@@ -486,12 +513,50 @@
                             method: 'Get'
                         }).then(function (response) {
                             var response = response.data;
-                            console.log(response);
                             angular.copy(response, endGameinfo);
                         }).catch(function (response) {
                             console.error("gameover fail");
                         });
                         return endGameinfo;
+                    },
+                    getOverPaths: function getOverPaths() {
+                        $http({
+                            url: '/game-over',
+                            method: 'Get'
+                        }).then(function (response) {
+                            var teams = [];
+                            var pos = [];
+
+                            var response = response.data;
+                            console.log(response);
+                            response.forEach(function (team) {
+                                // var teams = [];
+                                console.log('team for each loop', team);
+                                // teamAnswerPath.push(teams);
+                                team.answerList.forEach(function (answers) {
+                                    // console.log(answers);
+                                    var pos = [];
+                                    var teams = [];
+
+                                    //
+                                    pos.push(answers.answerLat, answers.answerLong);
+                                    teams.push(pos);
+                                    console.log(teams);
+                                    teamAnswerPath.push(teams);
+                                    //   // teams.push([pos]);
+                                    //
+                                });
+                                // teams.push([pos]);
+                                console.log(teamAnswerPath);
+                                // console.log(pos);
+
+                                // console.log('answer list loop',pos);
+                                // console.log('teams answer array',teams);
+                            });
+                        }).catch(function (response) {
+                            console.error("gameover fail");
+                        });
+                        return teamAnswerPath;
                     }
                 }; //end of return
             }]); //end of factory

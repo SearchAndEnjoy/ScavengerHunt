@@ -11,7 +11,7 @@ module.exports = function(app) {
         $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
         console.log($scope.clue);
         var clueId = $routeParams.clueId;
-
+        // $scope.correct = false;
         console.log($routeParams);
         //////// back-button function/////////
         $scope.return = function() {
@@ -43,14 +43,24 @@ module.exports = function(app) {
                 return dist;
             }
             console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
-            // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
-            if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
+            if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
+            // if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                 alert('here!');
                 // MainService.CreateMarker();
                 var answerObj = {
-                    answerLat:$scope.myLoc[0].lat,
-                    answerLong:$scope.myLoc[0].lon,
-                }
+                        answerLat: $scope.myLoc[0].lat,
+                        answerLong: $scope.myLoc[0].lon,
+                    }
+                    console.log();
+                  map.addMarker({
+                        lat: $scope.myLoc[0].lat,
+                        lng: $scope.myLoc[0].lon,
+                        title: $scope.clue.locationName,
+                        click: function(e) {
+                            alert($scope.clue.locationName);
+                        },
+                    });
+                    // $scope.correct = true;
                 $http({
                     url: '/at-location' + '/' + clueId,
                     method: 'PUT',
@@ -62,10 +72,19 @@ module.exports = function(app) {
                 }).catch(function(response) {
                     console.error('clue answer PUT failed');
 
+
                 });
 
             } else {
                 alert('not here')
+                map.addMarker({
+                      lat: $scope.myLoc[0].lat,
+                      lng: $scope.myLoc[0].lon,
+                      title: $scope.clue.locationName,
+                      click: function(e) {
+                          alert($scope.clue.locationName);
+                      },
+                  });
             }
         };
         /////// end marker code///////
