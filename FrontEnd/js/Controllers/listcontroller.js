@@ -1,8 +1,9 @@
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService','$routeParams', function($scope, $http, $location, QuestionService, $routeParams) {
       var jq = jQuery.noConflict();
-      $scope.clues = QuestionService.getClues();
-
+      $scope.clues = QuestionService.compareAnswers();
+      QuestionService.getClues();
+      // $scope.compare= QuestionService.compareAnswers();
 ////// back-button //////
       $scope.goback = function(){
         $location.path('/lobby');

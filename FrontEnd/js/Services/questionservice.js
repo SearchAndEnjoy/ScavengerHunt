@@ -2,21 +2,34 @@ module.exports = function(app) {
     app.factory('QuestionService', ['$http', function($http) {
       var clues = [];
       var singleClue = [];
+      var executed = false
 
         return {
           getClues: function(){
+              if(!executed){
+                executed = true
             $http({
                 url: '/get-clues',
                 method: 'GET',
             }).then(function(response) {
+              console.log(clues.length)
+
             let data = response.data
-            console.log('questionservice', data);
-              angular.copy(data, clues)
-            }).catch(function(response) {
+            console.log('questionservice', data.clues);
+              angular.copy(data, clues);
+
+              // clues.push(data)
+              // data.clues.forEach(function(el,ind){
+              //   clueCheck.push({
+              //     id:el.id,
+              //     clue:el.clue
+              //   })
+              // });
+          }).catch(function(response) {
               console.log('error! error! bzzzt!')
 
             });
-            return clues;
+          }
           },
           getSingleClue: function(id) {
             $http({
@@ -30,7 +43,10 @@ module.exports = function(app) {
               console.log('error');
             });
             return singleClue;
-          }
+          },
+          compareAnswers: function(){
+            return clues
+          },
         }//end of return
     }]);
   };
