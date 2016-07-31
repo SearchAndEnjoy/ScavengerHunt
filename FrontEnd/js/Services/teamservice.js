@@ -3,6 +3,7 @@ module.exports = function(app) {
         var jq = jQuery.noConflict();
         var teamName = [];
         var endGameinfo = [];
+
         return {
             getTeams: function() {
                 teamName = []
