@@ -2,6 +2,7 @@ module.exports = function(app) {
     app.factory('MainService', ['$http', function($http) {
         var myPosition = [];
 
+
         return {
             getLocation: function(map) {
                 GMaps.geolocate({

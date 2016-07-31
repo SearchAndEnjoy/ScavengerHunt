@@ -92,8 +92,9 @@
         module.exports = function (app) {
             app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', function ($scope, $http, $location, QuestionService, $routeParams) {
                 var jq = jQuery.noConflict();
-                $scope.clues = QuestionService.getClues();
-
+                $scope.clues = QuestionService.compareAnswers();
+                QuestionService.getClues();
+                // $scope.compare= QuestionService.compareAnswers();
                 ////// back-button //////
                 $scope.goback = function () {
                     $location.path('/lobby');
@@ -213,14 +214,16 @@
                     lat: 1,
                     lng: -1
                 });
-
                 $scope.myLoc = MainService.getLocation(map);
-                console.log($scope.myLoc);
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
-                console.log($scope.clue);
+                $scope.compare = QuestionService.compareAnswers();
+                console.log($scope.compare);
+                // console.log($scope.compare)
+                // console.log($scope.clue)
                 var clueId = $routeParams.clueId;
                 // $scope.correct = false;
                 console.log($routeParams);
+
                 //////// back-button function/////////
                 $scope.return = function () {
                     $location.path('/list');
@@ -230,7 +233,6 @@
                 $scope.marker = function () {
                     MainService.getLocation(map);
                     console.log("click", $scope.myLoc);
-
                     function distance(lat1, lon1, lat2, lon2, unit) {
                         var radlat1 = Math.PI * lat1 / 180;
                         var radlat2 = Math.PI * lat2 / 180;
@@ -254,7 +256,7 @@
                     if (Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                         // if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                         alert('here!');
-                        // MainService.CreateMarker();
+                        console.log();
                         var answerObj = {
                             answerLat: $scope.myLoc[0].lat,
                             answerLong: $scope.myLoc[0].lon
@@ -275,7 +277,19 @@
                             data: answerObj
 
                         }).then(function (response) {
-                            console.log('clue answer PUT working', answerObj, response);
+                            $scope.compare.clues.forEach(function (el, ind) {
+                                if ($scope.clue.id === el.id) {
+                                    console.log($scope.clue.id);
+                                    console.log(el.id);
+                                    $scope.compare.clues.splice(ind, ind + 1);
+                                    console.log($scope.compare);
+                                    $location.path('/list');
+                                }
+                            });
+
+                            // console.log(response.data.clue.id)
+                            // console.log($scope.compare)
+                            // console.log('clue answer PUT working', answerObj, response)
                         }).catch(function (response) {
                             console.error('clue answer PUT failed');
                         });
@@ -388,20 +402,33 @@
             app.factory('QuestionService', ['$http', function ($http) {
                 var clues = [];
                 var singleClue = [];
+                var executed = false;
 
                 return {
                     getClues: function getClues() {
-                        $http({
-                            url: '/get-clues',
-                            method: 'GET'
-                        }).then(function (response) {
-                            var data = response.data;
-                            console.log('questionservice', data);
-                            angular.copy(data, clues);
-                        }).catch(function (response) {
-                            console.log('error! error! bzzzt!');
-                        });
-                        return clues;
+                        if (!executed) {
+                            executed = true;
+                            $http({
+                                url: '/get-clues',
+                                method: 'GET'
+                            }).then(function (response) {
+                                console.log(clues.length);
+
+                                var data = response.data;
+                                console.log('questionservice', data.clues);
+                                angular.copy(data, clues);
+
+                                // clues.push(data)
+                                // data.clues.forEach(function(el,ind){
+                                //   clueCheck.push({
+                                //     id:el.id,
+                                //     clue:el.clue
+                                //   })
+                                // });
+                            }).catch(function (response) {
+                                console.log('error! error! bzzzt!');
+                            });
+                        }
                     },
                     getSingleClue: function getSingleClue(id) {
                         $http({
@@ -415,6 +442,9 @@
                             console.log('error');
                         });
                         return singleClue;
+                    },
+                    compareAnswers: function compareAnswers() {
+                        return clues;
                     }
                 }; //end of return
             }]);
