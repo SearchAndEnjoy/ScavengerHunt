@@ -84,8 +84,9 @@
         module.exports = function (app) {
             app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', function ($scope, $http, $location, QuestionService, $routeParams) {
                 var jq = jQuery.noConflict();
-                $scope.clues = QuestionService.compareAnswers();
+                $scope.gameObj = QuestionService.compareAnswers();
                 QuestionService.getClues();
+                console.log($scope.gameObj);
                 // $scope.compare= QuestionService.compareAnswers();
                 ////// back-button //////
                 $scope.goback = function () {
@@ -246,7 +247,7 @@
                     // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                     if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                         alert('here!');
-                        console.log();
+                        $location.path('/list');
                         var answerObj = {
                             answerLat: $scope.myLoc[0].lat,
                             answerLong: $scope.myLoc[0].lon
@@ -257,13 +258,13 @@
                             data: answerObj
 
                         }).then(function (response) {
-                            $scope.compare.clues.forEach(function (el, ind) {
-                                if ($scope.clue.id === el.id) {
+                            $scope.compare.forEach(function (el, ind) {
+                                if ($scope.clue.clue === el.clue) {
                                     console.log($scope.clue.id);
                                     console.log(el.id);
-                                    $scope.compare.clues.splice(ind, ind + 1);
+                                    $scope.compare.splice(ind, ind + 1);
                                     console.log($scope.compare);
-                                    $location.path('/list');
+                                    // $location.path('/list')
                                 }
                             });
 
@@ -375,7 +376,7 @@
                 var clues = [];
                 var singleClue = [];
                 var executed = false;
-
+                var answers = [];
                 return {
                     getClues: function getClues() {
                         if (!executed) {
@@ -384,19 +385,26 @@
                                 url: '/get-clues',
                                 method: 'GET'
                             }).then(function (response) {
-                                console.log(clues.length);
 
                                 var data = response.data;
+                                console.log(data.teamList);
                                 console.log('questionservice', data.clues);
-                                angular.copy(data, clues);
+                                // angular.copy(data, clues);
 
                                 // clues.push(data)
-                                // data.clues.forEach(function(el,ind){
-                                //   clueCheck.push({
-                                //     id:el.id,
-                                //     clue:el.clue
-                                //   })
-                                // });
+                                data.teamList[0].answerList.forEach(function (el) {
+                                    answers.push({ answer: el.clue.clue });
+                                });
+                                data.clues.forEach(function (el, ind) {
+                                    // if(el.clue !== answers[0].answer){
+                                    console.log(answers);
+                                    console.log(ind);
+                                    clues.push({
+                                        clue: el.clue,
+                                        id: el.id
+                                    });
+                                    // }
+                                });
                             }).catch(function (response) {
                                 console.log('error! error! bzzzt!');
                             });

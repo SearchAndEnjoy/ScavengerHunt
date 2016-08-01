@@ -3,33 +3,41 @@ module.exports = function(app) {
       var clues = [];
       var singleClue = [];
       var executed = false
-
+      var answers = []
         return {
           getClues: function(){
-              if(!executed){
-                executed = true
+               if(!executed){
+                 executed = true
             $http({
                 url: '/get-clues',
                 method: 'GET',
             }).then(function(response) {
-              console.log(clues.length)
+
 
             let data = response.data
+            console.log(data.teamList)
             console.log('questionservice', data.clues);
-              angular.copy(data, clues);
+              // angular.copy(data, clues);
 
               // clues.push(data)
-              // data.clues.forEach(function(el,ind){
-              //   clueCheck.push({
-              //     id:el.id,
-              //     clue:el.clue
-              //   })
-              // });
+              data.teamList[0].answerList.forEach(function(el){
+                answers.push({answer:el.clue.clue})
+              })
+              data.clues.forEach(function(el,ind){
+                // if(el.clue !== answers[0].answer){
+                  console.log(answers)
+                  console.log(ind)
+               clues.push({
+                   clue:el.clue,
+                   id:el.id
+                 })
+            // }
+              })
           }).catch(function(response) {
               console.log('error! error! bzzzt!')
 
             });
-          }
+            }
           },
           getSingleClue: function(id) {
             $http({
@@ -46,6 +54,7 @@ module.exports = function(app) {
           },
           compareAnswers: function(){
             return clues
+
           },
         }//end of return
     }]);

@@ -7,13 +7,11 @@
 
     <ul class="list-group">
 
-        <button  type="button" data-toggle="button" aria-pressed="false" name="button" ng-repeat='clue in clues.clues'>
-            <a href="#/questionpage/{{clue.id}}">
-                <li class="list-group-item lobby-list-item">
-                    <h1>{{clue.clue}}</h1>
-                </li>
-            </a>
-        </button>
-
-
-    </ul>
+      <button type="button" data-toggle="button" aria-pressed="false" name="button" ng-repeat='clue in gameObj'>
+        <a href="#/questionpage/{{clue.id}}">
+            <li ng-if='clue.clue !== clue.answer'class="list-group-item lobby-list-item">
+                <h1>{{clue.clue}}</h1>
+                <hi>{{clue.answer}}</h1>
+            </li>
+        </a>
+    </button>
