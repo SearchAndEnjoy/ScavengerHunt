@@ -45,7 +45,7 @@ module.exports = function(app) {
             // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
             if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                 alert('here!');
-                console.log()
+                $location.path('/list')
                 var answerObj = {
                     answerLat:$scope.myLoc[0].lat,
                     answerLong:$scope.myLoc[0].lon,
@@ -56,13 +56,13 @@ module.exports = function(app) {
                     data: answerObj,
 
                 }).then(function(response) {
-                  $scope.compare.clues.forEach(function(el,ind){
-                     if($scope.clue.id === el.id){
+                  $scope.compare.forEach(function(el,ind){
+                     if($scope.clue.clue === el.clue){
                        console.log($scope.clue.id)
                        console.log(el.id)
-                       $scope.compare.clues.splice(ind,ind+1)
+                       $scope.compare.splice(ind,ind+1)
                        console.log($scope.compare)
-                      $location.path('/list')
+                      // $location.path('/list')
                     }
                   })
 
