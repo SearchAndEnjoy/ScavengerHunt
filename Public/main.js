@@ -21,13 +21,12 @@
                     lng: -1
                 });
                 $scope.myLoc = MainService.getLocation(map);
-
                 $scope.gameOver = TeamService.getOverInfo();
-                // $scope.teamPaths = TeamService.getOverPaths();
+                $scope.teamPaths = TeamService.getOverPaths();
 
                 $scope.gameOverButton = function () {
                     console.log("G-O stuff", TeamService.getOverInfo());
-                    // console.log('info for paths',TeamService.getOverPaths());
+                    console.log('info for paths', TeamService.getOverPaths());
                 };
             }]);
         };
@@ -222,7 +221,7 @@
                 // console.log($scope.compare)
                 // console.log($scope.clue)
                 var clueId = $routeParams.clueId;
-                // $scope.correct = false;
+                $scope.correct = false;
                 console.log($routeParams);
 
                 //////// back-button function/////////
@@ -416,7 +415,7 @@
 
                                 var data = response.data;
 
-                                console.log(data.teamList);
+                                // console.log(data.teamList)
                                 console.log('questionservice', data.clues);
                                 // angular.copy(data, clues);
 
@@ -426,8 +425,8 @@
                                 });
                                 data.clues.forEach(function (el, ind) {
                                     // if(el.clue !== answers[0].answer){
-                                    console.log(answers);
-                                    console.log(ind);
+                                    // console.log(answers)
+                                    // console.log(ind)
                                     clues.push({
                                         clue: el.clue,
                                         id: el.id
@@ -557,9 +556,30 @@
                             console.error("gameover fail");
                         });
                         return endGameinfo;
-                    }
+                    },
 
-                };
+                    //////////////  separate answer lists  so that diff routes ////////
+                    getOverPaths: function getOverPaths() {
+                        $http({
+                            url: '/game-over',
+                            method: 'Get'
+                        }).then(function (response) {
+                            var teams = [];
+                            var pos = [];
+
+                            var response = response.data;
+                            console.log('all data', response);
+                            angular.copy(response, teamAnswerPath);
+                            response.forEach(function (team) {
+                                // console.log(team);
+
+                            });
+                        }).catch(function (response) {
+                            console.error("gameover fail");
+                        });
+                        return teamAnswerPath;
+                    }
+                }; //end of return
             }]); //end of factory
         };
     }, {}], 12: [function (require, module, exports) {

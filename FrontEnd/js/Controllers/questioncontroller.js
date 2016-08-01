@@ -12,7 +12,7 @@ module.exports = function(app) {
         // console.log($scope.compare)
         // console.log($scope.clue)
         var clueId = $routeParams.clueId;
-        // $scope.correct = false;
+        $scope.correct = false;
         console.log($routeParams);
 
         //////// back-button function/////////

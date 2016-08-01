@@ -16,7 +16,7 @@ module.exports = function(app) {
 
             let data = response.data
 
-            console.log(data.teamList)
+            // console.log(data.teamList)
             console.log('questionservice', data.clues);
               // angular.copy(data, clues);
 
@@ -26,8 +26,8 @@ module.exports = function(app) {
               })
               data.clues.forEach(function(el,ind){
                 // if(el.clue !== answers[0].answer){
-                  console.log(answers)
-                  console.log(ind)
+                  // console.log(answers)
+                  // console.log(ind)
                clues.push({
                    clue:el.clue,
                    id:el.id
