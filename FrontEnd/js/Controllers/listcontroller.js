@@ -1,5 +1,6 @@
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService','$routeParams', function($scope, $http, $location, QuestionService, $routeParams) {
+      $route.reload()
       var jq = jQuery.noConflict();
       $scope.gameObj = QuestionService.compareAnswers()
       QuestionService.getClues();

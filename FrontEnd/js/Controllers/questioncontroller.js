@@ -71,14 +71,13 @@ module.exports = function(app) {
                 }).then(function(response) {
                   $scope.compare.forEach(function(el,ind){
                      if($scope.clue.clue === el.clue){
-                       console.log($scope.clue.id)
-                       console.log(el.id)
                        $scope.compare.splice(ind,ind+1)
-                       console.log($scope.compare)
-                      // $location.path('/list')
+                       console.log($scope.compare.length)
                     }
                   })
-
+                  if($scope.compare.length === 0){
+                    $location.path('/gameover')
+                  }
                   // console.log(response.data.clue.id)
                   // console.log($scope.compare)
                     // console.log('clue answer PUT working', answerObj, response)
