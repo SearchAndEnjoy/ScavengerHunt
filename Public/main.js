@@ -37,9 +37,12 @@
                 $scope.gameOver = TeamService.getOverInfo();
                 $scope.teamPaths = TeamService.getOverPaths();
 
+                ///////// change below to go to start page/////////
+
                 $scope.gameOverButton = function () {
                     console.log("G-O stuff", TeamService.getOverInfo());
                     console.log('info for paths', TeamService.getOverPaths());
+                    $location.path('/start_page');
                 };
             }]);
         };
@@ -210,7 +213,7 @@
                         console.log('start game POST working', response);
 
                         $location.path('/list');
-                        location.reload();
+                        //  location.reload()
                         ///////// location reload causes issue on safari look up/////////
                     }).catch(function (response) {
                         console.error('start game POST failed');

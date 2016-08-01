@@ -3,20 +3,13 @@
 </div>
 
 <div class="col-xs-10 col-xs-offset-1 page-box">
-<<<<<<< HEAD
-    <!-- <button type="button" class="btn btn-primary btn-lg back-button" ng-click="goback()">Back</button> -->
 
-    <!-- <ul class="list-group quest-list-item"> -->
-
-=======
-    <ul class="list-group">
->>>>>>> 42ba963ad0886ec81697cda1b9cd4c3af1893f2c
-      <button type="button" data-toggle="button" aria-pressed="false" name="button" ng-repeat='clue in gameObj'>
+    <ul class="list-group quest-list-ul">
+      <li class="quest-list-item" ng-repeat='clue in gameObj'>
+      <!-- <button type="button" data-toggle="button" aria-pressed="false" name="button" ng-repeat='clue in gameObj'> -->
         <a href="#/questionpage/{{clue.id}}">
-            <li ng-if='clue.clue !== clue.answer'class="list-group-item lobby-list-item">
                 <h1>{{clue.clue}}</h1>
-                <hi>{{clue.answer}}</h1>
-            </li>
         </a>
-    </button>
-  <!-- </ul> -->
+        </li>
+    <!-- </button> -->
+  </ul>

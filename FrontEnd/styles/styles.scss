@@ -81,6 +81,7 @@ body {
 }
 .page-box {
     // background-color: lightgreen;
+    padding-bottom: 10%;
 }
 ////////// create and join session page styling
 .form-group {
@@ -178,12 +179,21 @@ body {
     color: #faf9f5;
     text-shadow: #030303 1px 3px 3px;
     background-color: #85D6D1;
-    // border: 2px solid #F27D5C ;
+    border-radius: 10px;
+    padding: 3%;
     margin-bottom: 5%;
     min-height: 20%;
     -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
     box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    a {
+      text-decoration: none;
+      color: #faf9f5;
+
+    }
+}
+.quest-list-ul {
+  padding-bottom: 12%;
 }
 ///////// game over page styling
 .mini-map {
