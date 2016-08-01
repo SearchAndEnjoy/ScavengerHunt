@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService', 'QuestionService', '$location', '$routeParams', function($scope, $http, MainService, QuestionService, $location, $routeParams) {
+    app.controller('QuestionController', ['$scope', '$http', 'MainService', 'QuestionService', '$location', '$routeParams','$route', function($scope, $http, MainService, QuestionService, $location, $routeParams,$route) {
         var map = new GMaps({
             div: '#map',
             lat: 1,
@@ -8,11 +8,10 @@ module.exports = function(app) {
         $scope.myLoc = MainService.getLocation(map);
         $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
         $scope.compare= QuestionService.compareAnswers()
-        console.log($scope.compare)
         // console.log($scope.compare)
         // console.log($scope.clue)
         var clueId = $routeParams.clueId;
-        // $scope.correct = false;
+        //$scope.correct = false;
         console.log($routeParams);
 
         //////// back-button function/////////
@@ -46,21 +45,20 @@ module.exports = function(app) {
             console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
             // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
             if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
-                alert('here!');
-                $location.path('/list')
+                 alert('here!');
+                // $location.path('/list');
                 var answerObj = {
                         answerLat: $scope.myLoc[0].lat,
                         answerLong: $scope.myLoc[0].lon,
                     }
                     console.log();
-                  map.addMarker({
+                  var marker = map.addMarker({
                         lat: $scope.myLoc[0].lat,
                         lng: $scope.myLoc[0].lon,
                         title: $scope.clue.locationName,
-                        click: function(e) {
-                            alert($scope.clue.locationName);
-                        },
+                        infoWindow: {content: `<h1>${$scope.clue.locationName}</h1>`}
                     });
+                    new google.maps.event.trigger( marker, 'click' );
                     // $scope.correct = true;
                 $http({
                     url: '/at-location' + '/' + clueId,
@@ -71,7 +69,7 @@ module.exports = function(app) {
                 }).then(function(response) {
                   $scope.compare.forEach(function(el,ind){
                      if($scope.clue.clue === el.clue){
-                       $scope.compare.splice(ind,ind+1)
+                       $scope.compare.splice(ind,1)
                        console.log($scope.compare.length)
                     }
                   })
