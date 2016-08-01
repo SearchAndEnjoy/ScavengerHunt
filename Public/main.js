@@ -14,13 +14,26 @@
     }return s;
 })({ 1: [function (require, module, exports) {
         module.exports = function (app) {
-            app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService', function ($scope, $location, $http, MainService, TeamService) {
+            app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService', 'QuestionService', function ($scope, $location, $http, MainService, TeamService, QuestionService) {
                 var map = new GMaps({
                     div: '#map',
                     lat: 1,
                     lng: -1
                 });
-                $scope.myLoc = MainService.getLocation(map);
+
+                // $scope.myLoc = MainService.getLocation(map);
+                $scope.clueLoc = QuestionService.finalAnswers();
+                $scope.clueLoc.forEach(function (el) {
+                    console.log(el.latitude, el.longitude);
+                    var marker = map.addMarker({
+                        lat: el.latitude,
+                        lng: el.longitude,
+                        title: 'Logans super special marker',
+                        infoWindow: { content: "<h1>" + el.locationName + "</h1>" }
+                    });
+                    map.fitZoom();
+                    map.zoomOut(1);
+                });
                 $scope.gameOver = TeamService.getOverInfo();
                 $scope.teamPaths = TeamService.getOverPaths();
 
@@ -95,11 +108,6 @@
                 QuestionService.getClues();
                 console.log($scope.gameObj);
                 // $scope.compare= QuestionService.compareAnswers();
-                ////// back-button //////
-                $scope.goback = function () {
-                    $location.path('/lobby');
-                    console.log('clicked');
-                };
                 //////// tranfer to individual clue page
                 $scope.cluePage = function () {}
                 // console.log('clicked to clue page', id);
@@ -109,7 +117,6 @@
                 //  })
                 // }
                 // $location.path('/question/' + id);
-
 
                 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
                 ////// flipclock courtesy of flipclockjs.com
@@ -201,7 +208,10 @@
 
                     }).then(function (response) {
                         console.log('start game POST working', response);
+
                         $location.path('/list');
+                        location.reload();
+                        ///////// location reload causes issue on safari look up/////////
                     }).catch(function (response) {
                         console.error('start game POST failed');
                     });
@@ -212,7 +222,7 @@
         };
     }, {}], 6: [function (require, module, exports) {
         module.exports = function (app) {
-            app.controller('QuestionController', ['$scope', '$http', 'MainService', 'QuestionService', '$location', '$routeParams', function ($scope, $http, MainService, QuestionService, $location, $routeParams) {
+            app.controller('QuestionController', ['$scope', '$http', 'MainService', 'QuestionService', '$location', '$routeParams', '$route', function ($scope, $http, MainService, QuestionService, $location, $routeParams, $route) {
                 var map = new GMaps({
                     div: '#map',
                     lat: 1,
@@ -221,11 +231,11 @@
                 $scope.myLoc = MainService.getLocation(map);
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
                 $scope.compare = QuestionService.compareAnswers();
-                console.log($scope.compare);
                 // console.log($scope.compare)
                 // console.log($scope.clue)
                 var clueId = $routeParams.clueId;
-                $scope.correct = false;
+
+                //$scope.correct = false;
                 console.log($routeParams);
 
                 //////// back-button function/////////
@@ -260,20 +270,19 @@
                     // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                     if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                         alert('here!');
-                        $location.path('/list');
+                        // $location.path('/list');
                         var answerObj = {
                             answerLat: $scope.myLoc[0].lat,
                             answerLong: $scope.myLoc[0].lon
                         };
                         console.log();
-                        map.addMarker({
+                        var marker = map.addMarker({
                             lat: $scope.myLoc[0].lat,
                             lng: $scope.myLoc[0].lon,
                             title: $scope.clue.locationName,
-                            click: function click(e) {
-                                alert($scope.clue.locationName);
-                            }
+                            infoWindow: { content: "<h1>" + $scope.clue.locationName + "</h1>" }
                         });
+                        new google.maps.event.trigger(marker, 'click');
                         // $scope.correct = true;
                         $http({
                             url: '/at-location' + '/' + clueId,
@@ -283,14 +292,13 @@
                         }).then(function (response) {
                             $scope.compare.forEach(function (el, ind) {
                                 if ($scope.clue.clue === el.clue) {
-                                    console.log($scope.clue.id);
-                                    console.log(el.id);
-                                    $scope.compare.splice(ind, ind + 1);
-                                    console.log($scope.compare);
-                                    // $location.path('/list')
+                                    $scope.compare.splice(ind, 1);
+                                    console.log($scope.compare.length);
                                 }
                             });
-
+                            if ($scope.compare.length === 0) {
+                                $location.path('/gameover');
+                            }
                             // console.log(response.data.clue.id)
                             // console.log($scope.compare)
                             // console.log('clue answer PUT working', answerObj, response)
@@ -415,7 +423,7 @@
         };
     }, {}], 10: [function (require, module, exports) {
         module.exports = function (app) {
-            app.factory('QuestionService', ['$http', function ($http) {
+            app.factory('QuestionService', ['$http', '$route', function ($http, $route) {
                 var clues = [];
                 var singleClue = [];
                 var executed = false;
@@ -424,6 +432,7 @@
                     getClues: function getClues() {
                         if (!executed) {
                             executed = true;
+
                             $http({
                                 url: '/get-clues',
                                 method: 'GET'
@@ -431,23 +440,27 @@
 
                                 var data = response.data;
 
-                                // console.log(data.teamList)
-                                console.log('questionservice', data.clues);
+                                console.log(data);
+                                // console.log('questionservice', data.clues);
                                 // angular.copy(data, clues);
 
                                 // clues.push(data)
-                                data.teamList[0].answerList.forEach(function (el) {
-                                    answers.push({ answer: el.clue.clue });
+                                data.clues.forEach(function (el) {
+                                    answers.push({
+                                        clue: el.clue,
+                                        id: el.id,
+                                        latitude: el.latitude,
+                                        longitude: el.longitude,
+                                        locationName: el.locationName
+                                    });
                                 });
                                 data.clues.forEach(function (el, ind) {
-                                    // if(el.clue !== answers[0].answer){
-                                    // console.log(answers)
-                                    // console.log(ind)
                                     clues.push({
                                         clue: el.clue,
-                                        id: el.id
+                                        id: el.id,
+                                        latitude: el.latitude,
+                                        longitude: el.longitude
                                     });
-                                    // }
                                 });
                             }).catch(function (response) {
                                 console.log('error! error! bzzzt!');
@@ -469,6 +482,9 @@
                     },
                     compareAnswers: function compareAnswers() {
                         return clues;
+                    },
+                    finalAnswers: function finalAnswers() {
+                        return answers;
                     }
                 }; //end of return
             }]);

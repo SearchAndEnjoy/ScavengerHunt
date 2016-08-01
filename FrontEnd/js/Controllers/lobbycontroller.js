@@ -45,8 +45,10 @@ module.exports = function(app) {
 
             }).then(function(response) {
                 console.log('start game POST working', response)
-                $location.path('/list');
 
+                       $location.path('/list');
+                       location.reload()
+///////// location reload causes issue on safari look up/////////
 
             }).catch(function(response) {
                 console.error('start game POST failed');
