@@ -15,11 +15,19 @@
 })({ 1: [function (require, module, exports) {
         module.exports = function (app) {
             app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService', function ($scope, $location, $http, MainService, TeamService) {
+                var map = new GMaps({
+                    div: '#map',
+                    lat: 1,
+                    lng: -1
+                });
+                $scope.myLoc = MainService.getLocation(map);
+
                 $scope.gameOver = TeamService.getOverInfo();
-                // $scope.currentLocation = MainService.getLocation(map);
-                // console.log(MainService.getLocation());
+                // $scope.teamPaths = TeamService.getOverPaths();
+
                 $scope.gameOverButton = function () {
-                    console.log(TeamService.getOverInfo());
+                    console.log("G-O stuff", TeamService.getOverInfo());
+                    // console.log('info for paths',TeamService.getOverPaths());
                 };
             }]);
         };
@@ -161,19 +169,19 @@
                 $scope.ready = LobbyService.checkReady();
                 console.log('ready test Lobbyctrl', LobbyService.checkReady(), $scope.ready);
 
-                $interval(function () {
-                    console.log("checking for ready", LobbyService.checkReady());
-                    if ($scope.ready == true) {
-
-                        //// setting clock end cookie////////////////
-                        var endDate = Date.now() + 90 * 60 * 1000;
-                        jq.cookie('endDate', Math.round(endDate / 1000));
-                        //////////////
-
-                        // $location.path('/list')
-                        console.log("ready true");
-                    }
-                }, 10000);
+                // $interval(function() {
+                //   console.log("checking for ready", LobbyService.checkReady());
+                //     if ($scope.ready == true) {
+                //
+                // //// setting clock end cookie////////////////
+                // var endDate = Date.now() + 90 * 60 * 1000;
+                // jq.cookie('endDate', Math.round(endDate / 1000));
+                // //////////////
+                //
+                //         // $location.path('/list')
+                //         console.log("ready true");
+                //     }
+                // }, 10000);
 
                 $scope.displayCode = TeamService.getLobbyCode();
                 // console.log('lobby log', $scope.Game)
@@ -214,7 +222,9 @@
                 // console.log($scope.compare)
                 // console.log($scope.clue)
                 var clueId = $routeParams.clueId;
-                ;
+                // $scope.correct = false;
+                console.log($routeParams);
+
                 //////// back-button function/////////
                 $scope.return = function () {
                     $location.path('/list');
@@ -252,6 +262,16 @@
                             answerLat: $scope.myLoc[0].lat,
                             answerLong: $scope.myLoc[0].lon
                         };
+                        console.log();
+                        map.addMarker({
+                            lat: $scope.myLoc[0].lat,
+                            lng: $scope.myLoc[0].lon,
+                            title: $scope.clue.locationName,
+                            click: function click(e) {
+                                alert($scope.clue.locationName);
+                            }
+                        });
+                        // $scope.correct = true;
                         $http({
                             url: '/at-location' + '/' + clueId,
                             method: 'PUT',
@@ -276,6 +296,14 @@
                         });
                     } else {
                         alert('not here');
+                        map.addMarker({
+                            lat: $scope.myLoc[0].lat,
+                            lng: $scope.myLoc[0].lon,
+                            title: $scope.clue.locationName,
+                            click: function click(e) {
+                                alert($scope.clue.locationName);
+                            }
+                        });
                     }
                 };
                 /////// end marker code///////
@@ -351,12 +379,12 @@
                         GMaps.geolocate({
                             success: function success(position) {
                                 map.setCenter(position.coords.latitude, position.coords.longitude);
-                                map.setZoom(19);
+                                map.setZoom(16);
                                 myPosition.push({
                                     lat: position.coords.latitude,
                                     lon: position.coords.longitude
                                 });
-                                console.log(myPosition);
+                                console.log("My current Location", myPosition);
                             },
                             error: function error(_error) {
                                 alert('Geolocation failed: ' + _error.message);
@@ -387,6 +415,7 @@
                             }).then(function (response) {
 
                                 var data = response.data;
+
                                 console.log(data.teamList);
                                 console.log('questionservice', data.clues);
                                 // angular.copy(data, clues);
@@ -435,6 +464,7 @@
                 var jq = jQuery.noConflict();
                 var teamName = [];
                 var endGameinfo = [];
+                var teamAnswerPath = [];
 
                 return {
                     getTeams: function getTeams() {
@@ -522,14 +552,14 @@
                             method: 'Get'
                         }).then(function (response) {
                             var response = response.data;
-                            console.log(response);
                             angular.copy(response, endGameinfo);
                         }).catch(function (response) {
                             console.error("gameover fail");
                         });
                         return endGameinfo;
                     }
-                }; //end of return
+
+                };
             }]); //end of factory
         };
     }, {}], 12: [function (require, module, exports) {

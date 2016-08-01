@@ -15,6 +15,7 @@ module.exports = function(app) {
 
 
             let data = response.data
+
             console.log(data.teamList)
             console.log('questionservice', data.clues);
               // angular.copy(data, clues);

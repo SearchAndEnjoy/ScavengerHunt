@@ -12,7 +12,9 @@ module.exports = function(app) {
         // console.log($scope.compare)
         // console.log($scope.clue)
         var clueId = $routeParams.clueId;
-;
+        // $scope.correct = false;
+        console.log($routeParams);
+
         //////// back-button function/////////
         $scope.return = function() {
             $location.path('/list')
@@ -47,13 +49,24 @@ module.exports = function(app) {
                 alert('here!');
                 $location.path('/list')
                 var answerObj = {
-                    answerLat:$scope.myLoc[0].lat,
-                    answerLong:$scope.myLoc[0].lon,
-                }
+                        answerLat: $scope.myLoc[0].lat,
+                        answerLong: $scope.myLoc[0].lon,
+                    }
+                    console.log();
+                  map.addMarker({
+                        lat: $scope.myLoc[0].lat,
+                        lng: $scope.myLoc[0].lon,
+                        title: $scope.clue.locationName,
+                        click: function(e) {
+                            alert($scope.clue.locationName);
+                        },
+                    });
+                    // $scope.correct = true;
                 $http({
                     url: '/at-location' + '/' + clueId,
                     method: 'PUT',
                     data: answerObj,
+
 
                 }).then(function(response) {
                   $scope.compare.forEach(function(el,ind){
@@ -72,10 +85,19 @@ module.exports = function(app) {
                 }).catch(function(response) {
                     console.error('clue answer PUT failed');
 
+
                 });
 
             } else {
                 alert('not here')
+                map.addMarker({
+                      lat: $scope.myLoc[0].lat,
+                      lng: $scope.myLoc[0].lon,
+                      title: $scope.clue.locationName,
+                      click: function(e) {
+                          alert($scope.clue.locationName);
+                      },
+                  });
             }
         };
         /////// end marker code///////

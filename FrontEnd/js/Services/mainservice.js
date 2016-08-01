@@ -8,12 +8,12 @@ module.exports = function(app) {
                 GMaps.geolocate({
                     success: function(position) {
                         map.setCenter(position.coords.latitude, position.coords.longitude);
-                        map.setZoom(19)
+                        map.setZoom(16)
                        myPosition.push({
                          lat:position.coords.latitude,
                          lon:position.coords.longitude
                        });
-                        console.log(myPosition);
+                        console.log("My current Location",myPosition);
                     },
                     error: function(error) {
                         alert('Geolocation failed: ' + error.message);
