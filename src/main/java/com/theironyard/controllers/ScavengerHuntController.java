@@ -41,6 +41,7 @@ public class ScavengerHuntController {
 
 
     // initialize the database
+    @CrossOrigin
     @PostConstruct
     public void init() throws FileNotFoundException, SQLException {
         Server.createWebServer().start();
@@ -80,7 +81,6 @@ public class ScavengerHuntController {
         return game;
     }
 
-
     @RequestMapping(path = "/add-team/{lobby_code}", method = RequestMethod.POST)
     public ResponseEntity<Object> addTeam(@RequestBody Team team, @PathVariable("lobby_code") String lobbyCode, HttpSession session) {
         //{teamName: "something"
@@ -96,6 +96,7 @@ public class ScavengerHuntController {
         team = teams.save(team);
 
         session.setAttribute("team_id", team.getId());
+        session.setAttribute("game_id", game.getId());
 
         return new ResponseEntity<Object>(team, HttpStatus.OK);
 
@@ -160,7 +161,6 @@ public class ScavengerHuntController {
         return new ResponseEntity<Object>(clue, HttpStatus.OK);
     }
 
-
     @RequestMapping(path = "/at-location/{clueId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> atLocation (HttpSession session, @RequestBody Answer answer, @PathVariable int clueId) {
 
@@ -188,7 +188,6 @@ public class ScavengerHuntController {
 
         return new ResponseEntity<Object>(game.getTeamList(), HttpStatus.OK);
     }
-
 
     @RequestMapping(path = "/cancel-game", method = RequestMethod.DELETE)
     public HttpStatus cancelGame (HttpSession session) {
