@@ -15,9 +15,11 @@
           {{clue.clue}}
         </h1>
             </p>
+          </div>
+            <div class="clue-box" ng-model="correct">
             <p>
               <h2>
-                Answer: <span ng-show= "$scope.correct === true">{{clue.locationName}}</span>
+                Answer: <span ng-show= "$scope.correct === false">{{clue.locationName}}</span>
               </h2>
             </p>
 

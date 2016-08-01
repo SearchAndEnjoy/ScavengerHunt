@@ -102,46 +102,48 @@ module.exports = function(app) {
               })
               return endGameinfo;
             },
-            getOverPaths: function(){
-              $http({
-                url: '/game-over',
-                method: 'Get',
-              }).then(function(response){
-                var teams = [];
-                var pos = [];
 
-                var response = response.data;
-                console.log(response);
-                response.forEach(function(team) {
-                  // var teams = [];
-                  console.log('team for each loop', team);
-                  // teamAnswerPath.push(teams);
-                  team.answerList.forEach(function(answers) {
-                    // console.log(answers);
-                    var pos = [];
-                  var teams = [];
-
-                  //
-                    pos.push(answers.answerLat, answers.answerLong);
-                    teams.push(pos);
-                    console.log(teams);
-                    teamAnswerPath.push(teams);
-                  //   // teams.push([pos]);
-                  //
-                  })
-                  // teams.push([pos]);
-                  console.log(teamAnswerPath);
-                  // console.log(pos);
-
-                  // console.log('answer list loop',pos);
-                  // console.log('teams answer array',teams);
-
-              });
-              }).catch(function(response){
-                console.error("gameover fail");
-              })
-              return teamAnswerPath;
-            },
+//////////////  separate answer lists  so that diff routes ////////
+            // getOverPaths: function(){
+            //   $http({
+            //     url: '/game-over',
+            //     method: 'Get',
+            //   }).then(function(response){
+            //     var teams = [];
+            //     var pos = [];
+            //
+            //     var response = response.data;
+            //     console.log(response);
+            //     response.forEach(function(team) {
+            //       // var teams = [];
+            //       console.log('team for each loop', team);
+            //       // teamAnswerPath.push(teams);
+            //       team.answerList.forEach(function(answers) {
+            //         // console.log(answers);
+            //         var pos = [];
+            //       var teams = [];
+            //
+            //       //
+            //         pos.push(answers.answerLat, answers.answerLong);
+            //         teams.push(pos);
+            //         console.log(teams);
+            //         teamAnswerPath.push(teams);
+            //       //   // teams.push([pos]);
+            //       //
+            //       })
+            //       // teams.push([pos]);
+            //       console.log(teamAnswerPath);
+            //       // console.log(pos);
+            //
+            //       // console.log('answer list loop',pos);
+            //       // console.log('teams answer array',teams);
+            //
+            //   });
+            //   }).catch(function(response){
+            //     console.error("gameover fail");
+            //   })
+            //   return teamAnswerPath;
+            // },
         } //end of return
     }]); //end of factory
 };

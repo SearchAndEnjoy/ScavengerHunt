@@ -15,7 +15,7 @@ module.exports = function(app) {
               console.log(clues.length)
 
             let data = response.data
-            console.log('questionservice', data.clues);
+            // console.log('questionservice', data.clues);
               angular.copy(data, clues);
 
               // clues.push(data)

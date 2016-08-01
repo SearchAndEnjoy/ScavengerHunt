@@ -8,11 +8,11 @@ module.exports = function(app) {
         $scope.myLoc = MainService.getLocation(map);
 
         $scope.gameOver = TeamService.getOverInfo();
-        $scope.teamPaths = TeamService.getOverPaths();
+        // $scope.teamPaths = TeamService.getOverPaths();
 
         $scope.gameOverButton = function() {
-            // console.log("G-O stuff",TeamService.getOverInfo());
-            console.log('info for paths',TeamService.getOverPaths());
+            console.log("G-O stuff",TeamService.getOverInfo());
+            // console.log('info for paths',TeamService.getOverPaths());
         }
     }]);
 };

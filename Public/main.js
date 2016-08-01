@@ -23,11 +23,11 @@
                 $scope.myLoc = MainService.getLocation(map);
 
                 $scope.gameOver = TeamService.getOverInfo();
-                $scope.teamPaths = TeamService.getOverPaths();
+                // $scope.teamPaths = TeamService.getOverPaths();
 
                 $scope.gameOverButton = function () {
-                    // console.log("G-O stuff",TeamService.getOverInfo());
-                    console.log('info for paths', TeamService.getOverPaths());
+                    console.log("G-O stuff", TeamService.getOverInfo());
+                    // console.log('info for paths',TeamService.getOverPaths());
                 };
             }]);
         };
@@ -253,8 +253,8 @@
                         return dist;
                     }
                     console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
-                    if (Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
-                        // if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
+                    // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
+                    if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                         alert('here!');
                         console.log();
                         var answerObj = {
@@ -276,21 +276,23 @@
                             method: 'PUT',
                             data: answerObj
 
-                        }).then(function (response) {
-                            $scope.compare.clues.forEach(function (el, ind) {
-                                if ($scope.clue.id === el.id) {
-                                    console.log($scope.clue.id);
-                                    console.log(el.id);
-                                    $scope.compare.clues.splice(ind, ind + 1);
-                                    console.log($scope.compare);
-                                    $location.path('/list');
-                                }
-                            });
-
-                            // console.log(response.data.clue.id)
-                            // console.log($scope.compare)
-                            // console.log('clue answer PUT working', answerObj, response)
-                        }).catch(function (response) {
+                        })
+                        // .then(function(response) {
+                        //   $scope.compare.clues.forEach(function(el,ind){
+                        //      if($scope.clue.id === el.id){
+                        //        console.log($scope.clue.id)
+                        //        console.log(el.id)
+                        //        $scope.compare.clues.splice(ind,ind+1)
+                        //        console.log($scope.compare)
+                        //       $location.path('/list')
+                        //     }
+                        //   })
+                        //
+                        //   // console.log(response.data.clue.id)
+                        //   // console.log($scope.compare)
+                        //     // console.log('clue answer PUT working', answerObj, response)
+                        // })
+                        .catch(function (response) {
                             console.error('clue answer PUT failed');
                         });
                     } else {
@@ -415,7 +417,7 @@
                                 console.log(clues.length);
 
                                 var data = response.data;
-                                console.log('questionservice', data.clues);
+                                // console.log('questionservice', data.clues);
                                 angular.copy(data, clues);
 
                                 // clues.push(data)
@@ -548,47 +550,9 @@
                             console.error("gameover fail");
                         });
                         return endGameinfo;
-                    },
-                    getOverPaths: function getOverPaths() {
-                        $http({
-                            url: '/game-over',
-                            method: 'Get'
-                        }).then(function (response) {
-                            var teams = [];
-                            var pos = [];
-
-                            var response = response.data;
-                            console.log(response);
-                            response.forEach(function (team) {
-                                // var teams = [];
-                                console.log('team for each loop', team);
-                                // teamAnswerPath.push(teams);
-                                team.answerList.forEach(function (answers) {
-                                    // console.log(answers);
-                                    var pos = [];
-                                    var teams = [];
-
-                                    //
-                                    pos.push(answers.answerLat, answers.answerLong);
-                                    teams.push(pos);
-                                    console.log(teams);
-                                    teamAnswerPath.push(teams);
-                                    //   // teams.push([pos]);
-                                    //
-                                });
-                                // teams.push([pos]);
-                                console.log(teamAnswerPath);
-                                // console.log(pos);
-
-                                // console.log('answer list loop',pos);
-                                // console.log('teams answer array',teams);
-                            });
-                        }).catch(function (response) {
-                            console.error("gameover fail");
-                        });
-                        return teamAnswerPath;
                     }
-                }; //end of return
+
+                };
             }]); //end of factory
         };
     }, {}], 12: [function (require, module, exports) {
