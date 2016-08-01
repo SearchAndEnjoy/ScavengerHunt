@@ -38,6 +38,7 @@ module.exports = function(app) {
             }).then(function(response) {
                 console.log('start game POST working', response)
                        $location.path('/list');
+                       location.reload()
 
 
             }).catch(function(response) {
