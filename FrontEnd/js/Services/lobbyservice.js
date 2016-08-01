@@ -1,6 +1,6 @@
 module.exports = function(app) {
     app.factory('LobbyService', ['$http','$location', function($http, $location) {
-      var readyState = [];
+      //let readyState = false;
       var setReadyState = [];
 
       return{
@@ -21,18 +21,27 @@ module.exports = function(app) {
         //     });
         // },
         checkReady: function() {
-            $http({
+
+            var readyState = $http({
                 url: '/get-game-start',
                 method: 'GET',
 
             }).then(function(response) {
-                // console.log('checkReady works', response);
+
                 let data = response.data;
-                angular.copy(data, readyState);
+
+                console.log('checkReady from service', data);
+
+                if (data) {
+                  return true;
+
+                }
+                return false;
 
             }).catch(function(response) {
                 console.error('checkready err');
-                console.log(readyState)
+                return false;
+                // console.log(readyState)
             });
             return readyState;
         }

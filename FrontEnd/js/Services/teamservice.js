@@ -13,7 +13,7 @@ module.exports = function(app) {
                     method: 'GET',
                 }).then(function(response) {
                     let data = response.data.teams
-                    console.log(data);
+                    // console.log(data);
                     angular.copy(data, teamName);
 
                     // do a check to see if the array has changed from the one bound.   if it has do an angular copy, if not do nothing.

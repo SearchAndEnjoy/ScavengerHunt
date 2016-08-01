@@ -34,7 +34,7 @@ module.exports = function(app) {
             // $location.path('/available');
 
             $http({
-                url: '/add-team/' + `${$scope.joinLobbyCode}`,
+                url: '/add-team/' + `${$scope.joinLobbyCode.toLowerCase()}`,
                 method: 'post',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {

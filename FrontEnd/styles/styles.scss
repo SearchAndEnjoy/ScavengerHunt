@@ -19,6 +19,7 @@ body {
     display: block;
 }
 .title-header {
+  text-align: center;
     background-color: rgba(#6cada9, 0.9);
     height: 4%;
     -webkit-box-shadow: 0 21px 26px -9px rgba(0,0,0,0.56);
@@ -31,6 +32,12 @@ body {
         color: #faf9f5;
         font-size: 7em;
         text-shadow: rgb(3, 3, 3) 2px 7px 7px;
+    }
+    img {
+      margin: auto;
+      display: inline-block;
+      height: 21em;
+      
     }
 }
 .back-button {

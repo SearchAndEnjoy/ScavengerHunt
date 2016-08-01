@@ -11,6 +11,7 @@ body {
   display: block; }
 
 .title-header {
+  text-align: center;
   background-color: rgba(108, 173, 169, 0.9);
   height: 4%;
   -webkit-box-shadow: 0 21px 26px -9px rgba(0, 0, 0, 0.56);
@@ -23,6 +24,10 @@ body {
     color: #faf9f5;
     font-size: 7em;
     text-shadow: #030303 2px 7px 7px; }
+  .title-header img {
+    margin: auto;
+    display: inline-block;
+    height: 21em; }
 
 .back-button {
   color: #faf9f5;
