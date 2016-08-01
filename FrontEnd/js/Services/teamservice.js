@@ -13,7 +13,7 @@ module.exports = function(app) {
                     method: 'GET',
                 }).then(function(response) {
                     let data = response.data.teams
-                    console.log(data);
+                    // console.log(data);
                     angular.copy(data, teamName);
 
                     // do a check to see if the array has changed from the one bound.   if it has do an angular copy, if not do nothing.
@@ -104,46 +104,26 @@ module.exports = function(app) {
             },
 
 //////////////  separate answer lists  so that diff routes ////////
-            // getOverPaths: function(){
-            //   $http({
-            //     url: '/game-over',
-            //     method: 'Get',
-            //   }).then(function(response){
-            //     var teams = [];
-            //     var pos = [];
-            //
-            //     var response = response.data;
-            //     console.log(response);
-            //     response.forEach(function(team) {
-            //       // var teams = [];
-            //       console.log('team for each loop', team);
-            //       // teamAnswerPath.push(teams);
-            //       team.answerList.forEach(function(answers) {
-            //         // console.log(answers);
-            //         var pos = [];
-            //       var teams = [];
-            //
-            //       //
-            //         pos.push(answers.answerLat, answers.answerLong);
-            //         teams.push(pos);
-            //         console.log(teams);
-            //         teamAnswerPath.push(teams);
-            //       //   // teams.push([pos]);
-            //       //
-            //       })
-            //       // teams.push([pos]);
-            //       console.log(teamAnswerPath);
-            //       // console.log(pos);
-            //
-            //       // console.log('answer list loop',pos);
-            //       // console.log('teams answer array',teams);
-            //
-            //   });
-            //   }).catch(function(response){
-            //     console.error("gameover fail");
-            //   })
-            //   return teamAnswerPath;
-            // },
+            getOverPaths: function(){
+              $http({
+                url: '/game-over',
+                method: 'Get',
+              }).then(function(response){
+                var teams = [];
+                var pos = [];
+
+                var response = response.data;
+                console.log('all data',response);
+                angular.copy(response, teamAnswerPath)
+                response.forEach(function(team) {
+                  // console.log(team);
+
+              });
+              }).catch(function(response){
+                console.error("gameover fail");
+              })
+              return teamAnswerPath;
+            },
         } //end of return
     }]); //end of factory
 };

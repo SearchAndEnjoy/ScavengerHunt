@@ -20,6 +20,7 @@
                     lat: 1,
                     lng: -1
                 });
+
                 // $scope.myLoc = MainService.getLocation(map);
                 $scope.clueLoc = QuestionService.finalAnswers();
                 $scope.clueLoc.forEach(function (el) {
@@ -34,11 +35,11 @@
                     map.zoomOut(1);
                 });
                 $scope.gameOver = TeamService.getOverInfo();
-                // $scope.teamPaths = TeamService.getOverPaths();
+                $scope.teamPaths = TeamService.getOverPaths();
 
                 $scope.gameOverButton = function () {
                     console.log("G-O stuff", TeamService.getOverInfo());
-                    // console.log('info for paths',TeamService.getOverPaths());
+                    console.log('info for paths', TeamService.getOverPaths());
                 };
             }]);
         };
@@ -84,7 +85,7 @@
                     // $location.path('/available');
 
                     $http({
-                        url: '/add-team/' + ("" + $scope.joinLobbyCode),
+                        url: '/add-team/' + ("" + $scope.joinLobbyCode.toLowerCase()),
                         method: 'post',
                         data: JSON.stringify(joinGameObj)
                     }).then(function (data) {
@@ -171,22 +172,26 @@
                 $interval(function () {
                     TeamService.refreshTeams();
                 }, 5000);
-                $scope.ready = LobbyService.checkReady();
-                console.log('ready test Lobbyctrl', LobbyService.checkReady(), $scope.ready);
+                //$scope.ready = LobbyService.checkReady();
+                // console.log('ready test Lobbyctrl',$scope.ready);
 
-                // $interval(function() {
-                //   console.log("checking for ready", LobbyService.checkReady());
-                //     if ($scope.ready == true) {
-                //
-                // //// setting clock end cookie////////////////
-                // var endDate = Date.now() + 90 * 60 * 1000;
-                // jq.cookie('endDate', Math.round(endDate / 1000));
-                // //////////////
-                //
-                //         // $location.path('/list')
-                //         console.log("ready true");
-                //     }
-                // }, 10000);
+                $interval(function () {
+
+                    var ready = LobbyService.checkReady().then(function (result) {
+
+                        if (result) {
+                            //// setting clock end cookie////////////////
+                            var endDate = Date.now() + 90 * 60 * 1000;
+                            jq.cookie('endDate', Math.round(endDate / 1000));
+                            //////////////
+
+                            $location.path('/list');
+                        }
+
+                        // console.log("result", result);
+                        // console.log("-----------------------------------------------------------------");
+                    });
+                }, 5000);
 
                 $scope.displayCode = TeamService.getLobbyCode();
                 // console.log('lobby log', $scope.Game)
@@ -203,8 +208,10 @@
 
                     }).then(function (response) {
                         console.log('start game POST working', response);
+
                         $location.path('/list');
                         location.reload();
+                        ///////// location reload causes issue on safari look up/////////
                     }).catch(function (response) {
                         console.error('start game POST failed');
                     });
@@ -227,6 +234,7 @@
                 // console.log($scope.compare)
                 // console.log($scope.clue)
                 var clueId = $routeParams.clueId;
+
                 //$scope.correct = false;
                 console.log($routeParams);
 
@@ -323,9 +331,13 @@
                     console.log('something');
                 };
                 $scope.newSession = function () {
+                    jq.removeCookie('start');
+
                     $location.path('/create');
                 };
                 $scope.joinSession = function () {
+                    jq.removeCookie('start');
+
                     $location.path('/join');
                 };
             }]);
@@ -333,7 +345,7 @@
     }, {}], 8: [function (require, module, exports) {
         module.exports = function (app) {
             app.factory('LobbyService', ['$http', '$location', function ($http, $location) {
-                var readyState = [];
+                //let readyState = false;
                 var setReadyState = [];
 
                 return {
@@ -354,17 +366,25 @@
                     //     });
                     // },
                     checkReady: function checkReady() {
-                        $http({
+
+                        var readyState = $http({
                             url: '/get-game-start',
                             method: 'GET'
 
                         }).then(function (response) {
-                            // console.log('checkReady works', response);
+
                             var data = response.data;
-                            angular.copy(data, readyState);
+
+                            console.log('checkReady from service', data);
+
+                            if (data) {
+                                return true;
+                            }
+                            return false;
                         }).catch(function (response) {
                             console.error('checkready err');
-                            console.log(readyState);
+                            return false;
+                            // console.log(readyState)
                         });
                         return readyState;
                     }
@@ -419,6 +439,7 @@
                             }).then(function (response) {
 
                                 var data = response.data;
+
                                 console.log(data);
                                 // console.log('questionservice', data.clues);
                                 // angular.copy(data, clues);
@@ -484,7 +505,7 @@
                             method: 'GET'
                         }).then(function (response) {
                             var data = response.data.teams;
-                            console.log(data);
+                            // console.log(data);
                             angular.copy(data, teamName);
 
                             // do a check to see if the array has changed from the one bound.   if it has do an angular copy, if not do nothing.
@@ -567,9 +588,30 @@
                             console.error("gameover fail");
                         });
                         return endGameinfo;
-                    }
+                    },
 
-                };
+                    //////////////  separate answer lists  so that diff routes ////////
+                    getOverPaths: function getOverPaths() {
+                        $http({
+                            url: '/game-over',
+                            method: 'Get'
+                        }).then(function (response) {
+                            var teams = [];
+                            var pos = [];
+
+                            var response = response.data;
+                            console.log('all data', response);
+                            angular.copy(response, teamAnswerPath);
+                            response.forEach(function (team) {
+                                // console.log(team);
+
+                            });
+                        }).catch(function (response) {
+                            console.error("gameover fail");
+                        });
+                        return teamAnswerPath;
+                    }
+                }; //end of return
             }]); //end of factory
         };
     }, {}], 12: [function (require, module, exports) {

@@ -8,9 +8,13 @@ $scope.info = function(){
   console.log('something')
 }
 $scope.newSession = function(){
+  jq.removeCookie('start');
+
 $location.path('/create')
 }
 $scope.joinSession = function(){
+  jq.removeCookie('start');
+
   $location.path('/join')
 }
 
