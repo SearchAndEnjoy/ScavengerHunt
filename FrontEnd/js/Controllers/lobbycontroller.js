@@ -8,19 +8,19 @@ module.exports = function(app) {
         $scope.ready = LobbyService.checkReady();
         console.log('ready test Lobbyctrl',LobbyService.checkReady(),$scope.ready);
 
-        $interval(function() {
-          console.log("checking for ready", LobbyService.checkReady());
-            if ($scope.ready == true) {
-
-        //// setting clock end cookie////////////////
-        var endDate = Date.now() + 90 * 60 * 1000;
-        jq.cookie('endDate', Math.round(endDate / 1000));
-        //////////////
-
-                // $location.path('/list')
-                console.log("ready true");
-            }
-        }, 10000);
+        // $interval(function() {
+        //   console.log("checking for ready", LobbyService.checkReady());
+        //     if ($scope.ready == true) {
+        //
+        // //// setting clock end cookie////////////////
+        // var endDate = Date.now() + 90 * 60 * 1000;
+        // jq.cookie('endDate', Math.round(endDate / 1000));
+        // //////////////
+        //
+        //         // $location.path('/list')
+        //         console.log("ready true");
+        //     }
+        // }, 10000);
 
         $scope.displayCode = TeamService.getLobbyCode()
             // console.log('lobby log', $scope.Game)

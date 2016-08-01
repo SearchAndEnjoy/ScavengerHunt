@@ -69,6 +69,7 @@ body {
   background-color: lightblue;
   height: 50em;
   width: 100%;
+  margin-bottom: 5%;
   -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
@@ -145,11 +146,10 @@ body {
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
 
 .mini-map {
-  float: right;
-  display: inline-block;
   background-color: lightblue;
   height: 25em;
-  width: 50%;
+  width: 100%;
+  margin-bottom: 5%;
   -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }

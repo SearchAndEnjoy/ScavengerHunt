@@ -11,9 +11,17 @@
         </div>
         <div class="clue-box" ng-model="clue">
             <p>
-                <h3>
+                <h1>
           {{clue.clue}}
-        </h3></p>
+        </h1>
+            </p>
+          </div>
+            <div class="clue-box" ng-model="correct">
+            <p>
+              <h2>
+                Answer: <span ng-show= "$scope.correct === false">{{clue.locationName}}</span>
+              </h2>
+            </p>
 
         </div>
         <button ng-click="marker()" type="button" class="btn btn-primary btn-lg btn-block lrg-page-buttons">Check Location</button>
