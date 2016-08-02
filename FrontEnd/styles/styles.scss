@@ -67,7 +67,7 @@ body {
             margin-top: 1%;
             margin-bottom: 10%;
             h3 {
-              font-size: 1em;
+                font-size: 1em;
             }
         }
         .social {
@@ -95,7 +95,7 @@ body {
             margin-top: 1%;
             margin-bottom: 10%;
             h3 {
-              font-size: 1em;
+                font-size: 1em;
             }
         }
         .social {
@@ -124,6 +124,13 @@ body {
 .page-box {
     // background-color: lightgreen;
     padding-bottom: 10%;
+}
+/////input box styling//////
+.form-style {
+    height: 2em;
+}
+input[type="text"] {
+    font-size: 4em;
 }
 ////////info page styling//////
 .how-to-box {
@@ -175,7 +182,6 @@ body {
     color: #faf9f5;
     background-color: rgba(#6CADA9,0.9);
     margin-top: 5%;
-
     padding: 5%;
     border-radius: 3%;
     -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
