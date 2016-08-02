@@ -1,20 +1,20 @@
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService','$routeParams','$route',function($scope, $http, $location, QuestionService, $routeParams, $route) {
+
       var jq = jQuery.noConflict();
-      $scope.gameObj = QuestionService.compareAnswers()
-      QuestionService.getClues();
-      console.log($scope.gameObj)
-      
+
+      QuestionService.loadClues();
+
+      $scope.gameObj = QuestionService.getClues()
 
 
-      // $scope.compare= QuestionService.compareAnswers();
+      console.log($scope.gameObj);
+
+      // $scope.compare= QuestionService.getClues();
 
 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
 ////// flipclock courtesy of flipclockjs.com
 ///// endDate cookie init on lobby start button
-
-        // jq(function(){
-
              var countDown = function(){
                 var currentDate = Math.round(new Date() / 1000);
 
@@ -47,9 +47,8 @@ module.exports = function(app) {
                 clock.setCountdown(true);
                 clock.start();
             }
-            //Lanching count down on ready
+        /////Lanching count down on ready
             countDown();
-        // });
 //////// end  clock function///////
 
 
