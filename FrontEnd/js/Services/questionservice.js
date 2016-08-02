@@ -59,10 +59,10 @@ module.exports = function(app) {
             return singleClue;
           },
           compareAnswers: function(){
-            return clues
+            return clues;
           },
           finalAnswers: function(){
-            return answers
+            return answers;
           }
         }//end of return
     }]);

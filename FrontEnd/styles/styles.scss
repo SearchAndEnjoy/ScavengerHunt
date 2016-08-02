@@ -20,7 +20,7 @@ body {
     margin-bottom: 10%;
 }
 .title-header {
-  text-align: center;
+    text-align: center;
     background-color: rgba(#6cada9, 0.9);
     height: 4%;
     -webkit-box-shadow: 0 21px 26px -9px rgba(0,0,0,0.56);
@@ -35,10 +35,9 @@ body {
         text-shadow: rgb(3, 3, 3) 2px 7px 7px;
     }
     img {
-      margin: auto;
-      display: inline-block;
-      height: 21em;
-
+        margin: auto;
+        display: inline-block;
+        height: 21em;
     }
 }
 .back-button {
@@ -59,13 +58,55 @@ body {
     height: 50em;
     width: 100%;
 }
-.footer {
-    color: #faf9f5;
-    height: 8%;
-    background-color: rgba(#6cada9, 0.9);
-    -webkit-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
-    -moz-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
-    box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+@media screen and (min-width: 1025px) {
+    .footer {
+        color: #faf9f5;
+        height: 15%;
+        background-color: rgba(#6cada9, 0.9);
+        -webkit-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+        box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+        .credits {
+            // display: inline-block;
+            float: left;
+            margin-top: 1%;
+            margin-bottom: 10%;
+        }
+        .social {
+            // display: inline-block;
+            float: right;
+            text-align: center;
+            margin-top: 1%;
+            ul {
+                list-style-type: none;
+            }
+        }
+    }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+    .footer {
+        color: #faf9f5;
+        height: 8%;
+        background-color: rgba(#6cada9, 0.9);
+        -webkit-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+        box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
+        .credits {
+            display: inline-block;
+            float: left;
+            margin-top: 1%;
+            margin-bottom: 10%;
+        }
+        .social {
+            display: inline-block;
+            float: right;
+            text-align: center;
+            margin-top: 1%;
+            ul {
+                list-style-type: none;
+            }
+        }
+    }
 }
 .lrg-page-buttons {
     color: #faf9f5;
@@ -158,7 +199,7 @@ body {
 }
 ////////// question list styling
 .clock-box {
-  text-align: center;
+    text-align: center;
     background-color: #F27D5C;
     padding: 2%;
     margin-bottom: 5%;
@@ -188,23 +229,25 @@ body {
     -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
     box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
     a {
-      text-decoration: none;
-      color: #faf9f5;
-
+        text-decoration: none;
+        color: #faf9f5;
+        h3  {
+          font-size: 3em;
+        }
     }
 }
 .quest-list-ul {
-  padding-bottom: 12%;
+    padding-bottom: 12%;
 }
 ///////// game over page styling
 .mini-map {
-  background-color: lightblue;
-  height: 25em;
-  width: 100%;
-  margin-bottom: 5%;
-  -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
-  box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    background-color: lightblue;
+    height: 25em;
+    width: 100%;
+    margin-bottom: 5%;
+    -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
 }
 .team-info {
     display: inline-block;
