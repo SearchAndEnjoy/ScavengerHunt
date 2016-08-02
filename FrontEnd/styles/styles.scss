@@ -53,11 +53,6 @@ body {
     -moz-box-shadow: 5px 16px 15px -1px rgba(0,0,0,0.56);
     box-shadow: 5px 16px 15px -1px rgba(0,0,0,0.56);
 }
-.how-to-box {
-    background-color: #F27D5C;
-    height: 50em;
-    width: 100%;
-}
 @media screen and (min-width: 1025px) {
     .footer {
         color: #faf9f5;
@@ -67,10 +62,13 @@ body {
         -moz-box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
         box-shadow: -1px -7px 20px -5px rgba(0,0,0,0.75);
         .credits {
-            // display: inline-block;
+            font-size: 2em;
             float: left;
             margin-top: 1%;
             margin-bottom: 10%;
+            h3 {
+              font-size: 1em;
+            }
         }
         .social {
             // display: inline-block;
@@ -83,7 +81,7 @@ body {
         }
     }
 }
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+@media only screen and (min-device-width: 10px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
     .footer {
         color: #faf9f5;
         height: 8%;
@@ -96,6 +94,9 @@ body {
             float: left;
             margin-top: 1%;
             margin-bottom: 10%;
+            h3 {
+              font-size: 1em;
+            }
         }
         .social {
             display: inline-block;
@@ -123,6 +124,20 @@ body {
 .page-box {
     // background-color: lightgreen;
     padding-bottom: 10%;
+}
+////////info page styling//////
+.how-to-box {
+    background-color: rgba(#F27D5C, 0.9);
+    border-radius: 10px;
+    margin-top: 5%;
+    height: 25em;
+    width: 100%;
+    -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+}
+.tips {
+    font-size: 2em;
 }
 ////////// create and join session page styling
 .form-group {
@@ -158,9 +173,10 @@ body {
 /// used for info page too
 .clue-box {
     color: #faf9f5;
-    background-color: #6CADA9;
+    background-color: rgba(#6CADA9,0.9);
     margin-top: 5%;
-    padding: 3%;
+
+    padding: 5%;
     border-radius: 3%;
     -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
@@ -231,8 +247,8 @@ body {
     a {
         text-decoration: none;
         color: #faf9f5;
-        h3  {
-          font-size: 3em;
+        h3 {
+            font-size: 3em;
         }
     }
 }

@@ -2,7 +2,6 @@ module.exports = function(app) {
     app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService','QuestionService', function($scope, $location, $http, MainService, TeamService,QuestionService) {
       var jq = jQuery.noConflict();
       jq.removeCookie('demo');
-      // alert(jq.cookie('demo'));
       var map = new GMaps({
           div: '#map',
           lat: 1,
@@ -25,11 +24,11 @@ module.exports = function(app) {
         $scope.gameOver = TeamService.getOverInfo();
         $scope.teamPaths = TeamService.getOverPaths();
 
-///////// change below to go to start page/////////
-
+//////////button back to start page//////////////
         $scope.gameOverButton = function() {
-          
-            $location.path('/start')
+          // console.log('info',TeamService.getOverInfo());
+
+            $location.path('/start');
         }
     }]);
 };

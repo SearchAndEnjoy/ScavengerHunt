@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    app.factory('TeamService', ['$http', '$location', '$interval', function($http, $location, $interval) {
+    app.factory('TeamService', ['$http', '$location', function($http, $location) {
         var jq = jQuery.noConflict();
         var teamName = [];
         var endGameinfo = [];
@@ -113,7 +113,7 @@ module.exports = function(app) {
                 var pos = [];
 
                 var response = response.data;
-                console.log('all data',response);
+                // console.log('all data',response);
                 angular.copy(response, teamAnswerPath)
                 response.forEach(function(team) {
                   // console.log(team);
