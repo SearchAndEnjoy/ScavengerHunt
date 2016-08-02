@@ -15,6 +15,8 @@
 })({ 1: [function (require, module, exports) {
         module.exports = function (app) {
             app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService', 'QuestionService', function ($scope, $location, $http, MainService, TeamService, QuestionService) {
+                var jq = jQuery.noConflict();
+                jq.removeCookie('demo');
                 var map = new GMaps({
                     div: '#map',
                     lat: 1,
@@ -37,9 +39,12 @@
                 $scope.gameOver = TeamService.getOverInfo();
                 $scope.teamPaths = TeamService.getOverPaths();
 
+                ///////// change below to go to start page/////////
+
                 $scope.gameOverButton = function () {
                     console.log("G-O stuff", TeamService.getOverInfo());
                     console.log('info for paths', TeamService.getOverPaths());
+                    $location.path('/start_page');
                 };
             }]);
         };
@@ -102,21 +107,13 @@
         };
     }, {}], 4: [function (require, module, exports) {
         module.exports = function (app) {
-            app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', function ($scope, $http, $location, QuestionService, $routeParams) {
+            app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', '$route', function ($scope, $http, $location, QuestionService, $routeParams, $route) {
                 var jq = jQuery.noConflict();
                 $scope.gameObj = QuestionService.compareAnswers();
                 QuestionService.getClues();
                 console.log($scope.gameObj);
+
                 // $scope.compare= QuestionService.compareAnswers();
-                //////// tranfer to individual clue page
-                $scope.cluePage = function () {}
-                // console.log('clicked to clue page', id);
-                // if($routeParams.clueId !== undefined) {
-                //  QuestionService.getSingleClue($routeParams.id).then(function(singleClueObj) {
-                //      $scope.clueDetail = singleClueObj
-                //  })
-                // }
-                // $location.path('/question/' + id);
 
                 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
                 ////// flipclock courtesy of flipclockjs.com
@@ -124,7 +121,7 @@
 
                 // jq(function(){
 
-                ;var countDown = function countDown() {
+                var countDown = function countDown() {
                     var currentDate = Math.round(new Date() / 1000);
 
                     var clock = jq('.clock').FlipClock({
@@ -210,7 +207,7 @@
                         console.log('start game POST working', response);
 
                         $location.path('/list');
-                        location.reload();
+                        //  location.reload()
                         ///////// location reload causes issue on safari look up/////////
                     }).catch(function (response) {
                         console.error('start game POST failed');
@@ -222,7 +219,9 @@
         };
     }, {}], 6: [function (require, module, exports) {
         module.exports = function (app) {
-            app.controller('QuestionController', ['$scope', '$http', 'MainService', 'QuestionService', '$location', '$routeParams', '$route', function ($scope, $http, MainService, QuestionService, $location, $routeParams, $route) {
+            app.controller('QuestionController', ['$scope', '$http', '$timeout', 'MainService', 'QuestionService', '$location', '$routeParams', '$route', function ($scope, $http, $timeout, MainService, QuestionService, $location, $routeParams, $route) {
+                var jq = jQuery.noConflict();
+                alert(jq.cookie('demo'));
                 var map = new GMaps({
                     div: '#map',
                     lat: 1,
@@ -236,7 +235,7 @@
                 var clueId = $routeParams.clueId;
 
                 //$scope.correct = false;
-                console.log($routeParams);
+                // console.log($routeParams);
 
                 //////// back-button function/////////
                 $scope.return = function () {
@@ -266,6 +265,7 @@
                         }
                         return dist;
                     }
+                    ///////////// distance displayed in console
                     console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
                     // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
                     if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
@@ -297,7 +297,9 @@
                                 }
                             });
                             if ($scope.compare.length === 0) {
-                                $location.path('/gameover');
+                                $timeout(function () {
+                                    $location.path('/gameover');
+                                }, 2000);
                             }
                             // console.log(response.data.clue.id)
                             // console.log($scope.compare)
@@ -329,16 +331,15 @@
                 $scope.info = function () {
                     $location.path('/info1');
                     console.log('something');
-                };
-                $scope.newSession = function () {
+                }, $scope.newSession = function () {
                     jq.removeCookie('start');
-
                     $location.path('/create');
-                };
-                $scope.joinSession = function () {
+                }, $scope.joinSession = function () {
                     jq.removeCookie('start');
-
                     $location.path('/join');
+                }, $scope.demoMode = function () {
+                    jq.cookie('demo', true, { expires: 90 * 60 * 1000 });
+                    console.log(jq.cookie('demo'));
                 };
             }]);
         };
@@ -375,7 +376,7 @@
 
                             var data = response.data;
 
-                            console.log('checkReady from service', data);
+                            // console.log('checkReady from service', data);
 
                             if (data) {
                                 return true;

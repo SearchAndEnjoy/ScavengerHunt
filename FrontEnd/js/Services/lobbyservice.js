@@ -30,7 +30,7 @@ module.exports = function(app) {
 
                 let data = response.data;
 
-                console.log('checkReady from service', data);
+                // console.log('checkReady from service', data);
 
                 if (data) {
                   return true;
