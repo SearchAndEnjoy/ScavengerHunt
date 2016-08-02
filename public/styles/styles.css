@@ -1,0 +1,224 @@
+body {
+  overflow: scroll;
+  background: linear-gradient(to bottom, rgba(245, 231, 171, 0.7), rgba(245, 231, 171, 0.7)), url(../images/charleston_1869.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: right; }
+
+.temp-links {
+  display: block;
+  margin-bottom: 10%; }
+
+.title-header {
+  text-align: center;
+  background-color: rgba(108, 173, 169, 0.9);
+  height: 4%;
+  -webkit-box-shadow: 0 21px 26px -9px rgba(0, 0, 0, 0.56);
+  -moz-box-shadow: 0 21px 26px -9px rgba(0, 0, 0, 0.56);
+  box-shadow: 0 21px 26px -9px rgba(0, 0, 0, 0.56); }
+  .title-header h1 {
+    text-align: center;
+    font-family: 'PT Sans', sans-serif;
+    font-weight: bolder;
+    color: #faf9f5;
+    font-size: 7em;
+    text-shadow: #030303 2px 7px 7px; }
+  .title-header img {
+    margin: auto;
+    display: inline-block;
+    height: 21em; }
+
+.back-button {
+  color: #faf9f5;
+  background-color: #D96F52;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 4em;
+  width: 45%;
+  padding: 1%;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  -webkit-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
+  -moz-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
+  box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56); }
+
+.how-to-box {
+  background-color: #F27D5C;
+  height: 50em;
+  width: 100%; }
+
+@media screen and (min-width: 1025px) {
+  .footer {
+    color: #faf9f5;
+    height: 15%;
+    background-color: rgba(108, 173, 169, 0.9);
+    -webkit-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75); }
+    .footer .credits {
+      float: left;
+      margin-top: 1%;
+      margin-bottom: 10%; }
+    .footer .social {
+      float: right;
+      text-align: center;
+      margin-top: 1%; }
+      .footer .social ul {
+        list-style-type: none; } }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  .footer {
+    color: #faf9f5;
+    height: 8%;
+    background-color: rgba(108, 173, 169, 0.9);
+    -webkit-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75); }
+    .footer .credits {
+      display: inline-block;
+      float: left;
+      margin-top: 1%;
+      margin-bottom: 10%; }
+    .footer .social {
+      display: inline-block;
+      float: right;
+      text-align: center;
+      margin-top: 1%; }
+      .footer .social ul {
+        list-style-type: none; } }
+
+.lrg-page-buttons {
+  color: #faf9f5;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 5em;
+  background-color: #D96F52;
+  padding: 8%;
+  margin-top: 5%;
+  margin-bottom: 10%;
+  -webkit-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
+  -moz-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
+  box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56); }
+
+.page-box {
+  padding-bottom: 10%; }
+
+.form-group {
+  background-color: #6CADA9;
+  margin-bottom: 10%;
+  margin-top: 5%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+  .form-group h1 {
+    text-align: center;
+    font-size: 3em;
+    color: #faf9f5; }
+
+.map-box {
+  background-color: lightblue;
+  height: 50em;
+  width: 100%;
+  margin-bottom: 5%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+
+#map {
+  height: 100%;
+  width: 100%; }
+
+.clue-box {
+  color: #faf9f5;
+  background-color: #6CADA9;
+  margin-top: 5%;
+  padding: 3%;
+  border-radius: 3%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+
+.lobby-list-item {
+  text-align: center;
+  color: #faf9f5;
+  font-size: 2em;
+  text-shadow: #030303 1px 3px 3px;
+  background-color: #85D6D1;
+  border-radius: 10px;
+  margin-bottom: 5%;
+  min-height: 15%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+
+.lobby-header {
+  color: #faf9f5;
+  font-size: 2em;
+  text-shadow: #030303 4px 2px 7px;
+  background-color: #F27D5C;
+  border-radius: 5px;
+  text-align: center;
+  font-family: 'PT Sans', sans-serif;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+
+#lobby-code {
+  font-style: italic;
+  font-weight: bolder;
+  font-size: 2em; }
+
+.clock-box {
+  text-align: center;
+  background-color: #F27D5C;
+  padding: 2%;
+  margin-bottom: 5%;
+  border-radius: 5px;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+  .clock-box .clock {
+    width: auto;
+    margin: auto 0; }
+
+.flip-clock-wrapper {
+  display: inline-block;
+  width: auto; }
+
+.quest-list-item {
+  color: #faf9f5;
+  text-shadow: #030303 1px 3px 3px;
+  background-color: #85D6D1;
+  border-radius: 10px;
+  padding: 3%;
+  margin-bottom: 5%;
+  min-height: 20%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+  .quest-list-item a {
+    text-decoration: none;
+    color: #faf9f5; }
+    .quest-list-item a h3 {
+      font-size: 3em; }
+
+.quest-list-ul {
+  padding-bottom: 12%; }
+
+.mini-map {
+  background-color: lightblue;
+  height: 25em;
+  width: 100%;
+  margin-bottom: 5%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+
+.team-info {
+  display: inline-block;
+  background-color: lightgreen;
+  width: 50%;
+  height: 25em;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
