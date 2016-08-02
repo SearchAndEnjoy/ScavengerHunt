@@ -14,7 +14,7 @@ module.exports = function(app) {
               lat:el.latitude,
               lng:el.longitude,
               title: 'Logans super special marker',
-              infoWindow: {content: `<h1>${el.locationName}</h1>`}
+              infoWindow: {content: `<h1>${el.locationName}</h1>`},
           })
           map.fitZoom()
           map.zoomOut(1)
