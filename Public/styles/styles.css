@@ -48,13 +48,45 @@ body {
   height: 50em;
   width: 100%; }
 
-.footer {
-  color: #faf9f5;
-  height: 8%;
-  background-color: rgba(108, 173, 169, 0.9);
-  -webkit-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
-  box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75); }
+@media screen and (min-width: 1025px) {
+  .footer {
+    color: #faf9f5;
+    height: 15%;
+    background-color: rgba(108, 173, 169, 0.9);
+    -webkit-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75); }
+    .footer .credits {
+      float: left;
+      margin-top: 1%;
+      margin-bottom: 10%; }
+    .footer .social {
+      float: right;
+      text-align: center;
+      margin-top: 1%; }
+      .footer .social ul {
+        list-style-type: none; } }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  .footer {
+    color: #faf9f5;
+    height: 8%;
+    background-color: rgba(108, 173, 169, 0.9);
+    -webkit-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75); }
+    .footer .credits {
+      display: inline-block;
+      float: left;
+      margin-top: 1%;
+      margin-bottom: 10%; }
+    .footer .social {
+      display: inline-block;
+      float: right;
+      text-align: center;
+      margin-top: 1%; }
+      .footer .social ul {
+        list-style-type: none; } }
 
 .lrg-page-buttons {
   color: #faf9f5;
@@ -67,6 +99,9 @@ body {
   -webkit-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
   -moz-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
   box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56); }
+
+.page-box {
+  padding-bottom: 10%; }
 
 .form-group {
   background-color: #6CADA9;
@@ -154,11 +189,21 @@ body {
   color: #faf9f5;
   text-shadow: #030303 1px 3px 3px;
   background-color: #85D6D1;
+  border-radius: 10px;
+  padding: 3%;
   margin-bottom: 5%;
   min-height: 20%;
   -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+  .quest-list-item a {
+    text-decoration: none;
+    color: #faf9f5; }
+    .quest-list-item a h3 {
+      font-size: 3em; }
+
+.quest-list-ul {
+  padding-bottom: 12%; }
 
 .mini-map {
   background-color: lightblue;

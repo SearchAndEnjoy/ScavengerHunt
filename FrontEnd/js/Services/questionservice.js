@@ -2,8 +2,8 @@ module.exports = function(app) {
     app.factory('QuestionService', ['$http','$route', function($http,$route) {
       var clues = [];
       var singleClue = [];
-      var executed = false
-      var answers = []
+      var executed = false;
+      var answers = [];
         return {
           getClues: function(){
                if(!executed){
@@ -59,10 +59,10 @@ module.exports = function(app) {
             return singleClue;
           },
           compareAnswers: function(){
-            return clues
+            return clues;
           },
           finalAnswers: function(){
-            return answers
+            return answers;
           }
         }//end of return
     }]);
