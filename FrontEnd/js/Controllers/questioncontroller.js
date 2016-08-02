@@ -1,5 +1,7 @@
 module.exports = function(app) {
-    app.controller('QuestionController', ['$scope', '$http', 'MainService', 'QuestionService', '$location', '$routeParams','$route', function($scope, $http, MainService, QuestionService, $location, $routeParams,$route) {
+    app.controller('QuestionController', ['$scope', '$http','$timeout', 'MainService', 'QuestionService', '$location', '$routeParams','$route', function($scope, $http, $timeout, MainService, QuestionService, $location, $routeParams,$route) {
+      var jq = jQuery.noConflict();
+      alert(jq.cookie('demo'));
         var map = new GMaps({
             div: '#map',
             lat: 1,
@@ -13,7 +15,7 @@ module.exports = function(app) {
         var clueId = $routeParams.clueId;
 
         //$scope.correct = false;
-        console.log($routeParams);
+        // console.log($routeParams);
 
         //////// back-button function/////////
         $scope.return = function() {
@@ -43,6 +45,7 @@ module.exports = function(app) {
                 }
                 return dist;
             }
+///////////// distance displayed in console
             console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
             // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
             if ((Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
@@ -75,7 +78,7 @@ module.exports = function(app) {
                     }
                   })
                   if($scope.compare.length === 0){
-                    $location.path('/gameover')
+                    $timeout(function(){$location.path('/gameover')}, 2000)
                   }
                   // console.log(response.data.clue.id)
                   // console.log($scope.compare)

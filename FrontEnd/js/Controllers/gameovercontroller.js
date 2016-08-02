@@ -1,5 +1,7 @@
 module.exports = function(app) {
     app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService','QuestionService', function($scope, $location, $http, MainService, TeamService,QuestionService) {
+      var jq = jQuery.noConflict();
+      jq.removeCookie('demo');
       var map = new GMaps({
           div: '#map',
           lat: 1,
