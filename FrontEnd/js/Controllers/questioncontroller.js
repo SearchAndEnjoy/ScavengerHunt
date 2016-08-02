@@ -1,7 +1,6 @@
 module.exports = function(app) {
     app.controller('QuestionController', ['$scope', '$http','$timeout', 'MainService', 'QuestionService', '$location', '$routeParams','$route', function($scope, $http, $timeout, MainService, QuestionService, $location, $routeParams,$route) {
       var jq = jQuery.noConflict();
-      // alert(jq.cookie('demo'));
         var map = new GMaps({
             div: '#map',
             lat: 1,
@@ -13,16 +12,14 @@ module.exports = function(app) {
         // console.log($scope.compare)
         // console.log($scope.clue)
         var clueId = $routeParams.clueId;
-
-        //$scope.correct = false;
         // console.log($routeParams);
 
-        //////// back-button function/////////
+//////// back-button function from individual question page/////////
         $scope.return = function() {
             $location.path('/list')
         };
 
-        /////// getting location  checking distance and if passes creates marker/////////
+/////// getting location  checking distance and if passes creates marker/////////
         $scope.marker = function() {
             MainService.getLocation(map);
             console.log("click", $scope.myLoc);
@@ -47,9 +44,8 @@ module.exports = function(app) {
             }
 ///////////// distance displayed in console////////
             console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
+            console.log('-----------------------------------------------');
 /////////////////
-
-        // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
 
 ////////////demo mode code////////////
           if (jq.cookie('demo')) {
@@ -70,7 +66,6 @@ module.exports = function(app) {
                         infoWindow: {content: `<h1>${$scope.clue.locationName}</h1>`}
                     });
                     new google.maps.event.trigger( marker, 'click' );
-                    // $scope.correct = true;
                 $http({
                     url: '/at-location' + '/' + clueId,
                     method: 'PUT',
@@ -128,7 +123,6 @@ module.exports = function(app) {
                         infoWindow: {content: `<h1>${$scope.clue.locationName}</h1>`}
                     });
                     new google.maps.event.trigger(marker,'click' );
-                    // $scope.correct = true;
                 $http({
                     url: '/at-location' + '/' + clueId,
                     method: 'PUT',

@@ -63,7 +63,9 @@ body {
     .footer .social {
       float: right;
       text-align: center;
-      margin-top: 1%; } }
+      margin-top: 1%; }
+      .footer .social ul {
+        list-style-type: none; } }
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
   .footer {
@@ -83,8 +85,8 @@ body {
       float: right;
       text-align: center;
       margin-top: 1%; }
-      .footer .social a {
-        display: block; } }
+      .footer .social ul {
+        list-style-type: none; } }
 
 .lrg-page-buttons {
   color: #faf9f5;
@@ -197,6 +199,8 @@ body {
   .quest-list-item a {
     text-decoration: none;
     color: #faf9f5; }
+    .quest-list-item a h3 {
+      font-size: 3em; }
 
 .quest-list-ul {
   padding-bottom: 12%; }

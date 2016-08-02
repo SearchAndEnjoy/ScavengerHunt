@@ -161,7 +161,7 @@
         };
     }, {}], 5: [function (require, module, exports) {
         module.exports = function (app) {
-            app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', '$interval', function ($scope, $http, TeamService, LobbyService, $location, $interval) {
+            app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', '$interval', '$route', function ($scope, $http, TeamService, LobbyService, $location, $interval, $route) {
 
                 var jq = jQuery.noConflict();
                 $scope.startButton = jq.cookie('start');
@@ -181,7 +181,6 @@
                             var endDate = Date.now() + 90 * 60 * 1000;
                             jq.cookie('endDate', Math.round(endDate / 1000));
                             //////////////
-
                             $location.path('/list');
                         }
 
@@ -192,7 +191,7 @@
 
                 $scope.displayCode = TeamService.getLobbyCode();
                 // console.log('lobby log', $scope.Game)
-                ///// game start button
+                /////////////// game start button
                 $scope.session = function () {
                     ////// setting clock end cookie////////////////
                     var endDate = Date.now() + 90 * 60 * 1000;
@@ -207,7 +206,7 @@
                         console.log('start game POST working', response);
 
                         $location.path('/list');
-                        //  location.reload()
+                        //  $route.reload();
                         ///////// location reload causes issue on safari look up/////////
                     }).catch(function (response) {
                         console.error('start game POST failed');
@@ -221,7 +220,6 @@
         module.exports = function (app) {
             app.controller('QuestionController', ['$scope', '$http', '$timeout', 'MainService', 'QuestionService', '$location', '$routeParams', '$route', function ($scope, $http, $timeout, MainService, QuestionService, $location, $routeParams, $route) {
                 var jq = jQuery.noConflict();
-                // alert(jq.cookie('demo'));
                 var map = new GMaps({
                     div: '#map',
                     lat: 1,
@@ -233,11 +231,9 @@
                 // console.log($scope.compare)
                 // console.log($scope.clue)
                 var clueId = $routeParams.clueId;
-
-                //$scope.correct = false;
                 // console.log($routeParams);
 
-                //////// back-button function/////////
+                //////// back-button function from individual question page/////////
                 $scope.return = function () {
                     $location.path('/list');
                 };
@@ -267,9 +263,8 @@
                     }
                     ///////////// distance displayed in console////////
                     console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
+                    console.log('-----------------------------------------------');
                     /////////////////
-
-                    // if ((Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
 
                     ////////////demo mode code////////////
                     if (jq.cookie('demo')) {
@@ -290,7 +285,6 @@
                                 infoWindow: { content: "<h1>" + $scope.clue.locationName + "</h1>" }
                             });
                             new google.maps.event.trigger(marker, 'click');
-                            // $scope.correct = true;
                             $http({
                                 url: '/at-location' + '/' + clueId,
                                 method: 'PUT',
@@ -345,7 +339,6 @@
                                     infoWindow: { content: "<h1>" + $scope.clue.locationName + "</h1>" }
                                 });
                                 new google.maps.event.trigger(marker, 'click');
-                                // $scope.correct = true;
                                 $http({
                                     url: '/at-location' + '/' + clueId,
                                     method: 'PUT',
