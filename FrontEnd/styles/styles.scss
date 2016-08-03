@@ -35,7 +35,6 @@ body {
         text-shadow: rgb(3, 3, 3) 2px 7px 7px;
     }
     img {
-        margin: auto;
         display: inline-block;
         height: 21em;
     }
@@ -135,6 +134,7 @@ input[type="text"] {
 }
 ////////info page styling//////
 .how-to-box {
+    text-align: center;
     background-color: rgba(#F27D5C, 0.9);
     border-radius: 10px;
     margin-top: 5%;
@@ -143,6 +143,11 @@ input[type="text"] {
     -webkit-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
     box-shadow: -1px 8px 41px -7px rgba(0,0,0,0.75);
+    .howto {
+        display: inline-block;
+        padding-top:2%; 
+        width: 55%;
+    }
 }
 .tips {
     font-size: 2em;

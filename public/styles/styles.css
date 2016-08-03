@@ -26,7 +26,6 @@ body {
     font-size: 7em;
     text-shadow: #030303 2px 7px 7px; }
   .title-header img {
-    margin: auto;
     display: inline-block;
     height: 21em; }
 
@@ -111,6 +110,7 @@ input[type="text"] {
   font-family: 'PT Sans', sans-serif; }
 
 .how-to-box {
+  text-align: center;
   background-color: rgba(242, 125, 92, 0.9);
   border-radius: 10px;
   margin-top: 5%;
@@ -119,6 +119,10 @@ input[type="text"] {
   -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+  .how-to-box .howto {
+    display: inline-block;
+    padding-top: 2%;
+    width: 55%; }
 
 .tips {
   font-size: 2em; }

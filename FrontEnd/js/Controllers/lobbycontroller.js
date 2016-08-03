@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', '$interval','$route', function($scope, $http, TeamService, LobbyService, $location, $interval,$route) {
+    app.controller('LobbyController', ['$scope', '$http', 'TeamService', 'LobbyService', '$location', '$interval', '$route', function($scope, $http, TeamService, LobbyService, $location, $interval, $route) {
 
         var jq = jQuery.noConflict();
         $scope.startButton = jq.cookie('start');
@@ -16,14 +16,14 @@ module.exports = function(app) {
             var ready = LobbyService.checkReady().then(function(result) {
 
                 if (result) {
+
                     //// setting clock end cookie////////////////
                     var endDate = Date.now() + 90 * 60 * 1000;
                     jq.cookie('endDate', Math.round(endDate / 1000));
 
                     $interval.cancel(checkOurDude);
-                    //////////////
-                    $location.path('/list')
 
+                    $location.path('/list')
 
                 }
 
@@ -35,30 +35,49 @@ module.exports = function(app) {
 
         $scope.displayCode = TeamService.getLobbyCode()
             // console.log('lobby log', $scope.Game)
-/////////////// game start button
+            /////////////// game start button
         $scope.session = function() {
-            ////// setting clock end cookie////////////////
-            var endDate = Date.now() + 90 * 60 * 1000;
-            jq.cookie('endDate', Math.round(endDate / 1000));
-            ////////////////
-            console.log("clicked Post readyState");
-            $http({
-                url: '/start-game',
-                method: 'POST',
+            if (jq.cookie('demo')) {
+                var endDate = Date.now() + 3 * 60 * 1000;
+                jq.cookie('endDate', Math.round(endDate / 1000));
+                $http({
+                    url: '/start-game',
+                    method: 'POST',
 
-            }).then(function(response) {
-                console.log('start game POST working', response)
+                }).then(function(response) {
+                    console.log('start game POST working', response)
 
-                       $location.path('/list');
-                      //  $route.reload();
-///////// location reload causes issue on safari look up/////////
+                    $location.path('/list');
+                    //  $route.reload();
+                    ///////// location reload causes issue on safari look up/////////
 
-            }).catch(function(response) {
-                console.error('start game POST failed');
+                }).catch(function(response) {
+                    console.error('start game POST failed');
 
-            });
+                });
+            } else {
 
-            // $location.path('/list')
+                ////// setting clock end cookie////////////////
+                var endDate = Date.now() + 90 * 60 * 1000;
+                jq.cookie('endDate', Math.round(endDate / 1000));
+                ////////////////
+                console.log("clicked Post readyState");
+                $http({
+                    url: '/start-game',
+                    method: 'POST',
+
+                }).then(function(response) {
+                    console.log('start game POST working', response)
+
+                    $location.path('/list');
+                    //  $route.reload();
+                    ///////// location reload causes issue on safari look up/////////
+
+                }).catch(function(response) {
+                    console.error('start game POST failed');
+
+                });
+            }
         }
     }])
 };

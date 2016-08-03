@@ -8,10 +8,10 @@ module.exports = function(app) {
         });
         $scope.myLoc = MainService.getLocation(map);
 
-        // $interval(function () {
-        //   $scope.myLoc;
-        //   console.log('timer',$scope.myLoc);
-        // }, 5000);
+       var refreshMap = $interval(function () {
+          $scope.myLoc;
+          console.log('map refresh',$scope.myLoc);
+        }, 5000);
 
         $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
         $scope.compare= QuestionService.getClues()
@@ -105,7 +105,8 @@ module.exports = function(app) {
                     }
                   })
                   if($scope.compare.length === 0){
-                    $timeout(function(){$location.path('/gameover')}, 5000)
+                    $interval.cancel(refreshMap);
+                    $timeout(function(){$location.path('/gameover')}, 5000);
                   }
 
 
