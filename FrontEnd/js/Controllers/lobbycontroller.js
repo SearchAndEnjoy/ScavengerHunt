@@ -38,7 +38,7 @@ module.exports = function(app) {
             /////////////// game start button
         $scope.session = function() {
             if (jq.cookie('demo')) {
-                var endDate = Date.now() + 3 * 60 * 1000;
+                var endDate = Date.now() + 2 * 60 * 1000;
                 jq.cookie('endDate', Math.round(endDate / 1000));
                 $http({
                     url: '/start-game',
