@@ -148,7 +148,6 @@ module.exports = function(app) {
                         answerLat: $scope.myLoc[0].lat,
                         answerLong: $scope.myLoc[0].lon,
                     }
-                    console.log();
                   var marker = map.addMarker({
                         lat: $scope.myLoc[0].lat,
                         lng: $scope.myLoc[0].lon,
@@ -163,6 +162,7 @@ module.exports = function(app) {
 
 
                 }).then(function(response) {
+                  console.log(response)
                   $scope.compare.forEach(function(el,ind){
                      if($scope.clue.clue === el.clue){
                        $scope.compare.splice(ind,1)
@@ -190,9 +190,7 @@ module.exports = function(app) {
                       infoWindow: {content: `<h1>Wrong!</h1>`}
                   })
                   new google.maps.event.trigger(wrongMarker,'click' );
-
             }
-
           };
         };
 

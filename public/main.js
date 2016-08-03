@@ -38,7 +38,8 @@
                 });
                 $scope.gameOver = TeamService.getOverInfo();
                 $scope.teamPaths = TeamService.getOverPaths();
-
+                // console.log($scope.gameOver);
+                console.log($scope.gameOver);
                 //////////button back to start page//////////////
                 $scope.gameOverButton = function () {
                     // console.log('info',TeamService.getOverInfo());
@@ -108,8 +109,9 @@
         module.exports = function (app) {
             app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', '$route', function ($scope, $http, $location, QuestionService, $routeParams, $route) {
                 var jq = jQuery.noConflict();
-                $scope.gameObj = QuestionService.compareAnswers();
-                QuestionService.getClues();
+                // $scope.gameObj = QuestionService.compareAnswers()
+                QuestionService.loadClues();
+                $scope.gameObj = QuestionService.getClues();
                 console.log($scope.gameObj);
 
                 // $scope.compare= QuestionService.compareAnswers();
@@ -365,7 +367,6 @@
                                     answerLat: $scope.myLoc[0].lat,
                                     answerLong: $scope.myLoc[0].lon
                                 };
-                                console.log();
                                 var marker = map.addMarker({
                                     lat: $scope.myLoc[0].lat,
                                     lng: $scope.myLoc[0].lon,
@@ -379,6 +380,7 @@
                                     data: answerObj
 
                                 }).then(function (response) {
+                                    console.log(response);
                                     $scope.compare.forEach(function (el, ind) {
                                         if ($scope.clue.clue === el.clue) {
                                             $scope.compare.splice(ind, 1);
@@ -674,6 +676,18 @@
                             method: 'Get'
                         }).then(function (response) {
                             var response = response.data;
+                            var unique = [];
+                            var doubles = [];
+                            response[0].answerList.forEach(function (el, ind) {
+                                console.log(el.clue.clue);
+                                if (el.clue.clue !== unique[ind - 1]) {
+                                    unique.push(el.clue.clue);
+                                } else {
+                                    doubles.push(el.clue.clue);
+                                }
+                            });
+                            console.log(unique);
+                            console.log(doubles);
                             angular.copy(response, endGameinfo);
                         }).catch(function (response) {
                             console.error("gameover fail");
@@ -689,13 +703,10 @@
                         }).then(function (response) {
                             var teams = [];
                             var pos = [];
-
                             var response = response.data;
-                            // console.log('all data',response);
                             angular.copy(response, teamAnswerPath);
                             response.forEach(function (team) {
-                                // console.log(team);
-
+                                console.log(team);
                             });
                         }).catch(function (response) {
                             console.error("gameover fail");

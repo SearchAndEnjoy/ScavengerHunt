@@ -23,7 +23,8 @@ module.exports = function(app) {
         })
         $scope.gameOver = TeamService.getOverInfo();
         $scope.teamPaths = TeamService.getOverPaths();
-
+        // console.log($scope.gameOver);
+        console.log($scope.gameOver)
 //////////button back to start page//////////////
         $scope.gameOverButton = function() {
           // console.log('info',TeamService.getOverInfo());

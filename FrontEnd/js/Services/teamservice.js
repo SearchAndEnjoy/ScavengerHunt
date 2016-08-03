@@ -95,6 +95,19 @@ module.exports = function(app) {
                 method: 'Get',
               }).then(function(response){
                 var response = response.data;
+                var unique = []
+                var doubles=[]
+                response[0].answerList.forEach(function(el,ind){
+                  console.log(el.clue.clue)
+                    if(el.clue.clue !== unique[ind -1]){
+                    unique.push(el.clue.clue);
+                }
+                else{
+                  doubles.push(el.clue.clue)
+                }
+                })
+                console.log(unique)
+                console.log(doubles)
                 angular.copy(response, endGameinfo)
 
               }).catch(function(response){
@@ -111,12 +124,10 @@ module.exports = function(app) {
               }).then(function(response){
                 var teams = [];
                 var pos = [];
-
                 var response = response.data;
-                // console.log('all data',response);
-                angular.copy(response, teamAnswerPath)
+                  angular.copy(response, teamAnswerPath)
                 response.forEach(function(team) {
-                  // console.log(team);
+                  console.log(team);
 
               });
               }).catch(function(response){
