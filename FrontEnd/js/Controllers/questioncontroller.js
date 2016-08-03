@@ -11,7 +11,7 @@ module.exports = function(app) {
        var refreshMap = $interval(function () {
           $scope.myLoc;
           console.log('map refresh',$scope.myLoc);
-        }, 5000);
+        }, 10000);
 
         $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
         $scope.compare= QuestionService.getClues()
@@ -106,7 +106,7 @@ module.exports = function(app) {
                   })
                   if($scope.compare.length === 0){
                     $interval.cancel(refreshMap);
-                    $timeout(function(){$location.path('/gameover')}, 5000);
+                    $timeout(function(){$location.path('/gameover')}, 3000);
                   }
 
 
@@ -143,8 +143,7 @@ module.exports = function(app) {
             $scope.myLoc = MainService.getLocation(map);
 
             if ((Math.floor(getDistance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
-                 alert('here!');
-                // $location.path('/list');
+                 alert('You got it right!');
                 var answerObj = {
                         answerLat: $scope.myLoc[0].lat,
                         answerLong: $scope.myLoc[0].lon,
@@ -171,7 +170,7 @@ module.exports = function(app) {
                     }
                   })
                   if($scope.compare.length === 0){
-                    $timeout(function(){$location.path('/gameover')}, 2000)
+                    $timeout(function(){$location.path('/gameover')}, 3000)
                   }
                   // console.log(response.data.clue.id)
                   // console.log($scope.compare)
@@ -183,7 +182,7 @@ module.exports = function(app) {
                 });
 
             } else {
-                alert('not here')
+                alert('Wrong place, try again.')
                 var wrongMarker = map.addMarker({
                       lat: $scope.myLoc[0].lat,
                       lng: $scope.myLoc[0].lon,
