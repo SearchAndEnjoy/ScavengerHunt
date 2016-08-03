@@ -4,13 +4,14 @@ module.exports = function(app) {
         var jq = jQuery.noConflict();
         $scope.startButton = jq.cookie('start');
         $scope.Game = TeamService.getTeams();
+
         $interval(function() {
                 TeamService.refreshTeams()
             }, 5000)
             //$scope.ready = LobbyService.checkReady();
             // console.log('ready test Lobbyctrl',$scope.ready);
 
-        $interval(function() {
+        var checkOurDude = $interval(function() {
 
             var ready = LobbyService.checkReady().then(function(result) {
 
@@ -18,15 +19,19 @@ module.exports = function(app) {
                     //// setting clock end cookie////////////////
                     var endDate = Date.now() + 90 * 60 * 1000;
                     jq.cookie('endDate', Math.round(endDate / 1000));
+
+                    $interval.cancel(checkOurDude);
                     //////////////
                     $location.path('/list')
+
+
                 }
 
                 // console.log("result", result);
                 // console.log("-----------------------------------------------------------------");
             });
 
-        }, 5000);
+        }, 2000);
 
         $scope.displayCode = TeamService.getLobbyCode()
             // console.log('lobby log', $scope.Game)

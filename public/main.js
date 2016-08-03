@@ -17,7 +17,6 @@
             app.controller('GameOverController', ['$scope', '$location', '$http', 'MainService', 'TeamService', 'QuestionService', function ($scope, $location, $http, MainService, TeamService, QuestionService) {
                 var jq = jQuery.noConflict();
                 jq.removeCookie('demo');
-                // alert(jq.cookie('demo'));
                 var map = new GMaps({
                     div: '#map',
                     lat: 1,
@@ -40,9 +39,9 @@
                 $scope.gameOver = TeamService.getOverInfo();
                 $scope.teamPaths = TeamService.getOverPaths();
 
-                ///////// change below to go to start page/////////
-
+                //////////button back to start page//////////////
                 $scope.gameOverButton = function () {
+                    // console.log('info',TeamService.getOverInfo());
 
                     $location.path('/start');
                 };
@@ -112,7 +111,6 @@
                 $scope.gameObj = QuestionService.compareAnswers();
                 QuestionService.getClues();
                 console.log($scope.gameObj);
-                return location.reload();
 
                 // $scope.compare= QuestionService.compareAnswers();
 
@@ -167,13 +165,14 @@
                 var jq = jQuery.noConflict();
                 $scope.startButton = jq.cookie('start');
                 $scope.Game = TeamService.getTeams();
+
                 $interval(function () {
                     TeamService.refreshTeams();
                 }, 5000);
                 //$scope.ready = LobbyService.checkReady();
                 // console.log('ready test Lobbyctrl',$scope.ready);
 
-                $interval(function () {
+                var checkOurDude = $interval(function () {
 
                     var ready = LobbyService.checkReady().then(function (result) {
 
@@ -181,6 +180,8 @@
                             //// setting clock end cookie////////////////
                             var endDate = Date.now() + 90 * 60 * 1000;
                             jq.cookie('endDate', Math.round(endDate / 1000));
+
+                            $interval.cancel(checkOurDude);
                             //////////////
                             $location.path('/list');
                         }
@@ -188,7 +189,7 @@
                         // console.log("result", result);
                         // console.log("-----------------------------------------------------------------");
                     });
-                }, 5000);
+                }, 2000);
 
                 $scope.displayCode = TeamService.getLobbyCode();
                 // console.log('lobby log', $scope.Game)
@@ -228,7 +229,7 @@
                 });
                 $scope.myLoc = MainService.getLocation(map);
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
-                $scope.compare = QuestionService.compareAnswers();
+                $scope.compare = QuestionService.getClues();
                 // console.log($scope.compare)
                 // console.log($scope.clue)
                 var clueId = $routeParams.clueId;
@@ -240,10 +241,15 @@
                 };
 
                 /////// getting location  checking distance and if passes creates marker/////////
-                $scope.marker = function () {
-                    MainService.getLocation(map);
+                $scope.submitAnswer = function () {
+
+                    // get current location and set it to local scope myLoc - ONLY USED IN REGUALR MODE NOT DEMO MODE
+                    $scope.myLoc = MainService.getLocation(map);
+
                     console.log("click", $scope.myLoc);
-                    function distance(lat1, lon1, lat2, lon2, unit) {
+
+                    // Determine distance between two lat/long point
+                    function getDistance(lat1, lon1, lat2, lon2, unit) {
                         var radlat1 = Math.PI * lat1 / 180;
                         var radlat2 = Math.PI * lat2 / 180;
                         var radlon1 = Math.PI * lon1 / 180;
@@ -262,36 +268,51 @@
                         }
                         return dist;
                     }
+
                     ///////////// distance displayed in console////////
-                    console.log(Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
+                    console.log(Math.floor(getDistance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
                     console.log('-----------------------------------------------');
                     /////////////////
 
                     ////////////demo mode code////////////
                     if (jq.cookie('demo')) {
+
                         console.log('DEMO mode', jq.cookie('demo'));
                         console.log('---------------------------');
-                        if (Math.floor(distance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
+
+                        // Check that current location distance is within 50 meters of answer location
+                        if (Math.floor(getDistance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
+
                             alert('here!');
                             // $location.path('/list');
+
+                            // DEMO MODE ONLY - Create answer object from clue location so check Location is always true
                             var answerObj = {
                                 answerLat: $scope.clue.latitude,
                                 answerLong: $scope.clue.longitude
                             };
-                            console.log();
+
+                            // Create answer marker for map
                             var marker = map.addMarker({
                                 lat: $scope.clue.latitude,
                                 lng: $scope.clue.longitude,
                                 title: $scope.clue.locationName,
                                 infoWindow: { content: "<h1>" + $scope.clue.locationName + "</h1>" }
                             });
+
+                            // Add marker to map for point click event
                             new google.maps.event.trigger(marker, 'click');
+
+                            // Call server to log location answer
                             $http({
-                                url: '/at-location' + '/' + clueId,
+                                url: '/at-location/' + clueId,
                                 method: 'PUT',
                                 data: answerObj
 
                             }).then(function (response) {
+
+                                console.log('/at-location/', response);
+
                                 $scope.compare.forEach(function (el, ind) {
                                     if ($scope.clue.clue === el.clue) {
                                         $scope.compare.splice(ind, 1);
@@ -301,8 +322,9 @@
                                 if ($scope.compare.length === 0) {
                                     $timeout(function () {
                                         $location.path('/gameover');
-                                    }, 2000);
+                                    }, 5000);
                                 }
+
                                 // console.log(response.data.clue.id)
                                 // console.log($scope.compare)
                                 // console.log('clue answer PUT working', answerObj, response)
@@ -311,6 +333,7 @@
                             });
                         } else {
                             alert('not here');
+
                             map.addMarker({
                                 lat: $scope.myLoc[0].lat,
                                 lng: $scope.myLoc[0].lon,
@@ -325,7 +348,7 @@
                     else {
                             console.log('reg mode', jq.cookie('demo'));
                             console.log('---------------------------');
-                            if (Math.floor(distance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
+                            if (Math.floor(getDistance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                                 alert('here!');
                                 // $location.path('/list');
                                 var answerObj = {
@@ -487,7 +510,7 @@
                 var executed = false;
                 var answers = [];
                 return {
-                    getClues: function getClues() {
+                    loadClues: function loadClues() {
                         if (!executed) {
                             executed = true;
 
@@ -538,7 +561,7 @@
                         });
                         return singleClue;
                     },
-                    compareAnswers: function compareAnswers() {
+                    getClues: function getClues() {
                         return clues;
                     },
                     finalAnswers: function finalAnswers() {
@@ -549,7 +572,7 @@
         };
     }, {}], 11: [function (require, module, exports) {
         module.exports = function (app) {
-            app.factory('TeamService', ['$http', '$location', '$interval', function ($http, $location, $interval) {
+            app.factory('TeamService', ['$http', '$location', function ($http, $location) {
                 var jq = jQuery.noConflict();
                 var teamName = [];
                 var endGameinfo = [];
@@ -658,7 +681,7 @@
                             var pos = [];
 
                             var response = response.data;
-                            console.log('all data', response);
+                            // console.log('all data',response);
                             angular.copy(response, teamAnswerPath);
                             response.forEach(function (team) {
                                 // console.log(team);

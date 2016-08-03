@@ -43,11 +43,6 @@ body {
   -moz-box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56);
   box-shadow: 5px 16px 15px -1px rgba(0, 0, 0, 0.56); }
 
-.how-to-box {
-  background-color: #F27D5C;
-  height: 50em;
-  width: 100%; }
-
 @media screen and (min-width: 1025px) {
   .footer {
     color: #faf9f5;
@@ -57,9 +52,12 @@ body {
     -moz-box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75);
     box-shadow: -1px -7px 20px -5px rgba(0, 0, 0, 0.75); }
     .footer .credits {
+      font-size: 2em;
       float: left;
       margin-top: 1%;
       margin-bottom: 10%; }
+      .footer .credits h3 {
+        font-size: 1em; }
     .footer .social {
       float: right;
       text-align: center;
@@ -67,7 +65,7 @@ body {
       .footer .social ul {
         list-style-type: none; } }
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+@media only screen and (min-device-width: 10px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
   .footer {
     color: #faf9f5;
     height: 8%;
@@ -80,6 +78,8 @@ body {
       float: left;
       margin-top: 1%;
       margin-bottom: 10%; }
+      .footer .credits h3 {
+        font-size: 1em; }
     .footer .social {
       display: inline-block;
       float: right;
@@ -102,6 +102,19 @@ body {
 
 .page-box {
   padding-bottom: 10%; }
+
+.how-to-box {
+  background-color: rgba(242, 125, 92, 0.9);
+  border-radius: 10px;
+  margin-top: 5%;
+  height: 25em;
+  width: 100%;
+  -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75); }
+
+.tips {
+  font-size: 2em; }
 
 .form-group {
   background-color: #6CADA9;
@@ -130,9 +143,9 @@ body {
 
 .clue-box {
   color: #faf9f5;
-  background-color: #6CADA9;
+  background-color: rgba(108, 173, 169, 0.9);
   margin-top: 5%;
-  padding: 3%;
+  padding: 5%;
   border-radius: 3%;
   -webkit-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -1px 8px 41px -7px rgba(0, 0, 0, 0.75);
