@@ -6,7 +6,7 @@ module.exports = function(app) {
         $scope.Game = TeamService.getTeams();
 
         $interval(function() {
-                TeamService.refreshTeams()
+                TeamService.refreshTeams();
             }, 5000)
             //$scope.ready = LobbyService.checkReady();
             // console.log('ready test Lobbyctrl',$scope.ready);

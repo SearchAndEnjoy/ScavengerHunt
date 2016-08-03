@@ -103,6 +103,13 @@ body {
 .page-box {
   padding-bottom: 10%; }
 
+.form-style {
+  height: 2em; }
+
+input[type="text"] {
+  font-size: 4em;
+  font-family: 'PT Sans', sans-serif; }
+
 .how-to-box {
   background-color: rgba(242, 125, 92, 0.9);
   border-radius: 10px;

@@ -220,7 +220,7 @@
         };
     }, {}], 6: [function (require, module, exports) {
         module.exports = function (app) {
-            app.controller('QuestionController', ['$scope', '$http', '$timeout', 'MainService', 'QuestionService', '$location', '$routeParams', '$route', function ($scope, $http, $timeout, MainService, QuestionService, $location, $routeParams, $route) {
+            app.controller('QuestionController', ['$scope', '$http', '$timeout', '$interval', 'MainService', 'QuestionService', '$location', '$routeParams', '$route', function ($scope, $http, $timeout, $interval, MainService, QuestionService, $location, $routeParams, $route) {
                 var jq = jQuery.noConflict();
                 var map = new GMaps({
                     div: '#map',
@@ -228,6 +228,12 @@
                     lng: -1
                 });
                 $scope.myLoc = MainService.getLocation(map);
+
+                // $interval(function () {
+                //   $scope.myLoc;
+                //   console.log('timer',$scope.myLoc);
+                // }, 5000);
+
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
                 $scope.compare = QuestionService.getClues();
                 // console.log($scope.compare)
@@ -236,15 +242,15 @@
                 // console.log($routeParams);
 
                 //////// back-button function from individual question page/////////
-                $scope.return = function () {
+                $scope.backButton = function () {
                     $location.path('/list');
                 };
 
                 /////// getting location  checking distance and if passes creates marker/////////
                 $scope.submitAnswer = function () {
 
-                    // get current location and set it to local scope myLoc - ONLY USED IN REGUALR MODE NOT DEMO MODE
-                    $scope.myLoc = MainService.getLocation(map);
+                    // // get current location and set it to local scope myLoc - ONLY USED IN REGUALR MODE NOT DEMO MODE
+                    // $scope.myLoc = MainService.getLocation(map);
 
                     console.log("click", $scope.myLoc);
 
@@ -348,6 +354,10 @@
                     else {
                             console.log('reg mode', jq.cookie('demo'));
                             console.log('---------------------------');
+
+                            // get current location and set it to local scope myLoc - ONLY USED IN REGUALR MODE NOT DEMO MODE
+                            $scope.myLoc = MainService.getLocation(map);
+
                             if (Math.floor(getDistance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                                 alert('here!');
                                 // $location.path('/list');
