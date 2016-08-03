@@ -44,7 +44,7 @@ public class ScavengerHuntController {
     @CrossOrigin
     @PostConstruct
     public void init() throws FileNotFoundException, SQLException {
-        Server.createWebServer("-webPort", "28182").start();
+        Server.createWebServer("-webPort", "2818").start();
         parseClues("clues.tsv");
     }
 
