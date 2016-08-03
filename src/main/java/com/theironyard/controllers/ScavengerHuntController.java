@@ -201,7 +201,6 @@ public class ScavengerHuntController {
         if (clues.count() == 0) {
             File clueFile = new File(fileName);
             Scanner fileScanner = new Scanner(clueFile);
-            fileScanner.nextLine();
             while (fileScanner.hasNext()) {
                 String[] columns = fileScanner.nextLine().split("\t");
                 Clue clue = new Clue(columns[0], columns[1], Double.valueOf(columns[2]), Double.valueOf(columns[3]));
