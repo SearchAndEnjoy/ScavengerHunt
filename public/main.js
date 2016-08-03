@@ -98,6 +98,21 @@
             app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', '$route', function ($scope, $http, $location, QuestionService, $routeParams, $route) {
                 var jq = jQuery.noConflict();
                 QuestionService.loadClues();
+
+                $scope.gameObj = QuestionService.getClues();
+
+                console.log($scope.gameObj);
+
+                $scope.giveUp = function () {
+                    var con = confirm('Are You Sure?');
+                    if (con == true) {
+                        $location.path('/gameover');
+                    } else {
+                        // console.log("stay");
+                    }
+                };
+
+                // $scope.compare= QuestionService.getClues();
                 $scope.gameObj = QuestionService.getClues();
                 console.log($scope.gameObj);
 
@@ -174,7 +189,7 @@
                 /////////////// game start button
                 $scope.session = function () {
                     if (jq.cookie('demo')) {
-                        var endDate = Date.now() + 3 * 60 * 1000;
+                        var endDate = Date.now() + 2 * 60 * 1000;
                         jq.cookie('endDate', Math.round(endDate / 1000));
                         $http({
                             url: '/start-game',

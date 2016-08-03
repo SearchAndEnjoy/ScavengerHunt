@@ -64,7 +64,7 @@ body {
       .footer .social ul {
         list-style-type: none; } }
 
-@media only screen and (min-device-width: 10px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+@media only screen and (min-device-width: 10px) and (max-device-width: 1024px) {
   .footer {
     color: #faf9f5;
     height: 8%;
@@ -152,6 +152,10 @@ input[type="text"] {
   height: 100%;
   width: 100%; }
 
+.single-clue {
+  font-size: 2em;
+  text-shadow: #030303 1px 3px 3px; }
+
 .clue-box {
   color: #faf9f5;
   background-color: rgba(108, 173, 169, 0.9);
@@ -224,10 +228,7 @@ input[type="text"] {
     text-decoration: none;
     color: #faf9f5; }
     .quest-list-item a h3 {
-      font-size: 3em; }
-
-.quest-list-ul {
-  padding-bottom: 12%; }
+      font-size: 4em; }
 
 .mini-map {
   background-color: lightblue;

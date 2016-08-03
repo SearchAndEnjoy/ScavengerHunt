@@ -9,13 +9,15 @@
     <div class="mini-map">
         <div id="map"></div>
     </div>
-    <ul class="list-group" ng-repeat="team in gameOver | orderBy : '-team.answerList.length' " ng-init='mins = team.answerList[team.answerList.length -1].timestamp.minute'>
+    <ul class="list-group" ng-repeat="team in gameOver | orderBy : teamName " ng-init='mins = team.answerList[team.answerList.length -1].timestamp.minute; hour = team.answerList[team.answerList.length -1].timestamp.hour'>
 
         <li class="list-group-item lobby-list-item">
 
             <h1>Team Name: {{team.teamName}}</h1>
             <h2>Correct Answers: {{team.answerList.length}}</h2>
-            <h2>Time Finished: {{team.answerList[team.answerList.length -1].timestamp.hour}}:{{mins}}</h2>
+            <h2 ng-if='hour <= 12'>Finished at {{hour}}:<span ng-if='mins < 10'>{{'0'+mins}}</span><span ng-if='mins >= 10'>{{mins}}</span> A.M.</h2>
+
+            <h2 ng-if='hour > 12'>Finished at {{(hour -12)}}:<span ng-if='mins < 10'>{{'0'+mins}}</span><span ng-if='mins >= 10'>{{mins}}</span> P.M.</h2>
 
 
     </ul>
