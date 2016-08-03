@@ -7,8 +7,16 @@ module.exports = function(app) {
 
       $scope.gameObj = QuestionService.getClues()
 
-
       console.log($scope.gameObj);
+
+      $scope.giveUp = function(){
+        var con = confirm('Are You Sure?');
+        if (con == true) {
+          $location.path('/gameover');
+        }else{
+          console.log("stay");
+        }
+      }
 
       // $scope.compare= QuestionService.getClues();
 
