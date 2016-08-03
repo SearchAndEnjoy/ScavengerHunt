@@ -7,8 +7,6 @@ module.exports = function(app) {
           lat: 1,
           lng: -1,
       });
-
-        // $scope.myLoc = MainService.getLocation(map);
         $scope.clueLoc = QuestionService.finalAnswers()
         $scope.clueLoc.forEach(function(el){
           console.log(el.latitude, el.longitude);
@@ -16,18 +14,16 @@ module.exports = function(app) {
               lat:el.latitude,
               lng:el.longitude,
               title: 'Logans super special marker',
-              infoWindow: {content: `<h1>${el.locationName}</h1>`}
+              infoWindow: {content: `<h1>${el.locationName}</h1>`},
           })
           map.fitZoom()
           map.zoomOut(1)
         })
         $scope.gameOver = TeamService.getOverInfo();
         $scope.teamPaths = TeamService.getOverPaths();
-
+        console.log($scope.gameOver)
 //////////button back to start page//////////////
         $scope.gameOverButton = function() {
-          // console.log('info',TeamService.getOverInfo());
-
             $location.path('/start');
         }
     }]);

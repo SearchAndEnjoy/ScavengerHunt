@@ -22,8 +22,6 @@
                     lat: 1,
                     lng: -1
                 });
-
-                // $scope.myLoc = MainService.getLocation(map);
                 $scope.clueLoc = QuestionService.finalAnswers();
                 $scope.clueLoc.forEach(function (el) {
                     console.log(el.latitude, el.longitude);
@@ -38,11 +36,9 @@
                 });
                 $scope.gameOver = TeamService.getOverInfo();
                 $scope.teamPaths = TeamService.getOverPaths();
-
+                console.log($scope.gameOver);
                 //////////button back to start page//////////////
                 $scope.gameOverButton = function () {
-                    // console.log('info',TeamService.getOverInfo());
-
                     $location.path('/start');
                 };
             }]);
@@ -84,22 +80,15 @@
                         teamName: $scope.joinTeamName
                     };
                     console.log("clicked Join Session");
-                    // console.log(joinGameObj)
-
-                    // $location.path('/available');
-
                     $http({
                         url: '/add-team/' + ("" + $scope.joinLobbyCode.toLowerCase()),
                         method: 'post',
                         data: JSON.stringify(joinGameObj)
                     }).then(function (data) {
-                        // console.log(data);
-
                         $location.path('/lobby');
                     }).catch(function () {
                         console.error('join Session screw up');
                         alert('Please enter an existing code');
-                        // $location.path('/shit')
                     });
                 };
             }]);
@@ -107,20 +96,15 @@
     }, {}], 4: [function (require, module, exports) {
         module.exports = function (app) {
             app.controller('ListController', ['$scope', '$http', '$location', 'QuestionService', '$routeParams', '$route', function ($scope, $http, $location, QuestionService, $routeParams, $route) {
-
                 var jq = jQuery.noConflict();
-
                 QuestionService.loadClues();
-
                 $scope.gameObj = QuestionService.getClues();
-
                 console.log($scope.gameObj);
-
-                // $scope.compare= QuestionService.getClues();
 
                 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
                 ////// flipclock courtesy of flipclockjs.com
                 ///// endDate cookie init on lobby start button
+
                 var countDown = function countDown() {
                     var currentDate = Math.round(new Date() / 1000);
 
@@ -152,8 +136,9 @@
                     clock.setCountdown(true);
                     clock.start();
                 };
-                /////Lanching count down on ready
+                //Lanching count down on ready
                 countDown();
+                // });
                 //////// end  clock function///////
 
             }]);
@@ -169,8 +154,6 @@
                 $interval(function () {
                     TeamService.refreshTeams();
                 }, 5000);
-                //$scope.ready = LobbyService.checkReady();
-                // console.log('ready test Lobbyctrl',$scope.ready);
 
                 var checkOurDude = $interval(function () {
 
@@ -181,19 +164,13 @@
                             //// setting clock end cookie////////////////
                             var endDate = Date.now() + 90 * 60 * 1000;
                             jq.cookie('endDate', Math.round(endDate / 1000));
-
                             $interval.cancel(checkOurDude);
-
                             $location.path('/list');
                         }
-
-                        // console.log("result", result);
-                        // console.log("-----------------------------------------------------------------");
                     });
                 }, 2000);
 
                 $scope.displayCode = TeamService.getLobbyCode();
-                // console.log('lobby log', $scope.Game)
                 /////////////// game start button
                 $scope.session = function () {
                     if (jq.cookie('demo')) {
@@ -207,8 +184,6 @@
                             console.log('start game POST working', response);
 
                             $location.path('/list');
-                            //  $route.reload();
-                            ///////// location reload causes issue on safari look up/////////
                         }).catch(function (response) {
                             console.error('start game POST failed');
                         });
@@ -217,7 +192,6 @@
                         ////// setting clock end cookie////////////////
                         var endDate = Date.now() + 90 * 60 * 1000;
                         jq.cookie('endDate', Math.round(endDate / 1000));
-                        ////////////////
                         console.log("clicked Post readyState");
                         $http({
                             url: '/start-game',
@@ -227,8 +201,6 @@
                             console.log('start game POST working', response);
 
                             $location.path('/list');
-                            //  $route.reload();
-                            ///////// location reload causes issue on safari look up/////////
                         }).catch(function (response) {
                             console.error('start game POST failed');
                         });
@@ -254,11 +226,7 @@
 
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
                 $scope.compare = QuestionService.getClues();
-                // console.log($scope.compare)
-                // console.log($scope.clue)
                 var clueId = $routeParams.clueId;
-                // console.log($routeParams);
-
                 //////// back-button function from individual question page/////////
                 $scope.backButton = function () {
                     $location.path('/list');
@@ -268,8 +236,6 @@
                 $scope.submitAnswer = function () {
 
                     // // get current location and set it to local scope myLoc - ONLY USED IN REGUALR MODE NOT DEMO MODE
-                    // $scope.myLoc = MainService.getLocation(map);
-
                     console.log("click", $scope.myLoc);
 
                     // Determine distance between two lat/long point
@@ -308,7 +274,6 @@
                         if (Math.floor(getDistance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
 
                             alert('here!');
-                            // $location.path('/list');
 
                             // DEMO MODE ONLY - Create answer object from clue location so check Location is always true
                             var answerObj = {
@@ -349,16 +314,12 @@
                                         $location.path('/gameover');
                                     }, 3000);
                                 }
-
-                                // console.log(response.data.clue.id)
-                                // console.log($scope.compare)
-                                // console.log('clue answer PUT working', answerObj, response)
                             }).catch(function (response) {
                                 console.error('clue answer PUT failed');
+                                alert('Already Answered! Nice Try Pal');
                             });
                         } else {
                             alert('not here');
-
                             map.addMarker({
                                 lat: $scope.myLoc[0].lat,
                                 lng: $scope.myLoc[0].lon,
@@ -383,7 +344,6 @@
                                     answerLat: $scope.myLoc[0].lat,
                                     answerLong: $scope.myLoc[0].lon
                                 };
-                                console.log();
                                 var marker = map.addMarker({
                                     lat: $scope.myLoc[0].lat,
                                     lng: $scope.myLoc[0].lon,
@@ -397,6 +357,7 @@
                                     data: answerObj
 
                                 }).then(function (response) {
+                                    console.log(response);
                                     $scope.compare.forEach(function (el, ind) {
                                         if ($scope.clue.clue === el.clue) {
                                             $scope.compare.splice(ind, 1);
@@ -408,9 +369,6 @@
                                             $location.path('/gameover');
                                         }, 3000);
                                     }
-                                    // console.log(response.data.clue.id)
-                                    // console.log($scope.compare)
-                                    // console.log('clue answer PUT working', answerObj, response)
                                 }).catch(function (response) {
                                     console.error('clue answer PUT failed');
                                 });
@@ -458,22 +416,6 @@
                 var setReadyState = [];
 
                 return {
-                    //////////// remove when sure its not needed//////////
-
-                    // setReadyState: function() {
-                    //     console.log("clicked Post readyState");
-                    //     $http({
-                    //         url: '/start-game',
-                    //         method: 'POST',
-                    //
-                    //     }).then(function(response) {
-                    //         console.log('start game POST working')
-                    //
-                    //     }).catch(function(response) {
-                    //         console.error('start game POST failed');
-                    //
-                    //     });
-                    // },
                     checkReady: function checkReady() {
 
                         var readyState = $http({
@@ -484,8 +426,6 @@
 
                             var data = response.data;
 
-                            // console.log('checkReady from service', data);
-
                             if (data) {
                                 return true;
                             }
@@ -493,7 +433,6 @@
                         }).catch(function (response) {
                             console.error('checkready err');
                             return false;
-                            // console.log(readyState)
                         });
                         return readyState;
                     }
@@ -550,10 +489,6 @@
                                 var data = response.data;
 
                                 console.log(data);
-                                // console.log('questionservice', data.clues);
-                                // angular.copy(data, clues);
-
-                                // clues.push(data)
                                 data.clues.forEach(function (el) {
                                     answers.push({
                                         clue: el.clue,
@@ -614,17 +549,9 @@
                             method: 'GET'
                         }).then(function (response) {
                             var data = response.data.teams;
-                            // console.log(data);
                             angular.copy(data, teamName);
 
                             // do a check to see if the array has changed from the one bound.   if it has do an angular copy, if not do nothing.
-
-                            // console.log(response)
-                            // data.forEach(function(el,ind) {
-                            //   if(el !== teamName[ind]){teamName.push(el.teamName)
-                            //   }
-                            //   else{return false}
-                            // });
                         }).catch(function (response) {
                             console.log('error! error! bzzzt!');
                         });
@@ -667,7 +594,6 @@
                         }).catch(function (response) {
                             console.error('new Session screw up');
                             console.log(response);
-                            // $location.path('/shit')
                         });
                     },
                     getLobbyCode: function getLobbyCode() {
@@ -678,7 +604,6 @@
 
                         }).then(function (response) {
                             lobbyCode.push(response.data.lobbyCode);
-                            // lobbyCode = response.data.lobbyCode
                             console.log(lobbyCode);
                         }).catch(function (response) {
                             console.error('EEERRT');
@@ -692,6 +617,16 @@
                             method: 'Get'
                         }).then(function (response) {
                             var response = response.data;
+                            var unique = [];
+                            var doubles = [];
+                            response[0].answerList.forEach(function (el, ind) {
+                                console.log(el.clue.clue);
+                                if (el.clue.clue !== unique[ind - 1]) {
+                                    unique.push(el.clue.clue);
+                                } else {
+                                    doubles.push(el.clue.clue);
+                                }
+                            });
                             angular.copy(response, endGameinfo);
                         }).catch(function (response) {
                             console.error("gameover fail");
@@ -707,13 +642,10 @@
                         }).then(function (response) {
                             var teams = [];
                             var pos = [];
-
                             var response = response.data;
-                            // console.log('all data',response);
                             angular.copy(response, teamAnswerPath);
                             response.forEach(function (team) {
-                                // console.log(team);
-
+                                console.log(team);
                             });
                         }).catch(function (response) {
                             console.error("gameover fail");
@@ -733,7 +665,6 @@
         require('./Controllers/startcontroller.js')(app);
         require('./Controllers/listcontroller.js')(app);
         require('./Controllers/joincontroller.js')(app);
-        // require('./Controllers/creategamecontroller.js')(app);
         require('./Controllers/lobbycontroller.js')(app);
         require('./Controllers/gameovercontroller.js')(app);
         // Services
@@ -746,7 +677,6 @@
             $routeProvider.when('/', {
                 redirectTo: '/start'
             }).when('/start', {
-                // controller: 'startcontroller',
                 templateUrl: 'templates/start_page.html',
                 controller: 'StartController'
             }).when('/info1', {
@@ -767,12 +697,7 @@
             }).when('/list', {
                 controller: 'ListController',
                 templateUrl: 'templates/questionlist.html'
-            })
-            // .when('/question/:id '{
-            //   controller: 'QuestionController',
-            //   templatesUrl:'templates/questionpage.html'
-            // })
-            .when('/questionpage/:clueId', {
+            }).when('/questionpage/:clueId', {
                 controller: 'QuestionController',
                 templateUrl: 'templates/questionpage.html'
             }).when('/gameover', {
@@ -780,8 +705,4 @@
                 templateUrl: 'templates/gameover.html'
             });
         }]);
-        // .when('/question/:id '{
-        //   controller: 'QuestionController',
-        //   templatesUrl:'templates/questionpage.html'
-        // })
     }, { "./Controllers/gameovercontroller.js": 1, "./Controllers/infocontroller.js": 2, "./Controllers/joincontroller.js": 3, "./Controllers/listcontroller.js": 4, "./Controllers/lobbycontroller.js": 5, "./Controllers/questioncontroller.js": 6, "./Controllers/startcontroller.js": 7, "./Services/lobbyservice.js": 8, "./Services/mainservice.js": 9, "./Services/questionservice.js": 10, "./Services/teamservice.js": 11 }] }, {}, [12]);

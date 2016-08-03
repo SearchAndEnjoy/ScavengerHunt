@@ -29,23 +29,15 @@ module.exports = function(app) {
                     teamName: $scope.joinTeamName,
                 }
                 console.log("clicked Join Session");
-            // console.log(joinGameObj)
-
-            // $location.path('/available');
-
             $http({
                 url: '/add-team/' + `${$scope.joinLobbyCode.toLowerCase()}`,
                 method: 'post',
                 data: JSON.stringify(joinGameObj)
             }).then(function(data) {
-                // console.log(data);
-
                 $location.path('/lobby');
-
             }).catch(function() {
                 console.error('join Session screw up');
                 alert('Please enter an existing code')
-                    // $location.path('/shit')
             });
         };
 

@@ -7,7 +7,6 @@ require('./Controllers/infocontroller.js')(app);
 require('./Controllers/startcontroller.js')(app);
 require('./Controllers/listcontroller.js')(app);
 require('./Controllers/joincontroller.js')(app);
-// require('./Controllers/creategamecontroller.js')(app);
 require('./Controllers/lobbycontroller.js')(app);
 require('./Controllers/gameovercontroller.js')(app);
 // Services
@@ -23,7 +22,6 @@ app.config(['$routeProvider', function($routeProvider) {
             redirectTo: '/start',
         })
         .when('/start', {
-            // controller: 'startcontroller',
             templateUrl: 'templates/start_page.html',
             controller: 'StartController',
         })
@@ -51,10 +49,6 @@ app.config(['$routeProvider', function($routeProvider) {
           controller:'ListController',
           templateUrl:'templates/questionlist.html',
         })
-        // .when('/question/:id '{
-        //   controller: 'QuestionController',
-        //   templatesUrl:'templates/questionpage.html'
-        // })
         .when('/questionpage/:clueId',{
           controller:'QuestionController',
           templateUrl:'templates/questionpage.html',
@@ -64,7 +58,3 @@ app.config(['$routeProvider', function($routeProvider) {
           templateUrl:'templates/gameover.html',
         });
 }]);
-// .when('/question/:id '{
-//   controller: 'QuestionController',
-//   templatesUrl:'templates/questionpage.html'
-// })

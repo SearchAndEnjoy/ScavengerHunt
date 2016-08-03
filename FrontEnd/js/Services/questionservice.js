@@ -18,10 +18,6 @@ module.exports = function(app) {
                         let data = response.data
 
                         console.log(data)
-                            // console.log('questionservice', data.clues);
-                            // angular.copy(data, clues);
-
-                        // clues.push(data)
                         data.clues.forEach(function(el) {
                             answers.push({
                                 clue: el.clue,
