@@ -103,6 +103,7 @@ module.exports = function(app) {
                   }
                 }).catch(function(response) {
                     console.error('clue answer PUT failed');
+                    alert('Already Answered! Nice Try Pal');
                 });
 
             } else {
@@ -156,7 +157,7 @@ module.exports = function(app) {
                   if($scope.compare.length === 0){
                     $timeout(function(){$location.path('/gameover')}, 3000)
                   }
-        
+
                 }).catch(function(response) {
                     console.error('clue answer PUT failed');
 

@@ -316,6 +316,7 @@
                                 }
                             }).catch(function (response) {
                                 console.error('clue answer PUT failed');
+                                alert('Already Answered! Nice Try Pal');
                             });
                         } else {
                             alert('not here');
