@@ -112,6 +112,7 @@
                 $scope.gameObj = QuestionService.compareAnswers();
                 QuestionService.getClues();
                 console.log($scope.gameObj);
+                return location.reload();
 
                 // $scope.compare= QuestionService.compareAnswers();
 
@@ -206,7 +207,7 @@
                         console.log('start game POST working', response);
 
                         $location.path('/list');
-                        //  $route.reload();
+                        //$route.reload();
                         ///////// location reload causes issue on safari look up/////////
                     }).catch(function (response) {
                         console.error('start game POST failed');

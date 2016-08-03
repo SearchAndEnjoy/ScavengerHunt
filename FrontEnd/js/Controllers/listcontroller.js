@@ -4,7 +4,7 @@ module.exports = function(app) {
       $scope.gameObj = QuestionService.compareAnswers()
       QuestionService.getClues();
       console.log($scope.gameObj)
-      
+      return location.reload()
 
 
       // $scope.compare= QuestionService.compareAnswers();
