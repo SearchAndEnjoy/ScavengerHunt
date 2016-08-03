@@ -1,19 +1,13 @@
 module.exports = function(app) {
     app.controller('ListController', ['$scope', '$http','$location','QuestionService','$routeParams','$route',function($scope, $http, $location, QuestionService, $routeParams, $route) {
       var jq = jQuery.noConflict();
-      // $scope.gameObj = QuestionService.compareAnswers()
       QuestionService.loadClues();
       $scope.gameObj = QuestionService.getClues();
       console.log($scope.gameObj)
 
-
-      // $scope.compare= QuestionService.compareAnswers();
-
 ////// function courtesy of http://questionandanswer.website/question/31670979-flipclock-js-countdown-1hour-without-reset
 ////// flipclock courtesy of flipclockjs.com
 ///// endDate cookie init on lobby start button
-
-        // jq(function(){
 
              var countDown = function(){
                 var currentDate = Math.round(new Date() / 1000);

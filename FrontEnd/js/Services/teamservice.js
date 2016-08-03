@@ -13,17 +13,10 @@ module.exports = function(app) {
                     method: 'GET',
                 }).then(function(response) {
                     let data = response.data.teams
-                    // console.log(data);
                     angular.copy(data, teamName);
 
                     // do a check to see if the array has changed from the one bound.   if it has do an angular copy, if not do nothing.
 
-                    // console.log(response)
-                    // data.forEach(function(el,ind) {
-                    //   if(el !== teamName[ind]){teamName.push(el.teamName)
-                    //   }
-                    //   else{return false}
-                    // });
                 }).catch(function(response) {
                     console.log('error! error! bzzzt!')
 
@@ -68,7 +61,6 @@ module.exports = function(app) {
                 }).catch(function(response) {
                     console.error('new Session screw up');
                     console.log(response);
-                    // $location.path('/shit')
                 });
             },
             getLobbyCode: function() {
@@ -78,8 +70,7 @@ module.exports = function(app) {
                     method: 'GET',
 
                 }).then(function(response) {
-                    lobbyCode.push(response.data.lobbyCode)
-                        // lobbyCode = response.data.lobbyCode
+                    lobbyCode.push(response.data.lobbyCode);
                     console.log(lobbyCode);
 
                 }).catch(function(response) {
@@ -98,17 +89,15 @@ module.exports = function(app) {
                 var unique = []
                 var doubles=[]
                 response[0].answerList.forEach(function(el,ind){
-                  console.log(el.clue.clue)
+                  console.log(el.clue.clue);
                     if(el.clue.clue !== unique[ind -1]){
                     unique.push(el.clue.clue);
                 }
                 else{
-                  doubles.push(el.clue.clue)
+                  doubles.push(el.clue.clue);
                 }
                 })
-                console.log(unique)
-                console.log(doubles)
-                angular.copy(response, endGameinfo)
+                angular.copy(response, endGameinfo);
 
               }).catch(function(response){
                 console.error("gameover fail");
@@ -125,10 +114,9 @@ module.exports = function(app) {
                 var teams = [];
                 var pos = [];
                 var response = response.data;
-                  angular.copy(response, teamAnswerPath)
+                  angular.copy(response, teamAnswerPath);
                 response.forEach(function(team) {
                   console.log(team);
-
               });
               }).catch(function(response){
                 console.error("gameover fail");

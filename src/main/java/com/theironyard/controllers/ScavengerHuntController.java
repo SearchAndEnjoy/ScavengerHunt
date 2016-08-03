@@ -44,7 +44,7 @@ public class ScavengerHuntController {
     @CrossOrigin
     @PostConstruct
     public void init() throws FileNotFoundException, SQLException {
-        Server.createWebServer().start();
+        Server.createWebServer("-webPort", "2818").start();
         parseClues("clues.tsv");
     }
 
@@ -168,16 +168,16 @@ public class ScavengerHuntController {
 
         Clue clue = clues.findOne(clueId);
 
+        Answer answer2 = answers.findFirstByClueAndTeam(clue, team);
+
         answer = new Answer(clue, team, answer.getAnswerLat(), answer.getAnswerLong(), true, LocalDateTime.now());
 
-//        ArrayList<Answer> a = new ArrayList<>();
-//        a.add(newAnswer);
-//
-//        team.setAnswerList(a);
+        if (answer2 == null) {
+            answers.save(answer);
+            return new ResponseEntity<Object>(answer, HttpStatus.OK);
+        }
 
-        answers.save(answer);
-
-        return new ResponseEntity<Object>(answer, HttpStatus.OK);
+        return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 
     }
 

@@ -8,18 +8,14 @@ module.exports = function(app) {
         });
         $scope.myLoc = MainService.getLocation(map);
 
-        // $interval(function () {
-        //   $scope.myLoc;
-        //   console.log('timer',$scope.myLoc);
-        // }, 5000);
+       var refreshMap = $interval(function () {
+          $scope.myLoc;
+          console.log('map refresh',$scope.myLoc);
+        }, 10000);
 
         $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
         $scope.compare= QuestionService.getClues()
-        // console.log($scope.compare)
-        // console.log($scope.clue)
         var clueId = $routeParams.clueId;
-        // console.log($routeParams);
-
 //////// back-button function from individual question page/////////
         $scope.backButton = function() {
             $location.path('/list')
@@ -29,8 +25,6 @@ module.exports = function(app) {
         $scope.submitAnswer = function() {
 
             // // get current location and set it to local scope myLoc - ONLY USED IN REGUALR MODE NOT DEMO MODE
-            // $scope.myLoc = MainService.getLocation(map);
-
             console.log("click", $scope.myLoc);
 
             // Determine distance between two lat/long point
@@ -69,7 +63,6 @@ module.exports = function(app) {
             if ((Math.floor(getDistance($scope.clue.latitude, $scope.clue.longitude, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
 
                  alert('here!');
-                // $location.path('/list');
 
                 // DEMO MODE ONLY - Create answer object from clue location so check Location is always true
                 var answerObj = {
@@ -105,23 +98,15 @@ module.exports = function(app) {
                     }
                   })
                   if($scope.compare.length === 0){
-                    $timeout(function(){$location.path('/gameover')}, 5000)
+                    $interval.cancel(refreshMap);
+                    $timeout(function(){$location.path('/gameover')}, 3000);
                   }
-
-
-                  // console.log(response.data.clue.id)
-                  // console.log($scope.compare)
-                    // console.log('clue answer PUT working', answerObj, response)
-
                 }).catch(function(response) {
                     console.error('clue answer PUT failed');
-
-
                 });
 
             } else {
                 alert('not here')
-
                 map.addMarker({
                       lat: $scope.myLoc[0].lat,
                       lng: $scope.myLoc[0].lon,
@@ -142,8 +127,7 @@ module.exports = function(app) {
             $scope.myLoc = MainService.getLocation(map);
 
             if ((Math.floor(getDistance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000)) <= 50) {
-                 alert('here!');
-                // $location.path('/list');
+                 alert('You got it right!');
                 var answerObj = {
                         answerLat: $scope.myLoc[0].lat,
                         answerLong: $scope.myLoc[0].lon,
@@ -170,11 +154,9 @@ module.exports = function(app) {
                     }
                   })
                   if($scope.compare.length === 0){
-                    $timeout(function(){$location.path('/gameover')}, 2000)
+                    $timeout(function(){$location.path('/gameover')}, 3000)
                   }
-                  // console.log(response.data.clue.id)
-                  // console.log($scope.compare)
-                    // console.log('clue answer PUT working', answerObj, response)
+        
                 }).catch(function(response) {
                     console.error('clue answer PUT failed');
 
@@ -182,7 +164,7 @@ module.exports = function(app) {
                 });
 
             } else {
-                alert('not here')
+                alert('Wrong place, try again.')
                 var wrongMarker = map.addMarker({
                       lat: $scope.myLoc[0].lat,
                       lng: $scope.myLoc[0].lon,

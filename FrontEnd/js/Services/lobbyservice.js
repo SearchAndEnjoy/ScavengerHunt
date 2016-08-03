@@ -4,22 +4,6 @@ module.exports = function(app) {
       var setReadyState = [];
 
       return{
-        //////////// remove when sure its not needed//////////
-
-        // setReadyState: function() {
-        //     console.log("clicked Post readyState");
-        //     $http({
-        //         url: '/start-game',
-        //         method: 'POST',
-        //
-        //     }).then(function(response) {
-        //         console.log('start game POST working')
-        //
-        //     }).catch(function(response) {
-        //         console.error('start game POST failed');
-        //
-        //     });
-        // },
         checkReady: function() {
 
             var readyState = $http({
@@ -30,8 +14,6 @@ module.exports = function(app) {
 
                 let data = response.data;
 
-                // console.log('checkReady from service', data);
-
                 if (data) {
                   return true;
 
@@ -41,7 +23,6 @@ module.exports = function(app) {
             }).catch(function(response) {
                 console.error('checkready err');
                 return false;
-                // console.log(readyState)
             });
             return readyState;
         }
