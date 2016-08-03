@@ -177,12 +177,13 @@
                     var ready = LobbyService.checkReady().then(function (result) {
 
                         if (result) {
+
                             //// setting clock end cookie////////////////
                             var endDate = Date.now() + 90 * 60 * 1000;
                             jq.cookie('endDate', Math.round(endDate / 1000));
 
                             $interval.cancel(checkOurDude);
-                            //////////////
+
                             $location.path('/list');
                         }
 
@@ -195,26 +196,43 @@
                 // console.log('lobby log', $scope.Game)
                 /////////////// game start button
                 $scope.session = function () {
-                    ////// setting clock end cookie////////////////
-                    var endDate = Date.now() + 90 * 60 * 1000;
-                    jq.cookie('endDate', Math.round(endDate / 1000));
-                    ////////////////
-                    console.log("clicked Post readyState");
-                    $http({
-                        url: '/start-game',
-                        method: 'POST'
+                    if (jq.cookie('demo')) {
+                        var endDate = Date.now() + 3 * 60 * 1000;
+                        jq.cookie('endDate', Math.round(endDate / 1000));
+                        $http({
+                            url: '/start-game',
+                            method: 'POST'
 
-                    }).then(function (response) {
-                        console.log('start game POST working', response);
+                        }).then(function (response) {
+                            console.log('start game POST working', response);
 
-                        $location.path('/list');
-                        //  $route.reload();
-                        ///////// location reload causes issue on safari look up/////////
-                    }).catch(function (response) {
-                        console.error('start game POST failed');
-                    });
+                            $location.path('/list');
+                            //  $route.reload();
+                            ///////// location reload causes issue on safari look up/////////
+                        }).catch(function (response) {
+                            console.error('start game POST failed');
+                        });
+                    } else {
 
-                    // $location.path('/list')
+                        ////// setting clock end cookie////////////////
+                        var endDate = Date.now() + 90 * 60 * 1000;
+                        jq.cookie('endDate', Math.round(endDate / 1000));
+                        ////////////////
+                        console.log("clicked Post readyState");
+                        $http({
+                            url: '/start-game',
+                            method: 'POST'
+
+                        }).then(function (response) {
+                            console.log('start game POST working', response);
+
+                            $location.path('/list');
+                            //  $route.reload();
+                            ///////// location reload causes issue on safari look up/////////
+                        }).catch(function (response) {
+                            console.error('start game POST failed');
+                        });
+                    }
                 };
             }]);
         };
@@ -229,10 +247,10 @@
                 });
                 $scope.myLoc = MainService.getLocation(map);
 
-                // $interval(function () {
-                //   $scope.myLoc;
-                //   console.log('timer',$scope.myLoc);
-                // }, 5000);
+                var refreshMap = $interval(function () {
+                    $scope.myLoc;
+                    console.log('map refresh', $scope.myLoc);
+                }, 10000);
 
                 $scope.clue = QuestionService.getSingleClue($routeParams.clueId);
                 $scope.compare = QuestionService.getClues();
@@ -326,9 +344,10 @@
                                     }
                                 });
                                 if ($scope.compare.length === 0) {
+                                    $interval.cancel(refreshMap);
                                     $timeout(function () {
                                         $location.path('/gameover');
-                                    }, 5000);
+                                    }, 3000);
                                 }
 
                                 // console.log(response.data.clue.id)
@@ -359,8 +378,7 @@
                             $scope.myLoc = MainService.getLocation(map);
 
                             if (Math.floor(getDistance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
-                                alert('here!');
-                                // $location.path('/list');
+                                alert('You got it right!');
                                 var answerObj = {
                                     answerLat: $scope.myLoc[0].lat,
                                     answerLong: $scope.myLoc[0].lon
@@ -388,7 +406,7 @@
                                     if ($scope.compare.length === 0) {
                                         $timeout(function () {
                                             $location.path('/gameover');
-                                        }, 2000);
+                                        }, 3000);
                                     }
                                     // console.log(response.data.clue.id)
                                     // console.log($scope.compare)
@@ -397,7 +415,7 @@
                                     console.error('clue answer PUT failed');
                                 });
                             } else {
-                                alert('not here');
+                                alert('Wrong place, try again.');
                                 var wrongMarker = map.addMarker({
                                     lat: $scope.myLoc[0].lat,
                                     lng: $scope.myLoc[0].lon,
