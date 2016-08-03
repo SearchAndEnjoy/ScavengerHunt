@@ -129,6 +129,7 @@
 
                             init: function init() {
                                 //store end date If it's not yet in cookies
+
                                 if (!jq.cookie('endDate')) {
                                     // end date = current date + 60 minutes
                                     var endDate = Date.now() + 90 * 60 * 1000;
