@@ -9,10 +9,10 @@ module.exports = function(app) {
                     success: function(position) {
                         map.setCenter(position.coords.latitude, position.coords.longitude);
                         map.setZoom(16)
-                       myPosition.push({
-                         lat:position.coords.latitude,
-                         lon:position.coords.longitude
-                       });
+                       angular.copy([
+                         position.coords.latitude,
+                         position.coords.longitude
+                       ], myPosition);
                         console.log("My current Location",myPosition);
                     },
                     error: function(error) {
