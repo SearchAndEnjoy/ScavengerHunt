@@ -276,7 +276,7 @@
                     }
 
                     ///////////// distance displayed in console////////
-                    console.log(Math.floor(getDistance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
+                    console.log(Math.floor(getDistance($scope.myLoc[0], $scope.myLoc[1], $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000), "meters");
                     console.log('-----------------------------------------------');
                     /////////////////
 
@@ -337,8 +337,8 @@
                         } else {
                             alert('not here');
                             map.addMarker({
-                                lat: $scope.myLoc[0].lat,
-                                lng: $scope.myLoc[0].lon,
+                                lat: $scope.myLoc[0],
+                                lng: $scope.myLoc[1],
                                 title: $scope.clue.locationName,
                                 click: function click(e) {
                                     alert('No Idea Where you are ');
@@ -354,15 +354,15 @@
                             // get current location and set it to local scope myLoc - ONLY USED IN REGUALR MODE NOT DEMO MODE
                             $scope.myLoc = MainService.getLocation(map);
 
-                            if (Math.floor(getDistance($scope.myLoc[0].lat, $scope.myLoc[0].lon, $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
+                            if (Math.floor(getDistance($scope.myLoc[0], $scope.myLoc[1], $scope.clue.latitude, $scope.clue.longitude, 'K') * 1000) <= 50) {
                                 alert('You got it right!');
                                 var answerObj = {
-                                    answerLat: $scope.myLoc[0].lat,
-                                    answerLong: $scope.myLoc[0].lon
+                                    answerLat: $scope.myLoc[0],
+                                    answerLong: $scope.myLoc[1]
                                 };
                                 var marker = map.addMarker({
-                                    lat: $scope.myLoc[0].lat,
-                                    lng: $scope.myLoc[0].lon,
+                                    lat: $scope.myLoc[0],
+                                    lng: $scope.myLoc[1],
                                     title: $scope.clue.locationName,
                                     infoWindow: { content: "<h1>" + $scope.clue.locationName + "</h1>" }
                                 });
@@ -391,8 +391,8 @@
                             } else {
                                 alert('Wrong place, try again.');
                                 var wrongMarker = map.addMarker({
-                                    lat: $scope.myLoc[0].lat,
-                                    lng: $scope.myLoc[0].lon,
+                                    lat: $scope.myLoc[0],
+                                    lng: $scope.myLoc[1],
                                     title: $scope.clue.locationName,
                                     infoWindow: { content: "<h1>Wrong!</h1>" }
                                 });
@@ -467,10 +467,7 @@
                             success: function success(position) {
                                 map.setCenter(position.coords.latitude, position.coords.longitude);
                                 map.setZoom(16);
-                                myPosition.push({
-                                    lat: position.coords.latitude,
-                                    lon: position.coords.longitude
-                                });
+                                angular.copy([position.coords.latitude, position.coords.longitude], myPosition);
                                 console.log("My current Location", myPosition);
                             },
                             error: function error(_error) {
